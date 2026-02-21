@@ -13,72 +13,97 @@ user-scalable=no">
 
 <title>Our Magical Love Anniversary 💗</title>
 
-<!-- ================= GOOGLE FONT LIBRARY ================= -->
+<!-- Fonts -->
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- ================= GOD LEVEL ANIMATION ENGINE ================= -->
+<!-- Animation Engine -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.min.js"></script>
-
-<!-- ================= CUSTOM ANNIVERSARY FONT ================= -->
 
 <style>
 
 @font-face{
-    font-family: CustomLoveFont;
-    src:url("assets/fonts/yourfont.ttf");
-}
-
-*{
-    box-sizing:border-box;
+font-family:CustomLoveFont;
+src:url("assets/fonts/yourfont.ttf");
 }
 
 html,body{
 
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
 
-    width:100%;
-    height:100%;
+width:100%;
+height:100%;
 
-    overflow:hidden;
+overflow:hidden;
 
-    font-family: CustomLoveFont,
-    -apple-system,
-    BlinkMacSystemFont,
-    Arial,
-    sans-serif;
+font-family:CustomLoveFont,Quicksand,sans-serif;
 
-    background:#ffd6e7;
+background:#ffd6e7;
 
 }
-
-/* Page Container */
 
 main{
-    width:100%;
-    height:100%;
+width:100%;
+height:100%;
+position:relative;
 }
 
-/* Page Default State */
+/* Page System */
 
 .page{
-    display:none;
-    width:100%;
-    height:100%;
-    position:relative;
+
+display:none;
+position:absolute;
+
+width:100%;
+height:100%;
+
+opacity:0;
+
+transition:0.45s ease;
+
 }
 
 .page.active{
-    display:block;
+display:block;
+opacity:1;
+}
+
+/* Center Content */
+
+.center{
+
+position:absolute;
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+text-align:center;
+
+width:100%;
+
+padding:20px;
+
+}
+
+.bg{
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+position:absolute;
+}
+
+button{
+cursor:pointer;
 }
 
 </style>
-
-<!-- ================= MAIN STYLE FILE ================= -->
 
 <link rel="stylesheet" href="style.css">
 
@@ -86,427 +111,145 @@ main{
 
 <body>
 
-<!-- ================= AUDIO SYSTEM ================= -->
-
 <audio id="bgMusic" src="assets/music/song.mp3" loop></audio>
 <audio id="clickSound" src="assets/music/click.mp3"></audio>
 <audio id="heartSound" src="assets/music/heart.mp3"></audio>
 <audio id="popSound" src="assets/music/pop.mp3"></audio>
 
-<!-- ================= MAIN APPLICATION CONTAINER ================= -->
+<main>
 
-<main id="app-container">
+<!-- PAGE 1 -->
 
-<section id="page1" class="page active">
+<section class="page active" id="page1">
 
-<!-- ================= BACKGROUND ================= -->
+<img src="assets/backgrounds/bg1.jpg" class="bg">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg1.jpg" class="bg-main">
-</div>
+<div class="center">
 
-<!-- Soft Dream Gradient Layer -->
+<img src="assets/characters/bunny_idle.gif" width="260">
 
-<div class="layer layer-gradient"></div>
+<h1>Do You Love Me? 💕</h1>
 
-<!-- Sparkle Magic Overlay -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/sparkle_overlay.gif"
-class="overlay-full">
-</div>
-
-<!-- Floating Heart Atmosphere -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/floating_hearts.gif"
-class="overlay-soft">
-</div>
-
-<!-- Soft Light Glow Atmosphere -->
-
-<div class="layer layer-light">
-<img src="assets/gifs/soft_glow.gif"
-class="light-glow">
-</div>
-
-<!-- Butterfly Motion Freedom -->
-
-<div class="layer layer-butterflies">
-
-<img src="assets/decorations/butterfly1.png"
-class="butterfly butterfly-left">
-
-<img src="assets/decorations/butterfly2.png"
-class="butterfly butterfly-right">
-
-</div>
-
-<!-- Corner Love Decoration -->
-
-<div class="layer layer-corner">
-
-<img src="assets/decorations/heart1.png" class="corner tl">
-<img src="assets/decorations/heart2.png" class="corner tr">
-<img src="assets/decorations/heart3.png" class="corner bl">
-<img src="assets/decorations/heart4.png" class="corner br">
-
-</div>
-
-<!-- ================= CHARACTER ================= -->
-
-<div class="character-area">
-
-<div class="character-glow"></div>
-
-<img src="assets/characters/bunny_idle.gif"
-class="main-character">
-
-<div class="character-shadow"></div>
-
-</div>
-
-<!-- ================= TEXT AREA ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Do You Love Me? 💕
-</h1>
-
-<p class="subtitle">
+<p>
 One year of magic… one year of memories…  
-Let's continue our dreamy fairy tale together ✨
+Let's continue our dreamy fairy tale ✨
 </p>
 
-</div>
-
-<!-- ================= BUTTON SYSTEM ================= -->
-
-<div class="button-area">
-
-<!-- YES BUTTON -->
+<div style="margin-top:40px">
 
 <img src="assets/buttons/btn_yes.png"
-class="btn"
-onclick="goToPage(2); playClick(); playHeart();">
-
-<!-- NO BUTTON ESCAPE AI SYSTEM -->
+width="120"
+onclick="goToPage(2); playHeart();">
 
 <img src="assets/buttons/btn_no.png"
 id="noBtn"
-class="btn btn-no"
+width="120"
 onclick="moveNoButton(); playClick();">
 
 </div>
 
-<!-- Mini Floating Hearts -->
-
-<div class="mini-hearts">
-
-<img src="assets/decorations/heart1.png"
-class="mini-heart h1">
-
-<img src="assets/decorations/heart2.png"
-class="mini-heart h2">
-
-<img src="assets/decorations/heart3.png"
-class="mini-heart h3">
-
 </div>
 
 </section>
 
-<section id="page2" class="page">
+<!-- PAGE 2 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page2">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg2.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg2.jpg" class="bg">
 
-<!-- Rain Emotion Atmosphere -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/rain_overlay.gif"
-class="overlay-full sad-rain">
-</div>
+<img src="assets/gifs/cry_bunny.gif" width="220">
 
-<!-- Soft Glow Sad Light -->
+<h1>Why did you say No? 😭</h1>
 
-<div class="layer layer-light">
-<img src="assets/gifs/soft_glow.gif"
-class="light-glow sad-glow">
-</div>
-
-<!-- Tear Drop Emotion -->
-
-<div class="layer layer-tears">
-<img src="assets/gifs/tear_drop.gif"
-class="tear-effect">
-</div>
-
-<!-- ================= CHARACTER ================= -->
-
-<div class="character-area sad">
-
-<div class="character-glow sad-glow"></div>
-
-<img src="assets/gifs/cry_bunny.gif"
-class="main-character sad-character">
-
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area sad-text">
-
-<h1 class="main-title">
-Why did you say No? 😭
-</h1>
-
-<p class="subtitle">
+<p>
 My heart is raining just like the sky…  
-Don’t break our 1 year fairy tale 💔  
 Please choose love again…
 </p>
 
-</div>
-
-<!-- ================= BUTTON SYSTEM ================= -->
-
-<div class="button-area">
-
-<!-- TRY AGAIN -->
+<div style="margin-top:40px">
 
 <img src="assets/buttons/btn_yes.png"
-class="btn btn-yes"
-onclick="goToPage(3); playClick(); playHeart();">
-
-<!-- BACK OPTION -->
+width="120"
+onclick="goToPage(3)">
 
 <img src="assets/buttons/btn_no.png"
-class="btn btn-no"
-onclick="goToPage(1); playClick();">
+width="120"
+onclick="goToPage(1)">
+
+</div>
 
 </div>
 
 </section>
 
-<section id="page3" class="page">
+<!-- PAGE 3 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page3">
 
-<div class="layer layer-bg">
-<img src="assets/decorations/tree.png" class="bg-main">
-</div>
+<img src="assets/backgrounds/tree.png" class="bg">
 
-<!-- Moving Background Animation -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/tree_bg_move.gif"
-class="overlay-full">
-</div>
+<h1>Find The Hidden Heart 💖</h1>
 
-<!-- Sparkle Small Effect -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/sparkle_small.gif"
-class="overlay-soft">
-</div>
-
-<!-- Flowers Decoration -->
-
-<div class="decor-layer">
-
-<img src="assets/decorations/flower1.png"
-class="decor flower f1">
-
-<img src="assets/decorations/flower2.png"
-class="decor flower f2">
-
-</div>
-
-<!-- Grass Bush Decoration -->
-
-<div class="decor-layer">
-
-<img src="assets/decorations/grass.png"
-class="decor grass">
-
-<img src="assets/decorations/bush.png"
-class="decor bush">
-
-</div>
-
-<!-- Butterfly Animation -->
-
-<div class="butterfly-layer">
-
-<img src="assets/gifs/butterfly_fly1.gif"
-class="butterfly b1">
-
-<img src="assets/gifs/butterfly_fly2.gif"
-class="butterfly b2">
-
-</div>
-
-<!-- Flower Sway Animation -->
-
-<div class="flower-animation-layer">
-
-<img src="assets/gifs/flower_sway1.gif"
-class="flower-anim fa1">
-
-<img src="assets/gifs/flower_sway2.gif"
-class="flower-anim fa2">
-
-</div>
-
-<!-- ================= GAME TEXT ================= -->
-
-<div class="text-area game-text">
-
-<h1 class="main-title">
-Find The Hidden Heart 💖
-</h1>
-
-<p class="subtitle">
-Somewhere in this magical garden  
-a tiny glowing heart is waiting ✨
-</p>
-
-</div>
-
-<!-- ================= HIDDEN ITEM ================= -->
-
-<div class="hidden-item-area">
+<p>Somewhere in magical garden ✨</p>
 
 <img src="assets/gifs/hidden_item.gif"
-class="hidden-heart"
+width="140"
 onclick="foundHeart()">
 
 </div>
 
-<!-- Back Button (Safe Navigation) -->
-
-<div class="back-option">
-<button onclick="goToPage(2); playClick();">
-← Go Back
-</button>
-</div>
-
 </section>
 
-<section id="page4" class="page">
+<!-- PAGE 4 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page4">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg3.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg3.jpg" class="bg">
 
-<!-- Ribbon Shine Overlay -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/ribbon_shine.gif"
-class="overlay-full">
-</div>
+<h1>Choose Your Gift 🎀</h1>
 
-<!-- Explosion Effect Layer -->
-
-<div class="layer explosion-layer" style="display:none;">
-<img src="assets/gifs/sparkle_explosion.gif"
-class="explosion-effect">
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Choose Your Gift 🎀
-</h1>
-
-<p class="subtitle">
-Four magical gifts are waiting…  
-Only one unlocks our next surprise 💗
-</p>
-
-</div>
-
-<!-- ================= GIFT AREA ================= -->
-
-<div class="gift-area">
+<div>
 
 <img src="assets/decorations/gift1.png"
-class="gift"
+width="120"
 onclick="openGift()">
 
 <img src="assets/decorations/gift2.png"
-class="gift"
+width="120"
 onclick="openGift()">
 
 <img src="assets/decorations/gift3.png"
-class="gift"
+width="120"
 onclick="openGift()">
 
 <img src="assets/decorations/gift4.png"
-class="gift"
+width="120"
 onclick="openGift()">
 
 </div>
 
-<!-- Back Button -->
-
-<div class="back-option">
-<button onclick="goToPage(3);">
-← Go Back
-</button>
 </div>
 
 </section>
 
-<section id="page5" class="page">
+<!-- PAGE 5 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page5">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg4.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg4.jpg" class="bg">
 
-<!-- Border Glow Overlay -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/border_glow.gif"
-class="overlay-full">
-</div>
+<h1>Special Love Coupons 💌</h1>
 
-<!-- Floating Heart Small -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/floating_heart_small.gif"
-class="overlay-soft">
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Special Love Coupons 💌
-</h1>
-
-<p class="subtitle">
-Redeem these anytime…  
-They are valid for lifetime only for you 💗
-</p>
-
-</div>
-
-<!-- ================= COUPON GRID ================= -->
-
-<div class="coupon-area">
+<div>
 
 <script>
 
@@ -514,7 +257,7 @@ for(let i=1;i<=12;i++){
 
 document.write(`
 <img src="assets/decorations/coupon${i}.png"
-class="coupon"
+width="100"
 onclick="selectCoupon()">
 `);
 
@@ -524,80 +267,30 @@ onclick="selectCoupon()">
 
 </div>
 
-<!-- Continue Button -->
-
-<div class="next-option">
-<button onclick="goToPage(6)">
-Continue Our Memories 💕 →
-</button>
-</div>
-
-<!-- Back Button -->
-
-<div class="back-option">
-<button onclick="goToPage(4)">
-← Go Back
-</button>
 </div>
 
 </section>
 
-<section id="page6" class="page">
+<!-- PAGE 6 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page6">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg5.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg5.jpg" class="bg">
 
-<!-- Sakura Fall Overlay -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/sakura_fall.gif"
-class="overlay-full">
-</div>
+<h1>Memory Lane 🌷</h1>
 
-<!-- Heart Rain Slow -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/heart_rain_slow.gif"
-class="overlay-soft">
-</div>
-
-<!-- Dreamy Light Glow -->
-
-<div class="layer layer-light">
-<img src="assets/gifs/dreamy_light.gif"
-class="light-glow">
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Memory Lane 🌷
-</h1>
-
-<p class="subtitle">
-Every picture holds our beautiful story 💗
-</p>
-
-</div>
-
-<!-- ================= MEMORY GALLERY ================= -->
-
-<div class="memory-gallery">
+<div>
 
 <script>
 
 for(let i=1;i<=6;i++){
 
 document.write(`
-<div class="memory-item">
 <img src="assets/decorations/pic${i}.jpg"
+width="120"
 class="memory-pic">
-</div>
 `);
 
 }
@@ -606,160 +299,46 @@ class="memory-pic">
 
 </div>
 
-<!-- Next Button -->
-
-<div class="next-option">
-<button onclick="goToPage(7)">
-Words From My Heart 💌 →
-</button>
-</div>
-
-<!-- Back Button -->
-
-<div class="back-option">
-<button onclick="goToPage(5)">
-← Go Back
-</button>
 </div>
 
 </section>
 
-<section id="page7" class="page">
+<!-- PAGE 7 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page7">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg6.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg6.jpg" class="bg">
 
-<!-- Text Sparkle Overlay -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/text_sparkle.gif"
-class="overlay-soft">
-</div>
+<h1>Words From My Heart 💗</h1>
 
-<!-- Floating Heart Decoration -->
-
-<div class="decor-layer">
-
-<img src="assets/decorations/heart1.png"
-class="floating-heart h1">
-
-<img src="assets/decorations/heart2.png"
-class="floating-heart h2">
-
-<img src="assets/decorations/heart3.png"
-class="floating-heart h3">
-
-<img src="assets/decorations/heart4.png"
-class="floating-heart h4">
-
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Words From My Heart 💗
-</h1>
-
-</div>
-
-<!-- ================= LOVE MESSAGE BOX ================= -->
-
-<div class="love-message-box">
-
-<p id="typingText" class="love-text">
+<p id="typingText">
 
 My love...  
-From the very first day you entered my life,  
-everything changed in the most beautiful way.  
-You are my comfort, my happiness, my forever.  
-Every heartbeat whispers your name 💕  
-I promise to love you more every single day...
+From the very first day you entered my life…  
+You are my forever 💕  
 
 </p>
 
-<img src="assets/gifs/typing_cursor.gif"
-class="typing-cursor">
-
-</div>
-
-<!-- Next Button -->
-
-<div class="next-option">
-<button onclick="goToPage(8)">
-Guess Our Song 🎵 →
-</button>
-</div>
-
-<!-- Back Button -->
-
-<div class="back-option">
-<button onclick="goToPage(6)">
-← Go Back
-</button>
 </div>
 
 </section>
 
-<section id="page8" class="page">
+<!-- PAGE 8 -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page8">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg6.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg6.jpg" class="bg">
 
-<!-- Floating Music Decoration -->
+<div class="center">
 
-<div class="decor-layer">
+<h1>Guess Our Song 🎵</h1>
 
-<img src="assets/decorations/music_note.png"
-class="music-note">
+<input type="text" id="songGuess"
+placeholder="Type song name">
 
-<img src="assets/decorations/qr_frame.png"
-class="qr-frame">
-
-</div>
-
-<!-- Floating Music Animation -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/floating_music.gif"
-class="overlay-soft">
-</div>
-
-<!-- Heart Pulse Animation -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/heart_pulse_big.gif"
-class="overlay-full">
-</div>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Guess Our Song 🎶
-</h1>
-
-<p class="subtitle">
-Type the name of our special song 💗
-</p>
-
-</div>
-
-<!-- ================= INPUT AREA ================= -->
-
-<div class="guess-area">
-
-<input type="text"
-id="songGuess"
-placeholder="Type your song guess 💕">
+<br><br>
 
 <button onclick="checkSongGuess()">
 Check Answer ✨
@@ -767,124 +346,38 @@ Check Answer ✨
 
 </div>
 
-<!-- Music Player -->
-
-<div class="music-player">
-
-<audio controls>
-<source src="assets/music/song.mp3" type="audio/mp3">
-</audio>
-
-</div>
-
-<!-- Next Button -->
-
-<div class="next-option">
-<button onclick="goToPage(9)">
-Final Love Note 💗 →
-</button>
-</div>
-
-<!-- Back Button -->
-
-<div class="back-option">
-<button onclick="goToPage(7)">
-← Go Back
-</button>
-</div>
-
 </section>
 
-<section id="page9" class="page">
+<!-- PAGE 9 FINAL -->
 
-<!-- ================= BACKGROUND ================= -->
+<section class="page" id="page9">
 
-<div class="layer layer-bg">
-<img src="assets/backgrounds/bg9_note.jpg" class="bg-main">
-</div>
+<img src="assets/backgrounds/bg9_note.jpg" class="bg">
 
-<!-- Heart Rain Animation -->
+<div class="center">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/heart_rain.gif"
-class="overlay-full">
-</div>
+<h1>Happy 1 Year Anniversary Jaaan 💗</h1>
 
-<!-- Sparkle Overlay -->
+<p style="max-width:600px;margin:auto">
 
-<div class="layer layer-overlay">
-<img src="assets/gifs/sparkle_overlay.gif"
-class="overlay-soft">
-</div>
-
-<!-- Confetti Celebration -->
-
-<div class="layer layer-overlay">
-<img src="assets/gifs/confetti.gif"
-class="overlay-soft">
-</div>
-
-<!-- Background Music -->
-
-<audio autoplay loop>
-<source src="assets/music/soft_piano.mp3" type="audio/mp3">
-</audio>
-
-<!-- ================= TEXT ================= -->
-
-<div class="text-area">
-
-<h1 class="main-title">
-Happy 1 Year Anniversary Jaaan 💗
-</h1>
-
-</div>
-
-<!-- ================= LOVE NOTE BOX ================= -->
-
-<div class="note-box">
-
-<p class="love-note">
-
-My love, today marks 1 year of our beautiful journey together. 💗<br><br>
-
-Every moment with you has been magical, full of joy, laughter, and endless love.<br><br>
-
-You are my dream, my heart, my everything. 💕<br><br>
-
-Here’s to us, our memories, and the countless adventures ahead.<br><br>
-
-I love you more than words can ever say. 💗💗
+My love, today marks 1 year of our beautiful journey together.  
+Every moment with you has been magical, full of joy and endless love.  
+You are my dream, my heart, my everything 💕  
+I love you more than words can say 💗
 
 </p>
 
-</div>
-
-<!-- Ending Message -->
-
-<div class="ending-text">
-
-<h2>Forever Yours 💗</h2>
+<audio autoplay loop>
+<source src="assets/music/soft_piano.mp3">
+</audio>
 
 </div>
 
 </section>
 
-<!-- ================= END OF ALL PAGES ================= -->
+</main>
 
-<div id="particle-container"
-style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-z-index:999">
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.min.js"></script>
+<div id="particle-container"></div>
 
 <script src="script.js"></script>
 
