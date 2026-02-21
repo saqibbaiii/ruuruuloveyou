@@ -1,0 +1,1514 @@
+//////////////////////////////////////////////////////////////
+// 💗 OUR MAGICAL ANNIVERSARY PROJECT
+// PART 1 - GOD LEVEL UI FOUNDATION ENGINE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+GLOBAL RESET MASTER
+======================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ========================================================
+BODY CORE ROMANCE THEME
+======================================================== */
+
+html,body{
+
+width:100%;
+height:100%;
+
+overflow:hidden;
+
+/* Soft Dream Love Background */
+
+background:linear-gradient(
+180deg,
+#ffd6e7,
+#ffb6d5
+);
+
+/* Romantic Font Stack */
+
+font-family:
+CustomLoveFont,
+"Quicksand",
+sans-serif;
+
+}
+
+/* ========================================================
+MAIN APP CONTAINER
+======================================================== */
+
+#app-container{
+
+width:100%;
+height:100%;
+
+position:relative;
+
+}
+
+/* ========================================================
+PAGE SYSTEM MASTER ENGINE
+======================================================== */
+
+.page{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+/* Hidden by default */
+
+display:none;
+
+/* Ultra Smooth Cinematic Transition */
+
+opacity:0;
+transform:scale(0.98);
+
+transition:
+opacity 0.45s ease,
+transform 0.45s ease;
+
+}
+
+/* Active Page */
+
+.page.active{
+
+display:block;
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+/* ========================================================
+LAYER SYSTEM CORE
+======================================================== */
+
+.layer{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+}
+
+/* Background Layer */
+
+.layer-bg{
+
+z-index:1;
+
+}
+
+/* Gradient Layer */
+
+.layer-gradient{
+
+background:linear-gradient(
+180deg,
+rgba(255,230,240,0.4),
+rgba(255,180,210,0.4)
+);
+
+z-index:2;
+
+}
+
+/* Overlay Layer */
+
+.layer-overlay{
+
+z-index:3;
+
+}
+
+/* Light Glow Layer */
+
+.layer-light{
+
+z-index:4;
+
+}
+
+/* Character Layer */
+
+.character-area{
+
+z-index:6;
+
+}
+
+/* Text Layer */
+
+.text-area{
+
+z-index:7;
+
+}
+
+/* Button Layer */
+
+.button-area{
+
+z-index:8;
+
+}
+
+/* ========================================================
+ROMANTIC ANIMATION BASE
+======================================================== */
+
+img{
+
+user-select:none;
+
+-webkit-user-drag:none;
+
+}
+
+/* Smooth Hover Physics */
+
+.btn,
+.gift,
+.coupon,
+.memory-pic{
+
+transition:0.3s ease;
+
+}
+
+.btn:hover,
+.gift:hover,
+.coupon:hover,
+.memory-pic:hover{
+
+transform:scale(1.07);
+
+filter:brightness(1.1);
+
+}
+
+/* ========================================================
+SCROLL LOCK SECURITY
+======================================================== */
+
+body{
+
+touch-action:none;
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 OUR MAGICAL ANNIVERSARY PROJECT
+// PART 2 - CHARACTER MOTION PHYSICS ENGINE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+CHARACTER AREA MASTER
+======================================================== */
+
+.character-area{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+/* Center Character */
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+z-index:6;
+
+}
+
+/* Idle Character */
+
+.main-character{
+
+width:280px;
+max-width:70vw;
+
+animation:characterBreath 3s ease-in-out infinite;
+
+}
+
+/* Character Glow Aura */
+
+.character-glow{
+
+position:absolute;
+
+width:320px;
+height:320px;
+
+border-radius:50%;
+
+/* Dream Love Glow */
+
+background:radial-gradient(
+circle,
+rgba(255,255,255,0.7),
+rgba(255,180,210,0.3),
+transparent 70%
+);
+
+filter:blur(20px);
+
+animation:glowPulse 4s ease-in-out infinite;
+
+}
+
+/* Character Shadow Physics */
+
+.character-shadow{
+
+position:absolute;
+
+width:220px;
+height:40px;
+
+background:rgba(0,0,0,0.2);
+
+border-radius:50%;
+
+filter:blur(15px);
+
+margin-top:240px;
+
+animation:shadowBreath 3s ease-in-out infinite;
+
+}
+
+/* ========================================================
+SAD CHARACTER MODE
+======================================================== */
+
+.sad-character{
+
+animation:sadFloat 2.5s ease-in-out infinite;
+
+}
+
+/* ========================================================
+ANIMATION KEYFRAMES
+======================================================== */
+
+@keyframes characterBreath{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+}
+
+/* Glow Physics */
+
+@keyframes glowPulse{
+
+0%,100%{
+transform:scale(1);
+opacity:0.8;
+}
+
+50%{
+transform:scale(1.12);
+opacity:1;
+}
+
+}
+
+/* Shadow Physics */
+
+@keyframes shadowBreath{
+
+0%,100%{
+transform:scale(1);
+opacity:0.35;
+}
+
+50%{
+transform:scale(0.85);
+opacity:0.15;
+}
+
+}
+
+/* Sad Emotion Float */
+
+@keyframes sadFloat{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-18px);
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 3 - AI ESCAPE BUTTON PHYSICS STYLE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+BUTTON AREA MASTER
+======================================================== */
+
+.button-area{
+
+position:absolute;
+bottom:60px;
+
+width:100%;
+
+display:flex;
+justify-content:center;
+gap:40px;
+
+z-index:10;
+
+}
+
+/* ========================================================
+COMMON BUTTON STYLE
+======================================================== */
+
+.btn{
+
+width:120px;
+cursor:pointer;
+
+transition:0.3s ease;
+
+user-select:none;
+
+}
+
+/* Hover Physics */
+
+.btn:hover{
+
+transform:scale(1.08);
+
+}
+
+/* No Button AI Escape Target */
+
+.btn-no{
+
+position:relative;
+
+}
+
+/* Yes Button Special Glow */
+
+.btn-yes{
+
+filter:drop-shadow(0 0 8px rgba(255,100,150,0.5));
+
+}
+
+/* ========================================================
+MINI FLOATING HEARTS
+======================================================== */
+
+.mini-hearts{
+
+position:absolute;
+
+bottom:140px;
+
+width:100%;
+
+display:flex;
+justify-content:center;
+gap:35px;
+
+z-index:5;
+
+}
+
+.mini-heart{
+
+width:45px;
+
+animation:miniHeartFloat 4s ease-in-out infinite;
+
+}
+
+/* Individual Motion Variation */
+
+.h1{ animation-delay:0s; }
+.h2{ animation-delay:1s; }
+.h3{ animation-delay:2s; }
+
+/* ========================================================
+ANIMATION KEYFRAMES
+======================================================== */
+
+@keyframes miniHeartFloat{
+
+0%,100%{
+transform:translateY(0) scale(1);
+opacity:0.9;
+}
+
+50%{
+transform:translateY(-25px) scale(1.15);
+opacity:1;
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 4 - GOD LEVEL CINEMATIC BACKGROUND ENGINE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+LAYER MASTER SYSTEM
+======================================================== */
+
+.layer{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+}
+
+/* ========================================================
+BACKGROUND IMAGE CORE
+======================================================== */
+
+.layer-bg{
+
+z-index:1;
+
+}
+
+.bg-main{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+/* ========================================================
+GRADIENT DREAM LAYER
+======================================================== */
+
+.layer-gradient{
+
+z-index:2;
+
+background:linear-gradient(
+180deg,
+rgba(255,214,231,0.35),
+rgba(255,180,210,0.5)
+);
+
+mix-blend-mode:soft-light;
+
+}
+
+/* ========================================================
+OVERLAY ANIMATION CORE
+======================================================== */
+
+.layer-overlay{
+
+z-index:3;
+
+}
+
+.overlay-full{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+opacity:0.9;
+
+}
+
+.overlay-soft{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+object-fit:contain;
+
+opacity:0.7;
+
+}
+
+/* ========================================================
+LIGHT GOD GLOW SYSTEM
+======================================================== */
+
+.layer-light{
+
+z-index:4;
+
+}
+
+.light-glow{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+mix-blend-mode:screen;
+
+opacity:0.65;
+
+}
+
+/* ========================================================
+TEAR EMOTION EFFECT
+======================================================== */
+
+.layer-tears{
+
+z-index:4;
+
+}
+
+.tear-effect{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+opacity:0.5;
+
+}
+
+/* ========================================================
+EXPLOSION CINEMATIC LAYER
+======================================================== */
+
+.explosion-layer{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+display:none;
+
+z-index:99;
+
+}
+
+.explosion-effect{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+/* ========================================================
+ROMANTIC PARTICLE CONTAINER
+======================================================== */
+
+#particle-container{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+z-index:999;
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 5 - CHARACTER GOD MOTION PHYSICS ENGINE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+CHARACTER AREA CORE
+======================================================== */
+
+.character-area{
+
+position:absolute;
+
+bottom:8%;
+
+left:50%;
+
+transform:translateX(-50%);
+
+z-index:20;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+/* ========================================================
+MAIN CHARACTER GOD SPRITE
+======================================================== */
+
+.main-character{
+
+width:240px;
+
+max-width:60vw;
+
+height:auto;
+
+filter:drop-shadow(0 0 18px rgba(255,120,160,0.6));
+
+animation:characterFloat 4s ease-in-out infinite;
+
+}
+
+/* Character Floating Physics */
+
+@keyframes characterFloat{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-18px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+/* ========================================================
+CHARACTER GLOW FIELD
+======================================================== */
+
+.character-glow{
+
+position:absolute;
+
+width:280px;
+height:280px;
+
+border-radius:50%;
+
+background:radial-gradient(
+circle,
+rgba(255,180,220,0.5),
+transparent 70%
+);
+
+animation:glowPulse 3s ease-in-out infinite;
+
+}
+
+@keyframes glowPulse{
+
+0%{
+transform:scale(1);
+opacity:0.6;
+}
+
+50%{
+transform:scale(1.15);
+opacity:0.9;
+}
+
+100%{
+transform:scale(1);
+opacity:0.6;
+}
+
+}
+
+/* ========================================================
+CHARACTER SHADOW STABILITY SYSTEM
+======================================================== */
+
+.character-shadow{
+
+position:absolute;
+
+bottom:-18px;
+
+width:180px;
+height:40px;
+
+background:radial-gradient(
+ellipse,
+rgba(0,0,0,0.25),
+transparent 70%
+);
+
+filter:blur(6px);
+
+animation:shadowPulse 4s ease-in-out infinite;
+
+}
+
+@keyframes shadowPulse{
+
+0%{
+transform:scale(1);
+opacity:0.5;
+}
+
+50%{
+transform:scale(0.85);
+opacity:0.2;
+}
+
+100%{
+transform:scale(1);
+opacity:0.5;
+}
+
+}
+
+/* ========================================================
+SAD CHARACTER MODE
+======================================================== */
+
+.sad .main-character{
+
+animation:cryFloat 4s ease-in-out infinite;
+
+}
+
+@keyframes cryFloat{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+/* ========================================================
+SAFE RESPONSIVE CHARACTER ZONE
+======================================================== */
+
+@media(max-width:768px){
+
+.main-character{
+
+width:180px;
+
+}
+
+.character-glow{
+
+width:220px;
+height:220px;
+
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 6 - BUTTERFLY ULTRA FREEDOM MOTION ENGINE
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+BUTTERFLY BASE STYLE
+======================================================== */
+
+.butterfly{
+
+position:absolute;
+
+width:70px;
+
+height:auto;
+
+pointer-events:none;
+
+filter:drop-shadow(0 0 8px rgba(255,150,200,0.5));
+
+animation:butterflyHover 6s ease-in-out infinite;
+
+}
+
+/* Left Right Corner Butterflies */
+
+.butterfly-left{
+left:5%;
+top:15%;
+}
+
+.butterfly-right{
+right:5%;
+top:25%;
+}
+
+/* Small Butterfly Motion */
+
+.b1{
+left:18%;
+bottom:20%;
+}
+
+.b2{
+right:20%;
+bottom:18%;
+}
+
+/* ========================================================
+BUTTERFLY FREE FLIGHT PHYSICS
+======================================================== */
+
+@keyframes butterflyHover{
+
+0%{
+transform:translateY(0) rotate(0deg);
+}
+
+25%{
+transform:translateY(-12px) rotate(6deg);
+}
+
+50%{
+transform:translateY(8px) rotate(-6deg);
+}
+
+75%{
+transform:translateY(-10px) rotate(4deg);
+}
+
+100%{
+transform:translateY(0) rotate(0deg);
+}
+
+}
+
+/* ========================================================
+BUTTERFLY WING LIGHT GLOW BREATHING
+======================================================== */
+
+.butterfly::after{
+
+content:"";
+
+position:absolute;
+
+inset:-12px;
+
+background:radial-gradient(
+circle,
+rgba(255,180,220,0.4),
+transparent 70%
+);
+
+filter:blur(10px);
+
+animation:butterflyGlow 3s ease-in-out infinite;
+
+}
+
+@keyframes butterflyGlow{
+
+0%{
+opacity:0.4;
+transform:scale(1);
+}
+
+50%{
+opacity:0.9;
+transform:scale(1.2);
+}
+
+100%{
+opacity:0.4;
+transform:scale(1);
+}
+
+}
+
+/* ========================================================
+BUTTERFLY LAYER STABILITY SYSTEM
+======================================================== */
+
+.butterfly-layer{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+top:0;
+left:0;
+
+z-index:15;
+
+}
+
+/* ========================================================
+RESPONSIVE BUTTERFLY CONTROL
+======================================================== */
+
+@media(max-width:768px){
+
+.butterfly{
+
+width:55px;
+
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 7 - HEART UNIVERSE PARTICLE MASTER LAYER
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+PARTICLE CONTAINER GOD MODE
+======================================================== */
+
+#particle-container{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+z-index:999;
+
+}
+
+/* ========================================================
+PARTICLE HEART DREAM MODE
+======================================================== */
+
+.ts-particles-canvas-el{
+
+filter: blur(0.4px) brightness(1.1);
+
+}
+
+/* ========================================================
+PARTICLE ROMANCE LIGHT CONTROL
+======================================================== */
+
+@keyframes particleSoftPulse{
+
+0%{
+opacity:0.6;
+transform:scale(1);
+}
+
+50%{
+opacity:1;
+transform:scale(1.05);
+}
+
+100%{
+opacity:0.6;
+transform:scale(1);
+}
+
+}
+
+/* ========================================================
+PARTICLE PERFORMANCE SHIELD (MOBILE SAFE)
+======================================================== */
+
+@media(max-width:768px){
+
+.ts-particles-canvas-el{
+
+transform:scale(0.92);
+
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 8 - CHARACTER DREAM MOTION SYSTEM
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+CHARACTER AREA MASTER
+======================================================== */
+
+.character-area{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+text-align:center;
+
+z-index:20;
+
+}
+
+/* ========================================================
+MAIN CHARACTER IMAGE
+======================================================== */
+
+.main-character{
+
+width:260px;
+
+animation:characterBreathing 4s ease-in-out infinite;
+
+}
+
+/* ========================================================
+CHARACTER GLOW AURA
+======================================================== */
+
+.character-glow{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:280px;
+height:280px;
+
+background:radial-gradient(
+circle,
+rgba(255,150,200,0.35),
+transparent 65%
+);
+
+filter:blur(15px);
+
+animation:auraPulse 5s ease-in-out infinite;
+
+}
+
+/* Shadow Depth System */
+
+.character-shadow{
+
+position:absolute;
+
+bottom:-40px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:200px;
+height:40px;
+
+background:rgba(0,0,0,0.18);
+
+filter:blur(18px);
+
+}
+
+/* ========================================================
+ANIMATION KEYFRAMES
+======================================================== */
+
+@keyframes characterBreathing{
+
+0%,100%{
+transform:translateY(0) scale(1);
+}
+
+50%{
+transform:translateY(-12px) scale(1.03);
+}
+
+}
+
+@keyframes auraPulse{
+
+0%,100%{
+opacity:0.6;
+transform:translate(-50%,-50%) scale(1);
+}
+
+50%{
+opacity:1;
+transform:translate(-50%,-50%) scale(1.1);
+}
+
+}
+
+/* ========================================================
+SAD MODE CHARACTER PATCH
+======================================================== */
+
+.sad-character{
+
+filter:brightness(0.9) saturate(0.85);
+
+}
+
+.sad .character-glow{
+
+background:radial-gradient(
+circle,
+rgba(120,180,255,0.25),
+transparent 65%
+);
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 9 - ROMANCE CINEMATIC PAGE TRANSITION
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+PAGE MASTER SYSTEM
+======================================================== */
+
+.page{
+
+position:relative;
+
+width:100%;
+height:100%;
+
+display:none;
+
+opacity:0;
+
+transition:opacity 0.45s ease,
+transform 0.45s ease;
+
+}
+
+/* Active Page Engine */
+
+.page.active{
+
+display:block;
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+/* ========================================================
+ROMANTIC FADE DREAM MODE
+======================================================== */
+
+.page:not(.active){
+
+pointer-events:none;
+
+transform:scale(1.02);
+
+}
+
+/* ========================================================
+BACKGROUND IMAGE MASTER
+======================================================== */
+
+.bg-main{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+/* ========================================================
+LAYER SYSTEM
+======================================================== */
+
+.layer{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+}
+
+/* Overlay Effects */
+
+.overlay-full{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+.overlay-soft{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+opacity:0.65;
+
+}
+
+/* Light Glow Layer */
+
+.layer-light{
+
+mix-blend-mode:screen;
+
+opacity:0.8;
+
+}
+
+/* Gradient Dream Layer */
+
+.layer-gradient{
+
+background:linear-gradient(
+180deg,
+rgba(255,200,230,0.35),
+rgba(255,150,200,0.15),
+rgba(0,0,0,0.05)
+);
+
+}
+
+/* ========================================================
+EXPLOSION CINEMATIC PATCH
+======================================================== */
+
+.explosion-layer{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+z-index:500;
+
+}
+
+/* Explosion Effect Image */
+
+.explosion-effect{
+
+width:280px;
+
+animation:explosionPop 0.6s ease forwards;
+
+}
+
+@keyframes explosionPop{
+
+0%{
+transform:scale(0.6);
+opacity:0;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+//////////////////////////////////////////////////////////////
+// 💗 ANNIVERSARY PROJECT
+// PART 10 - MOBILE ROMANCE GUARDIAN SHIELD
+//////////////////////////////////////////////////////////////
+
+/* ========================================================
+MOBILE TOUCH SAFE AREA
+======================================================== */
+
+@media (max-width:768px){
+
+html,body{
+
+overflow:hidden;
+
+touch-action:none;
+
+-webkit-touch-callout:none;
+
+-webkit-user-select:none;
+
+user-select:none;
+
+}
+
+}
+
+/* ========================================================
+BUTTON ROMANCE TOUCH FEEDBACK
+======================================================== */
+
+.btn,
+.gift,
+.coupon,
+.hidden-heart{
+
+cursor:pointer;
+
+transition:transform 0.25s ease,
+opacity 0.25s ease;
+
+}
+
+.btn:active,
+.gift:active,
+.coupon:active,
+.hidden-heart:active{
+
+transform:scale(0.92);
+
+opacity:0.85;
+
+}
+
+/* ========================================================
+ANIMATION PERFORMANCE OPTIMIZER
+======================================================== */
+
+*{
+
+will-change:transform, opacity;
+
+}
+
+/* ========================================================
+BACKGROUND LAYER STABILITY PATCH
+======================================================== */
+
+.layer-bg{
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+z-index:1;
+
+}
+
+/* ========================================================
+ROMANTIC FLOATING HEART ATMOSPHERE
+======================================================== */
+
+.mini-heart,
+.floating-heart,
+.butterfly{
+
+position:absolute;
+
+animation:loveFloat 6s ease-in-out infinite;
+
+}
+
+@keyframes loveFloat{
+
+0%{
+transform:translateY(0px) rotate(0deg);
+}
+
+50%{
+transform:translateY(-20px) rotate(6deg);
+}
+
+100%{
+transform:translateY(0px) rotate(0deg);
+}
+
+}
