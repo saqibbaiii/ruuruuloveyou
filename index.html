@@ -1,26 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
-
-<title>Our Magical Love Anniversary 💗</title>
-
-<!-- Fonts -->
+<title>Our Love Anniversary 💗</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- Animation Engine -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.min.js"></script>
 
 <style>
 
@@ -32,18 +21,17 @@ src:url("assets/fonts/yourfont.ttf");
 html,body{
 
 margin:0;
-padding:0;
-
 width:100%;
 height:100%;
-
 overflow:hidden;
 
 font-family:CustomLoveFont,Quicksand,sans-serif;
 
-background:#ffd6e7;
+background:linear-gradient(180deg,#ffd6e7,#ffb6d5);
 
 }
+
+/* PAGE SYSTEM */
 
 main{
 width:100%;
@@ -51,20 +39,14 @@ height:100%;
 position:relative;
 }
 
-/* Page System */
-
 .page{
 
-display:none;
 position:absolute;
-
 width:100%;
 height:100%;
-
+display:none;
 opacity:0;
-
-transition:0.45s ease;
-
+transition:0.4s ease;
 }
 
 .page.active{
@@ -72,40 +54,82 @@ display:block;
 opacity:1;
 }
 
-/* Center Content */
+.bg{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* CENTER */
 
 .center{
 
 position:absolute;
 top:50%;
 left:50%;
-
 transform:translate(-50%,-50%);
-
 text-align:center;
-
 width:100%;
-
-padding:20px;
-
+padding:25px;
 }
 
-.bg{
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-position:absolute;
-}
+/* BUTTON */
 
 button{
+
+padding:12px 26px;
+border:none;
+border-radius:30px;
+
+background:#ff5c8a;
+color:white;
+
 cursor:pointer;
+
+transition:0.3s ease;
+
+}
+
+button:hover{
+transform:scale(1.06);
+}
+
+/* POPUP */
+
+.zoom-popup{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,0.75);
+
+display:none;
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+.zoom-content{
+
+background:white;
+padding:30px;
+border-radius:25px;
+text-align:center;
+
+}
+
+.zoom-content img{
+
+width:220px;
+max-width:70vw;
+margin-bottom:20px;
+
 }
 
 </style>
-
-<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -114,7 +138,6 @@ cursor:pointer;
 <audio id="bgMusic" src="assets/music/song.mp3" loop></audio>
 <audio id="clickSound" src="assets/music/click.mp3"></audio>
 <audio id="heartSound" src="assets/music/heart.mp3"></audio>
-<audio id="popSound" src="assets/music/pop.mp3"></audio>
 
 <main>
 
@@ -124,29 +147,26 @@ cursor:pointer;
 
 <img src="assets/backgrounds/bg1.jpg" class="bg">
 
-<div class="center">
+<div class="center" onclick="startMusic()">
 
-<img src="assets/characters/bunny_idle.gif" width="260">
+<img src="assets/characters/bunny_idle.gif" width="250">
 
 <h1>Do You Love Me? 💕</h1>
 
-<p>
-One year of magic… one year of memories…  
-Let's continue our dreamy fairy tale ✨
-</p>
-
-<div style="margin-top:40px">
+<br>
 
 <img src="assets/buttons/btn_yes.png"
 width="120"
-onclick="goToPage(2); playHeart();">
+onclick="goToPage(2)">
 
 <img src="assets/buttons/btn_no.png"
 id="noBtn"
 width="120"
-onclick="moveNoButton(); playClick();">
+onclick="moveNoButton()">
 
-</div>
+<p style="opacity:0.5;font-size:14px">
+Tap screen to start music 🎵
+</p>
 
 </div>
 
@@ -164,22 +184,7 @@ onclick="moveNoButton(); playClick();">
 
 <h1>Why did you say No? 😭</h1>
 
-<p>
-My heart is raining just like the sky…  
-Please choose love again…
-</p>
-
-<div style="margin-top:40px">
-
-<img src="assets/buttons/btn_yes.png"
-width="120"
-onclick="goToPage(3)">
-
-<img src="assets/buttons/btn_no.png"
-width="120"
-onclick="goToPage(1)">
-
-</div>
+<button onclick="goToPage(3)">Try Again 💗</button>
 
 </div>
 
@@ -193,13 +198,11 @@ onclick="goToPage(1)">
 
 <div class="center">
 
-<h1>Find The Hidden Heart 💖</h1>
-
-<p>Somewhere in magical garden ✨</p>
+<h1>Find Hidden Heart 💖</h1>
 
 <img src="assets/gifs/hidden_item.gif"
 width="140"
-onclick="foundHeart()">
+onclick="goToPage(4)">
 
 </div>
 
@@ -215,25 +218,17 @@ onclick="foundHeart()">
 
 <h1>Choose Your Gift 🎀</h1>
 
-<div>
+<img src="assets/decorations/gift1.png" width="120"
+onclick="openZoom(this.src,5)">
 
-<img src="assets/decorations/gift1.png"
-width="120"
-onclick="openGift()">
+<img src="assets/decorations/gift2.png" width="120"
+onclick="openZoom(this.src,5)">
 
-<img src="assets/decorations/gift2.png"
-width="120"
-onclick="openGift()">
+<img src="assets/decorations/gift3.png" width="120"
+onclick="openZoom(this.src,5)">
 
-<img src="assets/decorations/gift3.png"
-width="120"
-onclick="openGift()">
-
-<img src="assets/decorations/gift4.png"
-width="120"
-onclick="openGift()">
-
-</div>
+<img src="assets/decorations/gift4.png" width="120"
+onclick="openZoom(this.src,5)">
 
 </div>
 
@@ -247,22 +242,18 @@ onclick="openGift()">
 
 <div class="center">
 
-<h1>Special Love Coupons 💌</h1>
+<h1>Special Coupons 💌</h1>
 
 <div>
 
 <script>
-
 for(let i=1;i<=12;i++){
-
 document.write(`
 <img src="assets/decorations/coupon${i}.png"
 width="100"
-onclick="selectCoupon()">
+onclick="openZoom(this.src,6)">
 `);
-
 }
-
 </script>
 
 </div>
@@ -284,17 +275,13 @@ onclick="selectCoupon()">
 <div>
 
 <script>
-
 for(let i=1;i<=6;i++){
-
 document.write(`
 <img src="assets/decorations/pic${i}.jpg"
 width="120"
-class="memory-pic">
+onclick="openZoom(this.src,7)">
 `);
-
 }
-
 </script>
 
 </div>
@@ -314,12 +301,10 @@ class="memory-pic">
 <h1>Words From My Heart 💗</h1>
 
 <p id="typingText">
-
-My love...  
-From the very first day you entered my life…  
-You are my forever 💕  
-
+My love... You are my forever 💕
 </p>
+
+<button onclick="goToPage(8)">Next 💌</button>
 
 </div>
 
@@ -335,20 +320,19 @@ You are my forever 💕
 
 <h1>Guess Our Song 🎵</h1>
 
-<input type="text" id="songGuess"
-placeholder="Type song name">
+<input id="songInput" placeholder="Type song name">
 
 <br><br>
 
 <button onclick="checkSongGuess()">
-Check Answer ✨
+Check ✨
 </button>
 
 </div>
 
 </section>
 
-<!-- PAGE 9 FINAL -->
+<!-- PAGE 9 -->
 
 <section class="page" id="page9">
 
@@ -356,20 +340,15 @@ Check Answer ✨
 
 <div class="center">
 
-<h1>Happy 1 Year Anniversary Jaaan 💗</h1>
+<h1>Happy 1 Year Anniversary 💗</h1>
 
 <p style="max-width:600px;margin:auto">
 
-My love, today marks 1 year of our beautiful journey together.  
-Every moment with you has been magical, full of joy and endless love.  
-You are my dream, my heart, my everything 💕  
+My love, today marks 1 year of our beautiful journey together.<br>
+You are my dream, my heart, my everything 💕<br>
 I love you more than words can say 💗
 
 </p>
-
-<audio autoplay loop>
-<source src="assets/music/soft_piano.mp3">
-</audio>
 
 </div>
 
@@ -377,9 +356,159 @@ I love you more than words can say 💗
 
 </main>
 
-<div id="particle-container"></div>
+<!-- POPUP -->
 
-<script src="script.js"></script>
+<div id="zoomPopup" class="zoom-popup">
+
+<div class="zoom-content">
+
+<img id="zoomImage">
+
+<h2>🎉 Congrats</h2>
+
+<button onclick="closeZoom()">
+Continue Story 💗
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* MUSIC START */
+
+function startMusic(){
+
+let music=document.getElementById("bgMusic");
+
+music?.play().catch(()=>{});
+
+}
+
+/* PAGE SYSTEM */
+
+function goToPage(page){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+
+let target=document.getElementById("page"+page);
+
+if(target){
+gsap.fromTo(target,
+{opacity:0,scale:0.95},
+{opacity:1,scale:1,duration:0.4});
+target.classList.add("active");
+}
+
+playClick();
+
+}
+
+/* NO BUTTON */
+
+function moveNoButton(){
+
+let btn=document.getElementById("noBtn");
+if(!btn) return;
+
+let maxX=window.innerWidth-150;
+let maxY=window.innerHeight-150;
+
+gsap.to(btn,{
+x:Math.random()*maxX,
+y:Math.random()*maxY,
+duration:0.5
+});
+
+}
+
+/* ZOOM */
+
+function openZoom(src,next){
+
+let popup=document.getElementById("zoomPopup");
+let img=document.getElementById("zoomImage");
+
+popup.style.display="flex";
+img.src=src;
+
+popup.dataset.next=next;
+
+gsap.fromTo(".zoom-content",
+{scale:0.6,opacity:0},
+{scale:1,opacity:1,duration:0.35});
+
+playHeart();
+
+}
+
+function closeZoom(){
+
+let popup=document.getElementById("zoomPopup");
+
+gsap.to(".zoom-content",{
+scale:0.6,
+opacity:0,
+duration:0.3
+});
+
+setTimeout(()=>{
+
+popup.style.display="none";
+
+let next=popup.dataset.next;
+
+if(next){
+goToPage(next);
+}
+
+delete popup.dataset.next;
+
+},300);
+
+}
+
+/* SONG CHECK */
+
+function checkSongGuess(){
+
+let input=document.getElementById("songInput");
+
+let value=input.value.toLowerCase().trim();
+
+if(value.includes("love") ||
+value.includes("heart") ||
+value.includes("jaaan")){
+
+playHeart();
+goToPage(9);
+
+}else{
+
+alert("Try again my love 💕");
+
+}
+
+}
+
+/* SOUND */
+
+function playClick(){
+document.getElementById("clickSound")?.play();
+}
+
+function playHeart(){
+let s=document.getElementById("heartSound");
+if(s){
+s.currentTime=0;
+s.play();
+}
+}
+
+</script>
 
 </body>
 </html>
