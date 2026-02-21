@@ -1,123 +1,765 @@
-/* =====================================
-ULTRA LEGEND LOVE STORY PEAK ENGINE
-===================================== */
+/* --- Global Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Cute+Font&family=Quicksand:wght@400;700&display=swap');
 
-/* GPU Smoothness God Mode */
+/* Custom Font (Uncomment if you have a .ttf file) */
+/*
+@font-face {
+    font-family: 'YourCustomFont';
+    src: url('assets/fonts/yourfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
 
-*{
-box-sizing:border-box;
+body {
+    margin: 0;
+    font-family: 'Cute Font', cursive, 'Quicksand', sans-serif; /* Default font stack */
+    color: #4a4a4a; /* Soft dark grey for text */
+    overflow: hidden; /* Hide scrollbars, page transitions will handle content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffe4e1; /* Baby pink background for the body */
+    touch-action: manipulation; /* Improves responsiveness on touch devices */
 }
 
-/* Floating Cinematic Background Pulse */
-
-body::before{
-content:"";
-
-position:fixed;
-inset:0;
-
-background:radial-gradient(circle at center,
-rgba(255,92,138,0.35),
-transparent 75%);
-
-pointer-events:none;
-
-z-index:0;
-
-animation:auraPeakPulse 8s infinite ease-in-out;
-
-will-change:transform,opacity;
+/* Application Container - Main wrapper for all pages */
+#app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 768px; /* Typical portrait tablet/large phone width */
+    max-height: 1024px; /* Typical portrait tablet/large phone height */
+    overflow: hidden; /* Important for page transitions and overlays */
+    background-color: #fff; /* White background for the main app area */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Slightly rounded corners for the app container */
 }
 
-@keyframes auraPeakPulse{
-
-0%{
-opacity:0.5;
-transform:scale(1);
+/* --- Page Styles --- */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: none; /* Hidden by default, controlled by JS */
+    opacity: 0;    /* Start transparent for fade-in, controlled by JS */
+    pointer-events: none; /* Disable interaction when hidden/fading out, controlled by JS */
+    /* Transition property is set dynamically by JavaScript for cinematic smoothness */
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+    padding: 20px; /* General padding for content */
+    text-align: center; /* Center content by default */
+    flex-direction: column; /* For vertical alignment */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
 }
 
-50%{
-opacity:1;
-transform:scale(1.12);
+/* No .page.active style for display/opacity/pointer-events here, JS handles it. */
+/* JS will dynamically add .active and set display/opacity/transition */
+
+
+/* --- Overlay & Animation Styles (Common) --- */
+.overlay-gif {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Allows clicks to pass through to elements below */
+    object-fit: cover; /* Ensures GIF covers the page without distortion */
+    mix-blend-mode: screen; /* Good for sparkle/light effects on light backgrounds */
+    z-index: 10; /* Overlays should be on top of background but below main content */
+    opacity: 0.7; /* Soften the effect */
 }
 
-100%{
-opacity:0.5;
-transform:scale(1);
+.overlay-gif.top-layer { z-index: 12; }
+.overlay-gif.bottom-layer { z-index: 8; }
+.overlay-gif.background-animation { z-index: 5; opacity: 0.5; } /* For subtle moving backgrounds */
+.overlay-gif.small-sparkles { z-index: 15; opacity: 0.8; } /* More prominent sparkles */
+.overlay-gif.butterfly-animation { 
+    z-index: 20; 
+    opacity: 0.9; 
+    animation: butterflyFlight 15s infinite ease-in-out;
+}
+.butterfly1 { animation-delay: 0s; left: -10%; top: 20%; width: 100px; height: 100px; }
+.butterfly2 { animation-delay: 7s; right: -10%; bottom: 10%; width: 80px; height: 80px; }
+
+
+/* --- Music Toggle Button (Global) --- */
+.music-toggle-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
 }
 
+.music-toggle-btn:hover {
+    transform: scale(1.1);
 }
 
-/* Soft Romantic Light Rain Overlay */
-
-body::after{
-content:"";
-
-position:fixed;
-inset:0;
-
-background:linear-gradient(
-180deg,
-rgba(255,255,255,0.04),
-rgba(255,92,138,0.12)
-);
-
-pointer-events:none;
-
-z-index:1;
-
-backdrop-filter:blur(6px);
+.music-toggle-btn .music-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.2));
 }
 
-/* Page Rendering Core Layer */
-
-main{
-position:relative;
-z-index:2;
+/* --- Typography Styles --- */
+h1, h2, h3 {
+    font-family: 'Pacifico', cursive; /* More elegant, script-like font */
+    color: #ff69b4; /* Hot pink */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
 }
 
-/* Premium Cinematic Text Glow */
-
-h1{
-text-shadow:
-0 0 12px rgba(255,63,122,0.45),
-0 0 35px rgba(255,63,122,0.22);
-
-letter-spacing:0.5px;
+h1 { font-size: 3em; }
+h2 { font-size: 2.2em; }
+p {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
 }
 
-/* Floating Page Transition Feel */
-
-.page{
-backface-visibility:hidden;
-transform-origin:center;
+/* --- General Button Styles --- */
+.action-button {
+    background-color: #ffc0cb; /* Baby pink default */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-family: 'Cute Font', cursive;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    margin: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
-/* Ultra Smooth Input Focus Glow */
-
-input:focus{
-box-shadow:
-0 0 14px rgba(255,92,138,0.4);
+.action-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background-color: #ff8fa5; /* Slightly darker pink on hover */
 }
 
-/* Heart Button Interaction Core */
-
-button:active{
-transform:scale(0.96);
+/* Specific button styles */
+.baby-pink-btn {
+    background-color: #ffc0cb;
+    color: #8b0000; /* Dark red for text on baby pink */
+    border: 2px solid #ff69b4;
+    padding: 12px 25px;
+}
+.baby-pink-btn:hover {
+    background-color: #ff8fa5;
+    color: white;
+}
+.button-icon {
+    width: 80px; /* Size for yes/no images */
+    height: auto;
+    vertical-align: middle;
+}
+.button-group {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    margin-top: 30px;
 }
 
-/* Mobile Love Optimization */
 
-@media(max-width:600px){
-
-h1{
-font-size:1.35em;
-line-height:1.4;
+/* --- Character Styles --- */
+.character-container {
+    position: relative;
+    margin-bottom: 30px;
+}
+.main-character {
+    width: 180px; /* Adjust size of main character */
+    height: auto;
+    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.2));
+    animation: bounce 2s infinite ease-in-out; /* Gentle bounce animation */
+}
+.crying-character {
+    animation: shake 0.8s infinite alternate; /* Crying effect */
+}
+.tear-animation {
+    position: absolute;
+    width: 30px; /* Size of tear drops */
+    height: auto;
+    animation: tearDrop 1.5s infinite linear;
+    top: 50%; /* Adjust position relative to character */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.zoom-content{
-border-radius:24px;
-padding:22px;
+
+/* --- Page Specific Styles --- */
+
+/* Page 1 */
+#page1 {
+    display: flex; /* Ensure flex for centering */
+}
+.question-text {
+    color: #ff69b4;
+    font-size: 3.5em;
+    letter-spacing: 2px;
 }
 
+/* Page 2 */
+#page2 {
+    display: flex;
+}
+.sad-message {
+    color: #a52a2a; /* Brownish red for sad text */
+    margin-top: 20px;
+    font-size: 2em;
+}
+
+/* Page 3: Find Hidden Item Game */
+#page3 {
+    display: flex;
+    position: relative;
+    padding: 0; /* No padding for full background */
+    overflow: hidden; /* Important for moving elements */
+}
+.game-area {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align to bottom for grass/bush */
+    overflow: hidden;
+    z-index: 20;
+}
+.game-title {
+    position: absolute;
+    top: 50px;
+    z-index: 30;
+    color: #6a0dad; /* Purple for game title */
+    text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+}
+.decoration-item {
+    position: absolute;
+    height: auto;
+    pointer-events: none; /* Default to none, enable for hidden item */
+}
+.grass-deco { width: 120%; bottom: -5%; left: -10%; z-index: 25; }
+.bush-deco { width: 40%; bottom: 10%; right: 5%; z-index: 28; }
+.flower-deco { width: 80px; position: absolute; }
+.flower1 { bottom: 20%; left: 15%; z-index: 27; }
+.flower2 { bottom: 15%; right: 20%; z-index: 27; }
+
+.flower-animation {
+    position: absolute;
+    width: 80px; /* Match flower size */
+    height: auto;
+    z-index: 27;
+    pointer-events: none;
+    animation: flowerSway 5s infinite alternate ease-in-out;
+}
+.flower-sway1 { bottom: 20%; left: 15%; }
+.flower-sway2 { bottom: 15%; right: 20%; animation-delay: 2s; }
+
+.hidden-game-item {
+    position: absolute;
+    width: 60px; /* Size of hidden item */
+    height: auto;
+    cursor: pointer;
+    z-index: 30; /* Ensure it's clickable */
+    animation: pulse 1.5s infinite alternate; /* Make it subtly noticeable */
+    top: 45%; /* Adjust position to hide it */
+    left: 48%;
+    filter: brightness(0.8) contrast(1.2); /* Blend a bit with background */
+    opacity: 0.9;
+}
+.hidden-game-item:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2) contrast(1);
+    transition: all 0.2s ease-in-out;
+}
+
+
+/* Page 4: Gift Page */
+#page4 {
+    display: flex;
+}
+.gift-title {
+    color: #ff69b4;
+    margin-bottom: 40px;
+}
+.gift-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 gifts per row */
+    gap: 30px;
+    max-width: 80%;
+}
+.gift-item {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+}
+.gift-item:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+.gift-image {
+    width: 120px; /* Size of gift images */
+    height: auto;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease;
+}
+.gift-image.zoomed {
+    transform: scale(1.2);
+}
+.gift-popup {
+    position: absolute;
+    bottom: 100%; /* Position above the gift item */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background-color: #ffefff; /* Lighter pink for popup */
+    border: 2px solid #ff69b4;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 100;
+    white-space: nowrap; /* Keep text on one line */
+    display: none; /* Hidden by default, shown by JS */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.gift-popup.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-20px);
+}
+.gift-popup p {
+    color: #d1498b; /* Darker pink for popup text */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Page 5: Special Coupons */
+#page5 {
+    display: flex;
+}
+.coupon-title {
+    color: #ff69b4;
+    margin-bottom: 40px;
+}
+.coupon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 coupons per row */
+    gap: 20px;
+    max-width: 90%;
+    margin-bottom: 30px;
+}
+.coupon-item {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+}
+.coupon-item:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+.coupon-image {
+    width: 100px; /* Size of coupon images */
+    height: auto;
+    filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+.coupon-image.zoomed {
+    transform: scale(1.1);
+}
+.coupon-popup {
+    position: absolute;
+    bottom: 100%; /* Position above coupon item */
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    background-color: #ffefff;
+    border: 1px solid #ff69b4;
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+    z-index: 100;
+    white-space: nowrap;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.coupon-popup.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-15px);
+}
+.coupon-popup p {
+    font-size: 0.9em;
+    color: #d1498b;
+}
+
+
+/* Page 6: Memory Lane */
+#page6 {
+    display: flex;
+}
+.memory-title {
+    color: #ff69b4;
+    margin-bottom: 30px;
+}
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 photos per row */
+    gap: 20px;
+    max-width: 90%;
+}
+.memory-item {
+    position: relative;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+.memory-item:hover {
+    transform: translateY(-5px) scale(1.03);
+}
+.memory-photo {
+    width: 100%;
+    height: 150px; /* Fixed height for photos */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.memory-photo.zoomed {
+    transform: scale(1.1);
+}
+.photo-quote {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 228, 225, 0.9); /* Baby pink semi-transparent */
+    color: #8b0000;
+    padding: 10px;
+    font-size: 0.9em;
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.photo-quote.active {
+    display: block;
+    opacity: 1;
+}
+
+
+/* Page 7: Words From My Heart */
+#page7 {
+    display: flex;
+}
+.wishes-title {
+    color: #ff69b4;
+    margin-bottom: 30px;
+}
+.wishes-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 3px solid #ffc0cb;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 0 20px;
+    max-width: 80%;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.heartfelt-message {
+    color: #6a0dad; /* Purple text */
+    font-family: 'Pacifico', cursive; /* More elegant font for message */
+    font-size: 1.3em;
+    line-height: 1.8;
+    white-space: pre-wrap; /* Preserve line breaks */
+}
+.floating-decoration {
+    position: absolute;
+    width: 50px;
+    height: auto;
+    opacity: 0.8;
+    animation: float 8s infinite ease-in-out alternate;
+}
+.heart-deco1 { top: 10%; left: -15px; animation-delay: 0s; }
+.heart-deco2 { top: 30%; right: -20px; animation-delay: 3s; }
+.heart-deco3 { bottom: 15%; left: 0; animation-delay: 6s; }
+.heart-deco4 { bottom: 5%; right: -10px; animation-delay: 9s; }
+.typing-animation { /* Assume this covers the whole message area */
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: contain; /* Don't stretch */
+    mix-blend-mode: screen;
+    z-index: 1;
+    opacity: 0.6;
+}
+.text-sparkle-animation { /* Assume this adds sparkles over text */
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    z-index: 2;
+    opacity: 0.8;
+}
+
+
+/* Page 8: Guess Our Song */
+#page8 {
+    display: flex;
+}
+.song-game-title {
+    color: #ff69b4;
+    margin-bottom: 40px;
+}
+.music-template-container {
+    position: relative;
+    width: 250px; /* Size of the music note template */
+    height: 250px;
+    margin-bottom: 30px;
+}
+.music-template-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.2));
+}
+.qr-code-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; /* Size for QR code */
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.qr-code-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+}
+.actual-qr-code {
+    width: 80%; /* Adjust size to fit inside frame */
+    height: 80%;
+    object-fit: contain;
+    z-index: 2;
+}
+.song-hint {
+    color: #6a0dad;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+.floating-music-animation {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    z-index: 10;
+    opacity: 0.7;
+    animation: musicFloat 10s infinite ease-in-out;
+}
+.heart-pulse-animation {
+    position: absolute;
+    width: 200px; height: 200px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    opacity: 0.5;
+    animation: pulse 2s infinite alternate;
+}
+.romantic-glow-animation {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: overlay;
+    z-index: 9;
+    opacity: 0.6;
+    animation: slowGlow 8s infinite alternate;
+}
+
+
+/* Page 9: Anniversary Note */
+#page9 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.book-page-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 5px solid #ffc0cb;
+    border-radius: 25px;
+    padding: 40px;
+    margin: 20px;
+    max-width: 85%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    text-align: center;
+}
+.anniversary-heading {
+    color: #ff69b4;
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+.anniversary-message {
+    font-family: 'Pacifico', cursive; /* Elegant font for the message */
+    font-size: 1.4em;
+    line-height: 1.7;
+    color: #8b0000; /* Dark red for romantic text */
+    white-space: pre-wrap; /* Preserve line breaks from HTML */
+    margin-bottom: 30px;
+}
+.page-decoration {
+    position: absolute;
+    width: 80px; /* Size of heart decoration */
+    height: auto;
+    top: -30px;
+    right: -20px;
+    z-index: 10;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
+    animation: pulse 2s infinite alternate;
+}
+.music-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+.music-options button {
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+
+/* --- Keyframe Animations --- */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes tearDrop {
+    0% { transform: translateY(-10px) scale(0); opacity: 0; }
+    20% { transform: translateY(0) scale(1); opacity: 1; }
+    80% { transform: translateY(20px) scale(0.8); opacity: 0.5; }
+    100% { transform: translateY(30px) scale(0.5); opacity: 0; }
+}
+
+@keyframes butterflyFlight {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20vw, 5vh) rotate(15deg); }
+    50% { transform: translate(0, 10vh) rotate(0deg); }
+    75% { transform: translate(-15vw, 5vh) rotate(-10deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes flowerSway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    25% { transform: translateY(-5px) translateX(5px) rotate(2deg); }
+    50% { transform: translateY(0px) translateX(-5px) rotate(-2deg); }
+    75% { transform: translateY(5px) translateX(5px) rotate(1deg); }
+}
+
+@keyframes musicFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes slowGlow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
+
+
+/* --- Responsive Adjustments (Basic) --- */
+@media (max-width: 768px) {
+    #app-container {
+        border-radius: 0; /* No rounded corners on small screens */
+    }
+    h1 { font-size: 2.5em; }
+    h2 { font-size: 1.8em; }
+    p { font-size: 1em; }
+
+    .music-toggle-btn {
+        top: 10px;
+        right: 10px;
+        padding: 8px;
+    }
+    .music-toggle-btn .music-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .main-character { width: 150px; }
+    .question-text { font-size: 2.8em; }
+
+    .gift-selection-grid, .coupon-grid, .memory-grid {
+        grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
+        gap: 15px;
+    }
+    .gift-image { width: 100px; }
+    .coupon-image { width: 80px; }
+    .memory-photo { height: 120px; }
+    .coupon-popup p { font-size: 0.8em; }
+
+    .book-page-container { padding: 25px; }
+    .anniversary-heading { font-size: 2.2em; }
+    .anniversary-message { font-size: 1.1em; }
+    .music-options { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; }
+    .question-text { font-size: 2.2em; }
+    .action-button { padding: 10px 20px; font-size: 1em; }
+    .button-icon { width: 60px; }
+
+    .gift-selection-grid, .coupon-grid, .memory-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+        max-width: 95%;
+    }
 }

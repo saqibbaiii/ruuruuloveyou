@@ -1,514 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sweetheart's Special Journey</title>
+    <!-- Link to your main CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for kawaii style (examples) -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cute+Font&display=swap" rel="stylesheet">
+    <!-- If you have a custom font, uncomment and link it here -->
+    <!-- <link rel="stylesheet" href="assets/fonts/yourfont.ttf"> -->
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Our Love Anniversary 💗</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-<style>
-
-@font-face{
-font-family:CustomLoveFont;
-src:url("assets/fonts/yourfont.ttf");
-}
-
-html,body{
-
-margin:0;
-width:100%;
-height:100%;
-overflow:hidden;
-
-font-family:CustomLoveFont,Quicksand,sans-serif;
-
-background:linear-gradient(180deg,#ffd6e7,#ffb6d5);
-
-}
-
-/* PAGE SYSTEM */
-
-main{
-width:100%;
-height:100%;
-position:relative;
-}
-
-.page{
-
-position:absolute;
-width:100%;
-height:100%;
-display:none;
-opacity:0;
-transition:0.4s ease;
-}
-
-.page.active{
-display:block;
-opacity:1;
-}
-
-.bg{
-position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* CENTER */
-
-.center{
-
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-width:100%;
-padding:25px;
-}
-
-/* BUTTON */
-
-button{
-
-padding:12px 26px;
-border:none;
-border-radius:30px;
-
-background:#ff5c8a;
-color:white;
-
-cursor:pointer;
-
-transition:0.3s ease;
-
-}
-
-button:hover{
-transform:scale(1.06);
-}
-
-/* POPUP */
-
-.zoom-popup{
-
-position:fixed;
-inset:0;
-
-background:rgba(0,0,0,0.75);
-
-display:none;
-justify-content:center;
-align-items:center;
-
-z-index:9999;
-
-}
-
-.zoom-content{
-
-background:white;
-padding:30px;
-border-radius:25px;
-text-align:center;
-
-}
-
-.zoom-content img{
-
-width:220px;
-max-width:70vw;
-margin-bottom:20px;
-
-}
-
-</style>
-
+    <!-- Accessibility Improvement: Theme Color for Mobile -->
+    <meta name="theme-color" content="#ffb6c1">
 </head>
-
 <body>
 
-<audio id="bgMusic" src="assets/music/song.mp3" loop></audio>
-<audio id="clickSound" src="assets/music/click.mp3"></audio>
-<audio id="heartSound" src="assets/music/heart.mp3"></audio>
-
-<main>
-
-<!-- PAGE 1 -->
-
-<section class="page active" id="page1">
-
-<img src="assets/backgrounds/bg1.jpg" class="bg">
-
-<div class="center" onclick="startMusic()">
-
-<img src="assets/characters/bunny_idle.gif" width="250">
-
-<h1>Do You Love Me? 💕</h1>
-
-<br>
-
-<img src="assets/buttons/btn_yes.png"
-width="120"
-onclick="goToPage(2)">
-
-<img src="assets/buttons/btn_no.png"
-id="noBtn"
-width="120"
-onclick="moveNoButton()">
-
-<p style="opacity:0.5;font-size:14px">
-Tap screen to start music 🎵
-</p>
-
-</div>
-
-</section>
-
-<!-- PAGE 2 -->
-
-<section class="page" id="page2">
-
-<img src="assets/backgrounds/bg2.jpg" class="bg">
-
-<div class="center">
-
-<img src="assets/gifs/cry_bunny.gif" width="220">
-
-<h1>Why did you say No? 😭</h1>
-
-<button onclick="goToPage(3)">Try Again 💗</button>
-
-</div>
-
-</section>
-
-<!-- PAGE 3 -->
-
-<section class="page" id="page3">
-
-<img src="assets/backgrounds/tree.png" class="bg">
-
-<div class="center">
-
-<h1>Find Hidden Heart 💖</h1>
-
-<img src="assets/gifs/hidden_item.gif"
-width="140"
-onclick="goToPage(4)">
-
-</div>
-
-</section>
-
-<!-- PAGE 4 -->
-
-<section class="page" id="page4">
-
-<img src="assets/backgrounds/bg3.jpg" class="bg">
-
-<div class="center">
-
-<h1>Choose Your Gift 🎀</h1>
-
-<img src="assets/decorations/gift1.png" width="120"
-onclick="openZoom(this.src,5)">
-
-<img src="assets/decorations/gift2.png" width="120"
-onclick="openZoom(this.src,5)">
-
-<img src="assets/decorations/gift3.png" width="120"
-onclick="openZoom(this.src,5)">
-
-<img src="assets/decorations/gift4.png" width="120"
-onclick="openZoom(this.src,5)">
-
-</div>
-
-</section>
-
-<!-- PAGE 5 -->
-
-<section class="page" id="page5">
-
-<img src="assets/backgrounds/bg4.jpg" class="bg">
-
-<div class="center">
-
-<h1>Special Coupons 💌</h1>
-
-<div>
-
-<script>
-for(let i=1;i<=12;i++){
-document.write(`
-<img src="assets/decorations/coupon${i}.png"
-width="100"
-onclick="openZoom(this.src,6)">
-`);
-}
-</script>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- PAGE 6 -->
-
-<section class="page" id="page6">
-
-<img src="assets/backgrounds/bg5.jpg" class="bg">
-
-<div class="center">
-
-<h1>Memory Lane 🌷</h1>
-
-<div>
-
-<script>
-for(let i=1;i<=6;i++){
-document.write(`
-<img src="assets/decorations/pic${i}.jpg"
-width="120"
-onclick="openZoom(this.src,7)">
-`);
-}
-</script>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- PAGE 7 -->
-
-<section class="page" id="page7">
-
-<img src="assets/backgrounds/bg6.jpg" class="bg">
-
-<div class="center">
-
-<h1>Words From My Heart 💗</h1>
-
-<p id="typingText">
-My love... You are my forever 💕
-</p>
-
-<button onclick="goToPage(8)">Next 💌</button>
-
-</div>
-
-</section>
-
-<!-- PAGE 8 -->
-
-<section class="page" id="page8">
-
-<img src="assets/backgrounds/bg6.jpg" class="bg">
-
-<div class="center">
-
-<h1>Guess Our Song 🎵</h1>
-
-<input id="songInput" placeholder="Type song name">
-
-<br><br>
-
-<button onclick="checkSongGuess()">
-Check ✨
-</button>
-
-</div>
-
-</section>
-
-<!-- PAGE 9 -->
-
-<section class="page" id="page9">
-
-<img src="assets/backgrounds/bg9_note.jpg" class="bg">
-
-<div class="center">
-
-<h1>Happy 1 Year Anniversary 💗</h1>
-
-<p style="max-width:600px;margin:auto">
-
-My love, today marks 1 year of our beautiful journey together.<br>
-You are my dream, my heart, my everything 💕<br>
-I love you more than words can say 💗
-
-</p>
-
-</div>
-
-</section>
-
-</main>
-
-<!-- POPUP -->
-
-<div id="zoomPopup" class="zoom-popup">
-
-<div class="zoom-content">
-
-<img id="zoomImage">
-
-<h2>🎉 Congrats</h2>
-
-<button onclick="closeZoom()">
-Continue Story 💗
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-/* MUSIC START */
-
-function startMusic(){
-
-let music=document.getElementById("bgMusic");
-
-music?.play().catch(()=>{});
-
-}
-
-/* PAGE SYSTEM */
-
-function goToPage(page){
-
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
-});
-
-let target=document.getElementById("page"+page);
-
-if(target){
-gsap.fromTo(target,
-{opacity:0,scale:0.95},
-{opacity:1,scale:1,duration:0.4});
-target.classList.add("active");
-}
-
-playClick();
-
-}
-
-/* NO BUTTON */
-
-function moveNoButton(){
-
-let btn=document.getElementById("noBtn");
-if(!btn) return;
-
-let maxX=window.innerWidth-150;
-let maxY=window.innerHeight-150;
-
-gsap.to(btn,{
-x:Math.random()*maxX,
-y:Math.random()*maxY,
-duration:0.5
-});
-
-}
-
-/* ZOOM */
-
-function openZoom(src,next){
-
-let popup=document.getElementById("zoomPopup");
-let img=document.getElementById("zoomImage");
-
-popup.style.display="flex";
-img.src=src;
-
-popup.dataset.next=next;
-
-gsap.fromTo(".zoom-content",
-{scale:0.6,opacity:0},
-{scale:1,opacity:1,duration:0.35});
-
-playHeart();
-
-}
-
-function closeZoom(){
-
-let popup=document.getElementById("zoomPopup");
-
-gsap.to(".zoom-content",{
-scale:0.6,
-opacity:0,
-duration:0.3
-});
-
-setTimeout(()=>{
-
-popup.style.display="none";
-
-let next=popup.dataset.next;
-
-if(next){
-goToPage(next);
-}
-
-delete popup.dataset.next;
-
-},300);
-
-}
-
-/* SONG CHECK */
-
-function checkSongGuess(){
-
-let input=document.getElementById("songInput");
-
-let value=input.value.toLowerCase().trim();
-
-if(value.includes("love") ||
-value.includes("heart") ||
-value.includes("jaaan")){
-
-playHeart();
-goToPage(9);
-
-}else{
-
-alert("Try again my love 💕");
-
-}
-
-}
-
-/* SOUND */
-
-function playClick(){
-document.getElementById("clickSound")?.play();
-}
-
-function playHeart(){
-let s=document.getElementById("heartSound");
-if(s){
-s.currentTime=0;
-s.play();
-}
-}
-
-</script>
-
+    <!-- Background Music Player -->
+    <audio id="background-music" loop>
+        <source src="assets/music/song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Global Music Play/Pause Button -->
+    <button id="music-toggle-btn" class="music-toggle-btn">
+        <img src="assets/buttons/music_play.png" alt="Music Control" class="music-icon">
+    </button>
+
+    <!-- Application Container - All pages will reside here and be managed by JS -->
+    <div id="app-container">
+
+        <!-- Page 1: Love Question -->
+        <section id="page1" class="page active" style="background-image: url('assets/backgrounds/bg1.jpg');">
+            <img src="assets/gifs/sparkle_overlay.gif" alt="Sparkles" class="overlay-gif top-layer">
+            <img src="assets/gifs/floating_hearts.gif" alt="Floating Hearts" class="overlay-gif bottom-layer">
+
+            <div class="character-container">
+                <img src="assets/characters/bunny_idle.gif" alt="Cute Bunny Character" class="main-character">
+            </div>
+
+            <h1 class="question-text">DO YOU LOVE ME?</h1>
+
+            <div class="button-group">
+                <button id="yes-btn" class="action-button yes-button">
+                    <img src="assets/buttons/btn_yes.png" alt="Yes" class="button-icon">
+                </button>
+                <button id="no-btn" class="action-button no-button">
+                    <img src="assets/buttons/btn_no.png" alt="No" class="button-icon">
+                </button>
+            </div>
+        </section>
+
+        <!-- Page 2: Crying Page (if 'No' is selected) -->
+        <section id="page2" class="page" style="background-image: url('assets/backgrounds/bg2.jpg');">
+            <img src="assets/gifs/rain_overlay.gif" alt="Rain Overlay" class="overlay-gif top-layer">
+            <img src="assets/gifs/soft_glow.gif" alt="Soft Glow" class="overlay-gif bottom-layer">
+
+            <div class="character-container">
+                <img src="assets/gifs/cry_bunny.gif" alt="Crying Bunny" class="main-character crying-character">
+                <img src="assets/gifs/tear_drop.gif" alt="Tear Drops" class="tear-animation">
+            </div>
+
+            <h2 class="sad-message">Why did you say no?</h2>
+            <button id="try-again-btn" class="action-button baby-pink-btn">Try Again</button>
+        </section>
+
+        <!-- Page 3: Find Hidden Item Game -->
+        <section id="page3" class="page" style="background-image: url('assets/backgrounds/tree.png');">
+            <img src="assets/gifs/tree_bg_move.gif" alt="Moving Tree Background" class="overlay-gif background-animation">
+            <img src="assets/gifs/sparkle_small.gif" alt="Small Sparkles" class="overlay-gif small-sparkles">
+            <img src="assets/gifs/butterfly_fly1.gif" alt="Butterfly 1" class="overlay-gif butterfly-animation butterfly1">
+            <img src="assets/gifs/butterfly_fly2.gif" alt="Butterfly 2" class="overlay-gif butterfly-animation butterfly2">
+
+            <div class="game-area">
+                <img src="assets/decorations/grass.png" alt="Grass" class="decoration-item grass-deco">
+                <img src="assets/decorations/bush.png" alt="Bush" class="decoration-item bush-deco">
+                <img src="assets/decorations/flower1.png" alt="Flower 1" class="decoration-item flower-deco flower1">
+                <img src="assets/gifs/flower_sway1.gif" alt="Swaying Flower 1" class="overlay-gif flower-animation flower-sway1">
+                <img src="assets/decorations/flower2.png" alt="Flower 2" class="decoration-item flower-deco flower2">
+                <img src="assets/gifs/flower_sway2.gif" alt="Swaying Flower 2" class="overlay-gif flower-animation flower-sway2">
+
+                <!-- The actual hidden item -->
+                <img id="hidden-item" src="assets/gifs/hidden_item.gif" alt="Hidden Item" class="hidden-game-item">
+            </div>
+
+            <h2 class="game-title">Find the Hidden Item!</h2>
+        </section>
+
+        <!-- Page 4: Choose Your Gift -->
+        <section id="page4" class="page" style="background-image: url('assets/backgrounds/bg3.jpg');">
+            <img src="assets/gifs/ribbon_shine.gif" alt="Ribbon Shine" class="overlay-gif top-layer">
+            <img src="assets/gifs/sparkle_explosion.gif" alt="Sparkle Explosion" class="overlay-gif bottom-layer">
+
+            <h2 class="gift-title">Choose Your Gift!</h2>
+
+            <div class="gift-selection-grid">
+                <div class="gift-item" data-gift-id="1">
+                    <img src="assets/decorations/gift1.png" alt="Gift 1" class="gift-image">
+                    <div class="gift-popup">
+                        <p>Congratulations! You can take this!</p>
+                        <button id="gift1-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+                    </div>
+                </div>
+                <div class="gift-item" data-gift-id="2">
+                    <img src="assets/decorations/gift2.png" alt="Gift 2" class="gift-image">
+                    <div class="gift-popup">
+                        <p>Congratulations! You can take this!</p>
+                        <button id="gift2-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+                    </div>
+                </div>
+                <div class="gift-item" data-gift-id="3">
+                    <img src="assets/decorations/gift3.png" alt="Gift 3" class="gift-image">
+                    <div class="gift-popup">
+                        <p>Congratulations! You can take this!</p>
+                        <button id="gift3-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+                    </div>
+                </div>
+                <div class="gift-item" data-gift-id="4">
+                    <img src="assets/decorations/gift4.png" alt="Gift 4" class="gift-image">
+                    <div class="gift-popup">
+                        <p>Congratulations! You can take this!</p>
+                        <button id="gift4-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 5: Special Coupons -->
+        <section id="page5" class="page" style="background-image: url('assets/backgrounds/bg4.jpg');">
+            <img src="assets/gifs/border_glow.gif" alt="Border Glow" class="overlay-gif border-animation">
+            <img src="assets/gifs/floating_heart_small.gif" alt="Small Floating Hearts" class="overlay-gif small-heart-animation">
+
+            <h2 class="coupon-title">Your Special Coupons!</h2>
+
+            <div class="coupon-grid">
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon1.png" alt="Coupon 1" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon2.png" alt="Coupon 2" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon3.png" alt="Coupon 3" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon4.png" alt="Coupon 4" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon5.png" alt="Coupon 5" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon6.png" alt="Coupon 6" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon7.png" alt="Coupon 7" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon8.png" alt="Coupon 8" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon9.png" alt="Coupon 9" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon10.png" alt="Coupon 10" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon11.png" alt="Coupon 11" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+                <div class="coupon-item">
+                    <img src="assets/decorations/coupon12.png" alt="Coupon 12" class="coupon-image">
+                    <div class="coupon-popup">
+                        <p>You can use this coupon anytime, limitless sweetie!</p>
+                    </div>
+                </div>
+            </div>
+            <button id="coupon-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+        </section>
+
+        <!-- Page 6: Memory Lane -->
+        <section id="page6" class="page" style="background-image: url('assets/backgrounds/bg5.jpg');">
+            <img src="assets/gifs/sakura_fall.gif" alt="Sakura Fall" class="overlay-gif top-layer">
+            <img src="assets/gifs/heart_rain_slow.gif" alt="Slow Heart Rain" class="overlay-gif middle-layer">
+            <img src="assets/gifs/dreamy_light.gif" alt="Dreamy Light" class="overlay-gif bottom-layer">
+
+            <h2 class="memory-title">Memory Lane 💖</h2>
+
+            <div class="memory-grid">
+                <div class="memory-item">
+                    <img src="assets/decorations/pic1.jpg" alt="Memory Photo 1" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"Every moment with you is a cherished memory."</p>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="assets/decorations/pic2.jpg" alt="Memory Photo 2" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"Our laughter echoes in my heart forever."</p>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="assets/decorations/pic3.jpg" alt="Memory Photo 3" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"Adventures are better when shared with you."</p>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="assets/decorations/pic4.jpg" alt="Memory Photo 4" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"You make every day brighter."</p>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="assets/decorations/pic5.jpg" alt="Memory Photo 5" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"Together, we create magic."</p>
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <img src="assets/decorations/pic6.jpg" alt="Memory Photo 6" class="memory-photo">
+                    <div class="photo-quote">
+                        <p>"My favorite story is us."</p>
+                    </div>
+                </div>
+            </div>
+            <button id="memory-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+        </section>
+
+        <!-- Page 7: Words From My Heart -->
+        <section id="page7" class="page" style="background-image: url('assets/backgrounds/bg6.jpg');">
+            <img src="assets/gifs/typing_cursor.gif" alt="Typing Cursor" class="overlay-gif typing-animation">
+            <img src="assets/gifs/text_sparkle.gif" alt="Text Sparkles" class="overlay-gif text-sparkle-animation">
+
+            <h2 class="wishes-title">Words From My Heart 💌</h2>
+
+            <div class="wishes-box">
+                <img src="assets/decorations/heart1.png" alt="Heart 1" class="floating-decoration heart-deco1">
+                <img src="assets/decorations/heart2.png" alt="Heart 2" class="floating-decoration heart-deco2">
+                <p class="heartfelt-message">
+                    My dearest Sweetheart,<br><br>
+                    With every beat of my heart, I wish you all the happiness in the world.
+                    You light up my life in ways I never imagined. Thank you for being you,
+                    my love. You mean everything to me.
+                    <br><br>
+                    With all my love, Always and Forever.
+                </p>
+                <img src="assets/decorations/heart3.png" alt="Heart 3" class="floating-decoration heart-deco3">
+                <img src="assets/decorations/heart4.png" alt="Heart 4" class="floating-decoration heart-deco4">
+            </div>
+            <button id="wishes-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+        </section>
+
+        <!-- Page 8: Guess Our Song -->
+        <section id="page8" class="page" style="background-image: url('assets/backgrounds/bg7.jpg');"> <!-- Assuming bg7.jpg for this page -->
+            <img src="assets/gifs/floating_music.gif" alt="Floating Music Notes" class="overlay-gif music-note-animation">
+            <img src="assets/gifs/heart_pulse_big.gif" alt="Big Pulsing Heart" class="overlay-gif heart-pulse-animation">
+            <img src="assets/gifs/romantic_glow.gif" alt="Romantic Glow" class="overlay-gif romantic-glow-animation">
+
+            <h2 class="song-game-title">Guess Our Song! 🎶</h2>
+
+            <div class="music-template-container">
+                <img src="assets/decorations/music_note.png" alt="Music Template" class="music-template-image">
+                <div class="qr-code-area">
+                    <img src="assets/decorations/qr_frame.png" alt="QR Code Frame" class="qr-code-frame">
+                    <!-- Placeholder for actual QR code image if dynamic, or embed directly -->
+                    <img src="assets/decorations/qr_code_actual.png" alt="Our Song QR Code" class="actual-qr-code">
+                </div>
+            </div>
+
+            <p class="song-hint">Scan the QR code or click to listen and guess!</p>
+            <button id="play-song-hint" class="action-button baby-pink-btn">Play Hint</button>
+            <button id="song-next-btn" class="next-page-btn baby-pink-btn">Next Page</button>
+            
+            <!-- Hidden audio for the song hint -->
+            <audio id="song-hint-audio">
+                <source src="assets/music/song_hint.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </section>
+
+        <!-- Page 9: Anniversary Note -->
+        <section id="page9" class="page" style="background-image: url('assets/backgrounds/bg9_note.jpg');">
+            <img src="assets/gifs/heart_rain.gif" alt="Heart Rain" class="overlay-gif top-layer">
+            <img src="assets/gifs/sparkle_overlay.gif" alt="Sparkle Overlay" class="overlay-gif middle-layer">
+            <img src="assets/gifs/confetti.gif" alt="Confetti" class="overlay-gif bottom-layer">
+
+            <div class="book-page-container">
+                <img src="assets/decorations/heart_decor.png" alt="Heart Decoration" class="page-decoration">
+                <h1 class="anniversary-heading">Happy 1 Year Anniversary Jaaan 💗</h1>
+                <p class="anniversary-message">
+                    My love, today marks 1 year of our beautiful journey together.<br>
+                    Every moment with you has been magical, full of joy, laughter, and endless love.<br>
+                    You are my dream, my heart, my everything. 💗💗<br>
+                    Here’s to us, our memories, our love, and the countless adventures ahead.<br>
+                    Iloveyoumore than words can ever say. 💗
+                </p>
+                <div class="music-options">
+                    <button id="stop-current-music" class="action-button baby-pink-btn">Stop Background Music</button>
+                    <button id="play-soft-piano" class="action-button baby-pink-btn">Play Soft Piano</button>
+                </div>
+            </div>
+
+            <!-- Audio for soft piano -->
+            <audio id="soft-piano-music" loop>
+                <source src="assets/music/soft_piano.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </section>
+
+    </div> <!-- End of app-container -->
+
+    <!-- Link to your main JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>

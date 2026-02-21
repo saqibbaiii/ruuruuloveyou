@@ -1,222 +1,375 @@
-/* =====================================
-ULTRA GOD MODE LOVE ENGINE V6
-===================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const bgMusic = document.getElementById('background-music');
+    const softPianoMusic = document.getElementById('soft-piano-music');
+    const songHintAudio = document.getElementById('song-hint-audio');
+    const musicToggleButton = document.getElementById('music-toggle-btn');
+    const musicIcon = musicToggleButton.querySelector('.music-icon');
 
-/* ===== SMART MUSIC AUTO SAFE START ===== */
+    let isBackgroundMusicPlaying = false; 
+    let isSoftPianoPlaying = false; 
 
-function enableMusicOnFirstInteraction(){
+    // --- Utility Functions ---
+    
+    // Function to play a sound effect
+    function playSound(src) {
+        const audio = new Audio(src);
+        audio.play().catch(e => console.log("Sound play prevented:", e));
+    }
 
-document.addEventListener("click", ()=>{
-const music = document.getElementById("bgMusic");
-if(music){
-music.volume = 0.7;
-music.play().catch(()=>{});
-}
-},{once:true});
+    // Function to show a specific page and hide others with a fade transition
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page');
+        
+        pages.forEach(page => {
+            if (page.id === pageId) {
+                // ⭐ Suggestion 1: ShowPage() transition animation - Added
+                // Prepare for fade-in: ensure opacity is 0 before adding 'active'
+                page.style.opacity = '0'; 
+                page.style.transition = 'opacity 0.4s ease-in-out'; // Add transition property
+                page.classList.add('active');
+                
+                // Trigger reflow to ensure transition works from 0 opacity
+                void page.offsetWidth; 
+                page.style.opacity = '1'; 
 
-}
+            } else {
+                page.style.opacity = '0'; // Start fade-out
+                page.style.transition = 'opacity 0.4s ease-in-out'; // Add transition property
+                
+                // After fade-out, remove 'active' class to apply `display: none;`
+                setTimeout(() => {
+                    page.classList.remove('active');
+                    // Reset transition property after it's done to prevent conflicts
+                    page.style.transition = 'none'; 
+                }, 400); // Match CSS transition duration
+            }
+        });
+        // Re-initialize scripts for the newly active page
+        initializePageScripts(pageId);
+    }
 
-enableMusicOnFirstInteraction();
+    // --- Global Music Controls ---
 
+    // Toggle main background music
+    musicToggleButton.addEventListener('click', () => {
+        if (isBackgroundMusicPlaying) {
+            bgMusic.pause();
+            musicIcon.src = 'assets/buttons/music_play.png'; 
+            isBackgroundMusicPlaying = false;
+        } else {
+            // Stop soft piano if playing
+            if (isSoftPianoPlaying) {
+                softPianoMusic.pause();
+                isSoftPianoPlaying = false;
+            }
+            // Stop song hint if playing
+            if (!songHintAudio.paused) {
+                songHintAudio.pause();
+            }
 
-/* ===== SMOOTH PAGE MEMORY LOCK ===== */
+            bgMusic.play().then(() => {
+                musicIcon.src = 'assets/buttons/music_pause.png'; 
+                isBackgroundMusicPlaying = true;
+            }).catch(e => {
+                console.error("Background music play failed:", e);
+                // Optionally show a message to the user that music requires interaction
+            });
+        }
+    });
 
-let currentPage = 1;
+    // --- Page Specific Initialization Functions ---
 
-function goToPage(page){
+    function initializePageScripts(pageId) {
+        // Clear listeners for common elements that might be re-bound or cause side effects
+        // This is a more robust approach for listener clearing before re-binding
+        
+        // General cleanup function to remove listeners from all known interactive elements on pages
+        // This prevents memory leaks if elements are frequently re-rendered or pages are fully removed/added
+        // For static HTML with distinct IDs, `element.onclick = null` is generally sufficient and simpler.
+        
+        switch (pageId) {
+            case 'page1':
+                setupPage1();
+                break;
+            case 'page2':
+                setupPage2();
+                break;
+            case 'page3':
+                setupPage3();
+                break;
+            case 'page4':
+                setupPage4();
+                break;
+            case 'page5':
+                setupPage5();
+                break;
+            case 'page6':
+                setupPage6();
+                break;
+            case 'page7':
+                setupPage7();
+                break;
+            case 'page8':
+                setupPage8();
+                break;
+            case 'page9':
+                setupPage9();
+                break;
+            default:
+                break;
+        }
+    }
 
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
+    // --- Page 1 Setup: Love Question ---
+    function setupPage1() {
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+
+        if (yesBtn) yesBtn.onclick = () => { playSound('assets/music/click.mp3'); showPage('page4'); };
+        if (noBtn) noBtn.onclick = () => { playSound('assets/music/click.mp3'); showPage('page2'); };
+    }
+
+    // --- Page 2 Setup: Crying Page ---
+    function setupPage2() {
+        const tryAgainBtn = document.getElementById('try-again-btn');
+        if (tryAgainBtn) tryAgainBtn.onclick = () => { playSound('assets/music/click.mp3'); showPage('page1'); };
+    }
+
+    // --- Page 3 Setup: Find Hidden Item Game ---
+    function setupPage3() {
+        const hiddenItem = document.getElementById('hidden-item');
+        if (hiddenItem) {
+            hiddenItem.onclick = () => {
+                playSound('assets/music/pop.mp3'); 
+                alert('🎉 You found the hidden item! Moving to gifts! 🎉');
+                showPage('page4'); 
+            };
+        }
+
+        // ⭐ Suggestion 2: Performance - Cache elements locally
+        const page3Elements = document.querySelector('#page3');
+        if (page3Elements) {
+            const decorationItems = page3Elements.querySelectorAll('.decoration-item, .flower-animation');
+            decorationItems.forEach(item => {
+                // Ensure existing listeners are cleared before (re)assigning
+                item.onmouseover = null;
+                item.onmouseout = null;
+
+                item.onmouseover = () => {
+                    item.style.transform = 'scale(1.05) rotate(5deg)';
+                    item.style.transition = 'transform 0.3s ease-out';
+                };
+                item.onmouseout = () => {
+                    item.style.transform = 'scale(1) rotate(0deg)';
+                };
+            });
+        }
+    }
+
+    // --- Page 4 Setup: Choose Your Gift ---
+    function setupPage4() {
+        // ⭐ Suggestion 2: Performance - Cache elements locally
+        const page4Elements = document.querySelector('#page4');
+        if (page4Elements) {
+            const giftItems = page4Elements.querySelectorAll('.gift-item');
+            giftItems.forEach(giftItem => {
+                const giftImage = giftItem.querySelector('.gift-image');
+                const giftPopup = giftItem.querySelector('.gift-popup');
+                const nextButton = giftPopup.querySelector('.next-page-btn');
+
+                // Clear existing listeners
+                giftImage.onclick = null;
+                nextButton.onclick = null;
+                
+                giftImage.onclick = () => {
+                    playSound('assets/music/heart.mp3'); 
+                    // Hide all other gift popups and reset zoom
+                    page4Elements.querySelectorAll('.gift-popup').forEach(popup => popup.classList.remove('active'));
+                    page4Elements.querySelectorAll('.gift-image').forEach(img => img.classList.remove('zoomed'));
+                    
+                    giftPopup.classList.add('active');
+                    giftImage.classList.add('zoomed'); 
+                };
+
+                nextButton.onclick = () => {
+                    playSound('assets/music/click.mp3');
+                    showPage('page5'); 
+                };
+            });
+        }
+    }
+
+    // --- Page 5 Setup: Special Coupons ---
+    function setupPage5() {
+        // ⭐ Suggestion 2: Performance - Cache elements locally
+        const page5Elements = document.querySelector('#page5');
+        if (page5Elements) {
+            const couponItems = page5Elements.querySelectorAll('.coupon-item');
+            couponItems.forEach(couponItem => {
+                const couponImage = couponItem.querySelector('.coupon-image');
+                const couponPopup = couponItem.querySelector('.coupon-popup');
+
+                couponImage.onclick = null; 
+                couponItem.onmouseleave = null; 
+
+                couponImage.onclick = () => {
+                    playSound('assets/music/pop.mp3');
+                    // Hide all other coupon popups and reset zoom
+                    page5Elements.querySelectorAll('.coupon-popup').forEach(popup => popup.classList.remove('active'));
+                    page5Elements.querySelectorAll('.coupon-image').forEach(img => img.classList.remove('zoomed'));
+
+                    couponPopup.classList.add('active');
+                    couponImage.classList.add('zoomed'); 
+                };
+
+                couponItem.onmouseleave = () => { 
+                    couponPopup.classList.remove('active');
+                    couponImage.classList.remove('zoomed');
+                };
+            });
+        }
+
+        const couponNextBtn = document.getElementById('coupon-next-btn');
+        if (couponNextBtn) {
+            couponNextBtn.onclick = null; 
+            couponNextBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                showPage('page6'); 
+            };
+        }
+    }
+
+    // --- Page 6 Setup: Memory Lane ---
+    function setupPage6() {
+        // ⭐ Suggestion 2: Performance - Cache elements locally
+        const page6Elements = document.querySelector('#page6');
+        if (page6Elements) {
+            const memoryItems = page6Elements.querySelectorAll('.memory-item');
+            memoryItems.forEach(memoryItem => {
+                const photo = memoryItem.querySelector('.memory-photo');
+                const quote = memoryItem.querySelector('.photo-quote');
+
+                photo.onclick = null; 
+
+                photo.onclick = () => {
+                    playSound('assets/music/heart.mp3'); 
+                    photo.classList.toggle('zoomed'); 
+                    quote.classList.toggle('active'); 
+                };
+            });
+        }
+
+        const memoryNextBtn = document.getElementById('memory-next-btn');
+        if (memoryNextBtn) {
+            memoryNextBtn.onclick = null; 
+            memoryNextBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                showPage('page7'); 
+            };
+        }
+    }
+
+    // --- Page 7 Setup: Words From My Heart ---
+    function setupPage7() {
+        const wishesNextBtn = document.getElementById('wishes-next-btn');
+        if (wishesNextBtn) {
+            wishesNextBtn.onclick = null; 
+            wishesNextBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                showPage('page8'); 
+            };
+        }
+    }
+
+    // --- Page 8 Setup: Guess Our Song ---
+    function setupPage8() {
+        const playSongHintButton = document.getElementById('play-song-hint');
+        if (playSongHintButton) {
+            playSongHintButton.onclick = null; 
+            playSongHintButton.onclick = () => {
+                // Stop other background music if playing
+                if (isBackgroundMusicPlaying) {
+                    bgMusic.pause();
+                    musicIcon.src = 'assets/buttons/music_play.png';
+                    isBackgroundMusicPlaying = false;
+                }
+                // Stop soft piano if playing
+                if (isSoftPianoPlaying) {
+                    softPianoMusic.pause();
+                    isSoftPianoPlaying = false;
+                }
+
+                songHintAudio.currentTime = 0; 
+                songHintAudio.play().catch(e => console.error("Song hint play failed:", e));
+                playSound('assets/music/pop.mp3'); 
+            };
+        }
+
+        const songNextBtn = document.getElementById('song-next-btn');
+        if (songNextBtn) {
+            songNextBtn.onclick = null; 
+            songNextBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                if (!songHintAudio.paused) { 
+                    songHintAudio.pause();
+                }
+                showPage('page9'); 
+            };
+        }
+    }
+
+    // --- Page 9 Setup: Anniversary Note ---
+    function setupPage9() {
+        const stopCurrentMusicBtn = document.getElementById('stop-current-music');
+        const playSoftPianoBtn = document.getElementById('play-soft-piano');
+
+        if (stopCurrentMusicBtn) stopCurrentMusicBtn.onclick = null;
+        if (playSoftPianoBtn) playSoftPianoBtn.onclick = null;
+
+        if (stopCurrentMusicBtn) {
+            stopCurrentMusicBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                if (isBackgroundMusicPlaying) {
+                    bgMusic.pause();
+                    musicIcon.src = 'assets/buttons/music_play.png';
+                    isBackgroundMusicPlaying = false;
+                }
+                if (isSoftPianoPlaying) {
+                    softPianoMusic.pause();
+                    isSoftPianoPlaying = false;
+                }
+                if (!songHintAudio.paused) {
+                    songHintAudio.pause();
+                }
+            };
+        }
+
+        if (playSoftPianoBtn) {
+            playSoftPianoBtn.onclick = () => {
+                playSound('assets/music/click.mp3');
+                // Stop other music first
+                if (isBackgroundMusicPlaying) {
+                    bgMusic.pause();
+                    musicIcon.src = 'assets/buttons/music_play.png';
+                    isBackgroundMusicPlaying = false;
+                }
+                if (!songHintAudio.paused) {
+                    songHintAudio.pause();
+                }
+
+                // Play soft piano
+                if (!isSoftPianoPlaying) {
+                    softPianoMusic.play().then(() => {
+                        isSoftPianoPlaying = true;
+                    }).catch(e => console.error("Soft piano play failed:", e));
+                } else {
+                    softPianoMusic.pause();
+                    isSoftPianoPlaying = false;
+                }
+            };
+        }
+    }
+
+    // --- Initial Load ---
+    showPage('page1');
 });
-
-const target = document.getElementById("page"+page);
-if(!target) return;
-
-currentPage = page;
-
-/* Premium cinematic transition */
-
-gsap.fromTo(target,
-{
-opacity:0,
-scale:0.9,
-filter:"blur(12px)"
-},
-{
-opacity:1,
-scale:1,
-filter:"blur(0px)",
-duration:0.6,
-ease:"power3.out"
-});
-
-target.classList.add("active");
-
-/* Typing trigger */
-
-if(page === 7){
-startTyping();
-}
-
-playClick();
-
-}
-
-
-/* ===== ADVANCED NO BUTTON GOD MOVE ===== */
-
-function moveNoButton(){
-
-const btn = document.getElementById("noBtn");
-if(!btn) return;
-
-const padding = 80;
-
-const maxX = window.innerWidth - btn.offsetWidth - padding;
-const maxY = window.innerHeight - btn.offsetHeight - padding;
-
-gsap.to(btn,{
-x:Math.random()*maxX,
-y:Math.random()*maxY,
-duration:0.5,
-ease:"power2.out"
-});
-
-}
-
-
-/* ===== EMOTIONAL ZOOM GOD ANIMATION ===== */
-
-function openZoom(src,next){
-
-const popup = document.getElementById("zoomPopup");
-const img = document.getElementById("zoomImage");
-
-if(!popup || !img) return;
-
-popup.style.display = "flex";
-img.src = src;
-
-popup.dataset.next = next || "";
-
-/* Cinematic zoom */
-
-gsap.fromTo(".zoom-content",
-{
-scale:0.4,
-opacity:0,
-rotate:-8
-},
-{
-scale:1,
-opacity:1,
-rotate:0,
-duration:0.55,
-ease:"back.out(1.8)"
-});
-
-playHeart();
-
-}
-
-
-/* ===== CLOSE ZOOM ===== */
-
-function closeZoom(){
-
-const popup = document.getElementById("zoomPopup");
-if(!popup) return;
-
-gsap.to(".zoom-content",{
-scale:0.4,
-opacity:0,
-duration:0.3
-});
-
-setTimeout(()=>{
-
-popup.style.display="none";
-
-const next = popup.dataset.next;
-
-if(next){
-goToPage(parseInt(next));
-}
-
-popup.dataset.next="";
-
-},300);
-
-}
-
-
-/* ===== SONG AI CHECKER ===== */
-
-function checkSongGuess(){
-
-const input = document.getElementById("songInput");
-if(!input) return;
-
-const value = input.value.toLowerCase().trim();
-
-const loveWords = ["love","heart","jaaan","jaan","romance"];
-
-if(loveWords.some(w=>value.includes(w))){
-
-playHeart();
-goToPage(9);
-
-}else{
-
-gsap.to(input,{
-x:[-12,12,-12,12,0],
-duration:0.35
-});
-
-alert("Try again my love 💕");
-
-}
-
-}
-
-
-/* ===== GOD TYPING ENGINE ===== */
-
-const typingText =
-"My love... You are my forever 💕\n"+
-"You are my dream, my heart, my everything.\n"+
-"I love you more than words can say 💗";
-
-let typingIndex = 0;
-let typingTimer;
-
-function startTyping(){
-
-const el = document.getElementById("typingText");
-if(!el) return;
-
-clearTimeout(typingTimer);
-
-typingIndex = 0;
-el.innerHTML = "";
-
-typeWriter();
-
-}
-
-function typeWriter(){
-
-const el = document.getElementById("typingText");
-if(!el) return;
-
-if(typingIndex < typingText.length){
-
-el.innerHTML += typingText.charAt(typingIndex);
-
-typingIndex++;
-
-typingTimer = setTimeout(typeWriter,32);
-
-}
-
-}
