@@ -1,43 +1,31 @@
-/* --- Global Styles --- */
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Cute+Font&family=Quicksand:wght@400;700&display=swap');
-
-/* Custom Font (Uncomment if you have a .ttf file) */
-/*
-@font-face {
-    font-family: 'YourCustomFont';
-    src: url('assets/fonts/yourfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+/* General Styling */
+:root {
+    --baby-pink: #FFB6C1;
+    --light-pink: #FFDDE1;
+    --dark-pink: #F8BBD0;
+    --text-color-dark: #333;
+    --text-color-light: #fff;
+    --overlay-z-index: 10;
+    --content-z-index: 20;
+    --button-z-index: 30;
+    --dark-pink-rgb: 248, 187, 208; /* For rgba usage */
 }
-*/
 
 body {
     margin: 0;
-    font-family: 'Cute Font', cursive, 'Quicksand', sans-serif; /* Default font stack */
-    color: #4a4a4a; /* Soft dark grey for text */
-    overflow: hidden; /* Hide scrollbars, page transitions will handle content */
-    display: flex;
+    overflow: hidden; /* Hide scrollbars for full-page transitions */
+    background-color: #fce4ec; /* Default fallback background */
+    color: var(--text-color-dark);
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+    display: flex; /* For centering content of the active page */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffe4e1; /* Baby pink background for the body */
-    touch-action: manipulation; /* Improves responsiveness on touch devices */
+    width: 100vw; /* Ensure full viewport width */
 }
 
-/* Application Container - Main wrapper for all pages */
-#app-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    max-width: 768px; /* Typical portrait tablet/large phone width */
-    max-height: 1024px; /* Typical portrait tablet/large phone height */
-    overflow: hidden; /* Important for page transitions and overlays */
-    background-color: #fff; /* White background for the main app area */
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-    border-radius: 20px; /* Slightly rounded corners for the app container */
-}
-
-/* --- Page Styles --- */
 .page {
     position: absolute;
     top: 0;
@@ -46,623 +34,183 @@ body {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    display: none; /* Hidden by default, controlled by JS */
-    opacity: 0;    /* Start transparent for fade-in, controlled by JS */
-    pointer-events: none; /* Disable interaction when hidden/fading out, controlled by JS */
-    /* Transition property is set dynamically by JavaScript for cinematic smoothness */
-    box-sizing: border-box; /* Include padding/border in element's total width/height */
-    padding: 20px; /* General padding for content */
-    text-align: center; /* Center content by default */
-    flex-direction: column; /* For vertical alignment */
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-}
-
-/* No .page.active style for display/opacity/pointer-events here, JS handles it. */
-/* JS will dynamically add .active and set display/opacity/transition */
-
-
-/* --- Overlay & Animation Styles (Common) --- */
-.overlay-gif {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none; /* Allows clicks to pass through to elements below */
-    object-fit: cover; /* Ensures GIF covers the page without distortion */
-    mix-blend-mode: screen; /* Good for sparkle/light effects on light backgrounds */
-    z-index: 10; /* Overlays should be on top of background but below main content */
-    opacity: 0.7; /* Soften the effect */
-}
-
-.overlay-gif.top-layer { z-index: 12; }
-.overlay-gif.bottom-layer { z-index: 8; }
-.overlay-gif.background-animation { z-index: 5; opacity: 0.5; } /* For subtle moving backgrounds */
-.overlay-gif.small-sparkles { z-index: 15; opacity: 0.8; } /* More prominent sparkles */
-.overlay-gif.butterfly-animation { 
-    z-index: 20; 
-    opacity: 0.9; 
-    animation: butterflyFlight 15s infinite ease-in-out;
-}
-.butterfly1 { animation-delay: 0s; left: -10%; top: 20%; width: 100px; height: 100px; }
-.butterfly2 { animation-delay: 7s; right: -10%; bottom: 10%; width: 80px; height: 80px; }
-
-
-/* --- Music Toggle Button (Global) --- */
-.music-toggle-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease-in-out;
-}
-
-.music-toggle-btn:hover {
-    transform: scale(1.1);
-}
-
-.music-toggle-btn .music-icon {
-    width: 40px;
-    height: 40px;
-    filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.2));
-}
-
-/* --- Typography Styles --- */
-h1, h2, h3 {
-    font-family: 'Pacifico', cursive; /* More elegant, script-like font */
-    color: #ff69b4; /* Hot pink */
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-}
-
-h1 { font-size: 3em; }
-h2 { font-size: 2.2em; }
-p {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #555;
-}
-
-/* --- General Button Styles --- */
-.action-button {
-    background-color: #ffc0cb; /* Baby pink default */
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2em;
-    font-family: 'Cute Font', cursive;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    margin: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.action-button:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    background-color: #ff8fa5; /* Slightly darker pink on hover */
-}
-
-/* Specific button styles */
-.baby-pink-btn {
-    background-color: #ffc0cb;
-    color: #8b0000; /* Dark red for text on baby pink */
-    border: 2px solid #ff69b4;
-    padding: 12px 25px;
-}
-.baby-pink-btn:hover {
-    background-color: #ff8fa5;
-    color: white;
-}
-.button-icon {
-    width: 80px; /* Size for yes/no images */
-    height: auto;
-    vertical-align: middle;
-}
-.button-group {
-    display: flex;
-    gap: 20px; /* Space between buttons */
-    margin-top: 30px;
-}
-
-
-/* --- Character Styles --- */
-.character-container {
-    position: relative;
-    margin-bottom: 30px;
-}
-.main-character {
-    width: 180px; /* Adjust size of main character */
-    height: auto;
-    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.2));
-    animation: bounce 2s infinite ease-in-out; /* Gentle bounce animation */
-}
-.crying-character {
-    animation: shake 0.8s infinite alternate; /* Crying effect */
-}
-.tear-animation {
-    position: absolute;
-    width: 30px; /* Size of tear drops */
-    height: auto;
-    animation: tearDrop 1.5s infinite linear;
-    top: 50%; /* Adjust position relative to character */
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-
-/* --- Page Specific Styles --- */
-
-/* Page 1 */
-#page1 {
-    display: flex; /* Ensure flex for centering */
-}
-.question-text {
-    color: #ff69b4;
-    font-size: 3.5em;
-    letter-spacing: 2px;
-}
-
-/* Page 2 */
-#page2 {
-    display: flex;
-}
-.sad-message {
-    color: #a52a2a; /* Brownish red for sad text */
-    margin-top: 20px;
-    font-size: 2em;
-}
-
-/* Page 3: Find Hidden Item Game */
-#page3 {
-    display: flex;
-    position: relative;
-    padding: 0; /* No padding for full background */
-    overflow: hidden; /* Important for moving elements */
-}
-.game-area {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Align to bottom for grass/bush */
-    overflow: hidden;
-    z-index: 20;
-}
-.game-title {
-    position: absolute;
-    top: 50px;
-    z-index: 30;
-    color: #6a0dad; /* Purple for game title */
-    text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
-}
-.decoration-item {
-    position: absolute;
-    height: auto;
-    pointer-events: none; /* Default to none, enable for hidden item */
-}
-.grass-deco { width: 120%; bottom: -5%; left: -10%; z-index: 25; }
-.bush-deco { width: 40%; bottom: 10%; right: 5%; z-index: 28; }
-.flower-deco { width: 80px; position: absolute; }
-.flower1 { bottom: 20%; left: 15%; z-index: 27; }
-.flower2 { bottom: 15%; right: 20%; z-index: 27; }
-
-.flower-animation {
-    position: absolute;
-    width: 80px; /* Match flower size */
-    height: auto;
-    z-index: 27;
-    pointer-events: none;
-    animation: flowerSway 5s infinite alternate ease-in-out;
-}
-.flower-sway1 { bottom: 20%; left: 15%; }
-.flower-sway2 { bottom: 15%; right: 20%; animation-delay: 2s; }
-
-.hidden-game-item {
-    position: absolute;
-    width: 60px; /* Size of hidden item */
-    height: auto;
-    cursor: pointer;
-    z-index: 30; /* Ensure it's clickable */
-    animation: pulse 1.5s infinite alternate; /* Make it subtly noticeable */
-    top: 45%; /* Adjust position to hide it */
-    left: 48%;
-    filter: brightness(0.8) contrast(1.2); /* Blend a bit with background */
-    opacity: 0.9;
-}
-.hidden-game-item:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2) contrast(1);
-    transition: all 0.2s ease-in-out;
-}
-
-
-/* Page 4: Gift Page */
-#page4 {
-    display: flex;
-}
-.gift-title {
-    color: #ff69b4;
-    margin-bottom: 40px;
-}
-.gift-selection-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 gifts per row */
-    gap: 30px;
-    max-width: 80%;
-}
-.gift-item {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease-in-out;
-}
-.gift-item:hover {
-    transform: translateY(-8px) scale(1.03);
-}
-.gift-image {
-    width: 120px; /* Size of gift images */
-    height: auto;
-    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
-    transition: transform 0.3s ease;
-}
-.gift-image.zoomed {
-    transform: scale(1.2);
-}
-.gift-popup {
-    position: absolute;
-    bottom: 100%; /* Position above the gift item */
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    background-color: #ffefff; /* Lighter pink for popup */
-    border: 2px solid #ff69b4;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    z-index: 100;
-    white-space: nowrap; /* Keep text on one line */
-    display: none; /* Hidden by default, shown by JS */
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-.gift-popup.active {
-    display: block;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-20px);
-}
-.gift-popup p {
-    color: #d1498b; /* Darker pink for popup text */
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-/* Page 5: Special Coupons */
-#page5 {
-    display: flex;
-}
-.coupon-title {
-    color: #ff69b4;
-    margin-bottom: 40px;
-}
-.coupon-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 coupons per row */
-    gap: 20px;
-    max-width: 90%;
-    margin-bottom: 30px;
-}
-.coupon-item {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease-in-out;
-}
-.coupon-item:hover {
-    transform: translateY(-5px) scale(1.02);
-}
-.coupon-image {
-    width: 100px; /* Size of coupon images */
-    height: auto;
-    filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.1));
-    transition: transform 0.3s ease;
-}
-.coupon-image.zoomed {
-    transform: scale(1.1);
-}
-.coupon-popup {
-    position: absolute;
-    bottom: 100%; /* Position above coupon item */
-    left: 50%;
-    transform: translateX(-50%) translateY(-5px);
-    background-color: #ffefff;
-    border: 1px solid #ff69b4;
-    border-radius: 10px;
-    padding: 8px 12px;
-    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
-    z-index: 100;
-    white-space: nowrap;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-.coupon-popup.active {
-    display: block;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-15px);
-}
-.coupon-popup p {
-    font-size: 0.9em;
-    color: #d1498b;
-}
-
-
-/* Page 6: Memory Lane */
-#page6 {
-    display: flex;
-}
-.memory-title {
-    color: #ff69b4;
-    margin-bottom: 30px;
-}
-.memory-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 photos per row */
-    gap: 20px;
-    max-width: 90%;
-}
-.memory-item {
-    position: relative;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out;
-}
-.memory-item:hover {
-    transform: translateY(-5px) scale(1.03);
-}
-.memory-photo {
-    width: 100%;
-    height: 150px; /* Fixed height for photos */
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-.memory-photo.zoomed {
-    transform: scale(1.1);
-}
-.photo-quote {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 228, 225, 0.9); /* Baby pink semi-transparent */
-    color: #8b0000;
-    padding: 10px;
-    font-size: 0.9em;
-    display: none; /* Hidden by default */
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-.photo-quote.active {
-    display: block;
-    opacity: 1;
-}
-
-
-/* Page 7: Words From My Heart */
-#page7 {
-    display: flex;
-}
-.wishes-title {
-    color: #ff69b4;
-    margin-bottom: 30px;
-}
-.wishes-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 3px solid #ffc0cb;
-    border-radius: 20px;
-    padding: 30px;
-    margin: 0 20px;
-    max-width: 80%;
-    position: relative;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-.heartfelt-message {
-    color: #6a0dad; /* Purple text */
-    font-family: 'Pacifico', cursive; /* More elegant font for message */
-    font-size: 1.3em;
-    line-height: 1.8;
-    white-space: pre-wrap; /* Preserve line breaks */
-}
-.floating-decoration {
-    position: absolute;
-    width: 50px;
-    height: auto;
-    opacity: 0.8;
-    animation: float 8s infinite ease-in-out alternate;
-}
-.heart-deco1 { top: 10%; left: -15px; animation-delay: 0s; }
-.heart-deco2 { top: 30%; right: -20px; animation-delay: 3s; }
-.heart-deco3 { bottom: 15%; left: 0; animation-delay: 6s; }
-.heart-deco4 { bottom: 5%; right: -10px; animation-delay: 9s; }
-.typing-animation { /* Assume this covers the whole message area */
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: contain; /* Don't stretch */
-    mix-blend-mode: screen;
-    z-index: 1;
-    opacity: 0.6;
-}
-.text-sparkle-animation { /* Assume this adds sparkles over text */
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    mix-blend-mode: screen;
-    z-index: 2;
-    opacity: 0.8;
-}
-
-
-/* Page 8: Guess Our Song */
-#page8 {
-    display: flex;
-}
-.song-game-title {
-    color: #ff69b4;
-    margin-bottom: 40px;
-}
-.music-template-container {
-    position: relative;
-    width: 250px; /* Size of the music note template */
-    height: 250px;
-    margin-bottom: 30px;
-}
-.music-template-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.2));
-}
-.qr-code-area {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px; /* Size for QR code */
-    height: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.qr-code-frame {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 1;
-}
-.actual-qr-code {
-    width: 80%; /* Adjust size to fit inside frame */
-    height: 80%;
-    object-fit: contain;
-    z-index: 2;
-}
-.song-hint {
-    color: #6a0dad;
-    font-size: 1.1em;
-    margin-bottom: 20px;
-}
-.floating-music-animation {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    mix-blend-mode: screen;
-    z-index: 10;
-    opacity: 0.7;
-    animation: musicFloat 10s infinite ease-in-out;
-}
-.heart-pulse-animation {
-    position: absolute;
-    width: 200px; height: 200px;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    opacity: 0.5;
-    animation: pulse 2s infinite alternate;
-}
-.romantic-glow-animation {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    mix-blend-mode: overlay;
-    z-index: 9;
-    opacity: 0.6;
-    animation: slowGlow 8s infinite alternate;
-}
-
-
-/* Page 9: Anniversary Note */
-#page9 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    pointer-events: none; /* Disable interaction when not active */
+    transition: opacity 0.8s ease-in-out;
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    padding: 20px; /* General padding for content */
 }
-.book-page-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 5px solid #ffc0cb;
-    border-radius: 25px;
-    padding: 40px;
-    margin: 20px;
-    max-width: 85%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+.page.active {
+    opacity: 1;
+    pointer-events: auto; /* Enable interaction when active */
+    z-index: 1; /* Bring active page to front */
+}
+
+.content-wrapper {
     position: relative;
-    text-align: center;
+    z-index: var(--content-z-index);
+    background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent background for readability */
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto; /* Allow scrolling for content if it overflows */
 }
-.anniversary-heading {
-    color: #ff69b4;
-    font-size: 2.8em;
+
+h1, h2, h3, h4 {
+    color: var(--dark-pink);
     margin-bottom: 20px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+    font-weight: bold;
 }
-.anniversary-message {
-    font-family: 'Pacifico', cursive; /* Elegant font for the message */
-    font-size: 1.4em;
-    line-height: 1.7;
-    color: #8b0000; /* Dark red for romantic text */
-    white-space: pre-wrap; /* Preserve line breaks from HTML */
-    margin-bottom: 30px;
-}
-.page-decoration {
+
+h1 { font-size: 3.5em; }
+h2 { font-size: 2.5em; }
+h3 { font-size: 2em; }
+p { font-size: 1.2em; }
+
+/* Overlay Gifs */
+.overlay {
     position: absolute;
-    width: 80px; /* Size of heart decoration */
-    height: auto;
-    top: -30px;
-    right: -20px;
-    z-index: 10;
-    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
-    animation: pulse 2s infinite alternate;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; /* Make overlays not block clicks */
+    z-index: var(--overlay-z-index);
 }
-.music-options {
+
+/* Specific overlay adjustments */
+.sparkle-overlay, .hearts-overlay, .tear-drop, .soft-glow, .rain-overlay,
+.tree-bg-move, .sparkle-small-game, .flower-sway-1, .flower-sway-2,
+.butterfly-fly-1, .butterfly-fly-2, .ribbon-shine, .sparkle-explosion,
+.border-glow, .floating-heart-small, .sakura-fall, .heart-rain_slow,
+.dreamy-light, .typing-cursor, .text-sparkle, .floating-heart-decor,
+.floating-music, .heart-pulse-big, .romantic-glow, .heart-rain,
+.sparkle-overlay-final, .confetti, .heart-decor {
+    opacity: 0.8; /* Adjust as needed */
+}
+
+.music-toggle-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--baby-pink);
+    border: 2px solid var(--dark-pink);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     display: flex;
-    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 100; /* Ensure it's always on top */
+}
+
+.music-toggle-button:hover {
+    transform: scale(1.1);
+    background-color: var(--dark-pink);
+}
+
+.music-icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%); /* Make icon white */
+}
+
+/* Action Buttons */
+.action-button {
+    background-color: var(--light-pink);
+    color: var(--text-color-dark);
+    border: 2px solid var(--baby-pink);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button:hover {
+    background-color: var(--baby-pink);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.action-button img {
+    height: 40px; /* Adjust button image size */
+    width: auto;
+    margin-right: 8px; /* Space between image and text if any */
+}
+
+.baby-pink-button {
+    background-color: var(--baby-pink);
+    color: white;
+    border-color: var(--dark-pink);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.baby-pink-button:hover {
+    background-color: var(--dark-pink);
+}
+
+.next-page-button {
     margin-top: 30px;
 }
-.music-options button {
-    padding: 10px 20px;
-    font-size: 1em;
+
+/* Page 1 Specific */
+.character-bunny {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite ease-in-out;
 }
 
-
-/* --- Keyframe Animations --- */
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-15px); }
+}
+
+.buttons-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+.buttons-container .action-button {
+    padding: 0; /* Remove padding to let image control size */
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+.buttons-container .action-button:hover {
+    transform: scale(1.1);
+    background: none;
+}
+.buttons-container .action-button img {
+    width: 100px; /* Specific size for yes/no buttons */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Page 2 Specific */
+.cry-bunny {
+    width: 200px;
+    height: auto;
+    animation: shake 0.5s infinite;
 }
 
 @keyframes shake {
@@ -671,95 +219,617 @@ p {
     75% { transform: translateX(5px); }
 }
 
-@keyframes tearDrop {
-    0% { transform: translateY(-10px) scale(0); opacity: 0; }
-    20% { transform: translateY(0) scale(1); opacity: 1; }
-    80% { transform: translateY(20px) scale(0.8); opacity: 0.5; }
-    100% { transform: translateY(30px) scale(0.5); opacity: 0; }
+/* Page 3 Specific (Game) */
+.game-page {
+    position: relative; /* For positioning game elements */
+    overflow: hidden; /* Prevent game elements from spilling */
 }
 
-@keyframes butterflyFlight {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(20vw, 5vh) rotate(15deg); }
-    50% { transform: translate(0, 10vh) rotate(0deg); }
-    75% { transform: translate(-15vw, 5vh) rotate(-10deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+.game-area {
+    position: relative;
+    width: 90%; /* Increased width for landscape view */
+    height: 70%; /* Increased height for landscape view */
+    margin: 20px auto;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.4); /* Slightly transparent background for game area */
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+    overflow: hidden; /* Keep decorations inside game area */
 }
 
-@keyframes flowerSway {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(5deg); }
+/* Non-clickable game decorations - to make only the hidden item clickable */
+.game-area > img:not(.hidden-item) {
+    pointer-events: none;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.05); opacity: 1; }
+
+.game-decoration {
+    position: absolute;
+    /* cursor: pointer; REMOVED - now only hidden item is clickable */
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.game-decoration:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Specific positions for decorations - adjust as needed */
+.flower1 { top: 10%; left: 5%; width: 10%; }
+.flower2 { top: 70%; left: 80%; width: 8%; }
+.butterfly1 { top: 20%; left: 70%; width: 7%; animation: float 3s infinite ease-in-out; }
+.butterfly2 { top: 50%; left: 15%; width: 6%; animation: float 3.5s infinite ease-in-out reverse; }
+.grass { bottom: 0; left: 0; width: 100%; height: 20%; object-fit: cover;}
+.bush { bottom: 15%; left: 30%; width: 25%; }
+
+.hidden-item {
+    position: absolute;
+    width: 100px; /* Make hidden item larger */
+    height: auto;
+    opacity: 1; /* Initially visible */
+    transition: transform 0.5s ease;
+    cursor: pointer;
+    /* Random initial position within game-area - adjust this in JS */
+    /* Z-index higher than other decorations to ensure it's on top where it appears */
+    z-index: 25;
+}
+
+.hidden-item.found {
+    transform: scale(1.2);
+    animation: pulse 1s infinite alternate;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-    25% { transform: translateY(-5px) translateX(5px) rotate(2deg); }
-    50% { transform: translateY(0px) translateX(-5px) rotate(-2deg); }
-    75% { transform: translateY(5px) translateX(5px) rotate(1deg); }
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(5px); }
+}
+@keyframes pulse {
+    0% { transform: scale(1.2); }
+    100% { transform: scale(1.3); }
 }
 
-@keyframes musicFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+/* Page 4 Specific (Gifts) */
+.gifts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
 }
 
-@keyframes slowGlow {
+.gift-item {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.gift-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.gift-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.gift-item.zoomed img {
+    transform: scale(1.1);
+}
+
+.gift-message {
+    margin-top: 20px;
+    font-size: 1.4em;
+    color: var(--dark-pink);
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.gift-message.show {
+    opacity: 1;
+}
+
+/* Page 5 Specific (Coupons) */
+.coupons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+    max-width: 800px; /* Limit width for better layout */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.coupon-item {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* Makes the item square */
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center image vertically */
+}
+
+.coupon-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the entire area */
+    transition: transform 0.3s ease;
+}
+
+.coupon-item:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.coupon-item.zoomed img {
+    transform: scale(1.1);
+}
+
+.coupon-text {
+    margin-top: 20px;
+    font-size: 1.3em;
+    color: var(--dark-pink);
+    font-weight: bold;
+    min-height: 2em; /* Ensure some space even when empty */
+}
+
+/* Page 6 Specific (Memory Lane) */
+.memory-photos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.memory-item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.memory-item img {
+    width: 100%;
+    height: 200px; /* Fixed height for photos */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.memory-item:hover {
+    transform: translateY(-7px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.memory-item.zoomed img {
+    transform: scale(1.05);
+}
+
+.photo-quote {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(var(--dark-pink-rgb), 0.9); /* Use RGB for transparency */
+    color: white;
+    padding: 10px 15px;
+    font-size: 1em;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    box-sizing: border-box;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.memory-item.zoomed .photo-quote {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Page 7 Specific (Words From Heart) */
+.wishes-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 3px solid var(--baby-pink);
+    border-radius: 20px;
+    padding: 40px;
+    margin-top: 30px;
+    max-width: 700px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.wishes-box p {
+    font-size: 1.5em;
+    color: var(--text-color-dark);
+    line-height: 1.8;
+}
+
+.floating-heart-decor {
+    width: 50px;
+    height: auto;
+    animation: float 4s infinite ease-in-out;
+}
+.heart1 { top: 10%; left: 5%; animation-delay: 0s; }
+.heart2 { top: 20%; right: 10%; animation-delay: 1s; }
+.heart3 { bottom: 15%; left: 15%; animation-delay: 2s; }
+.heart4 { bottom: 5%; right: 5%; animation-delay: 3s; }
+
+/* Page 8 Specific (Guess Our Song) */
+.song-game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.qr-frame {
+    width: 200px;
+    height: auto;
+    border: 5px solid var(--baby-pink);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.qr-frame:hover {
+    transform: scale(1.05);
+}
+
+.music-hint p {
+    font-size: 1.3em;
+    color: var(--text-color-dark);
+    margin-bottom: 15px;
+}
+
+/* Page 9 Specific (Anniversary Note) */
+.final-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    background-color: transparent; /* Remove wrapper background */
+    box-shadow: none; /* Remove wrapper shadow */
+    padding: 0; /* Remove wrapper padding */
+    width: 100%; /* Allow book to take more space */
+    max-width: none;
+    max-height: none;
+}
+
+.anniversary-note-book {
+    position: relative;
+    width: 600px; /* Size of the book */
+    height: 400px;
+    background-color: #fcf8e3; /* Creamy paper color */
+    border: 5px solid #d4a373; /* Book spine color */
+    border-radius: 8px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.book-page {
+    width: 100%;
+    height: 100%;
+    background-color: #fffaf0; /* Inner page color */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+    overflow-y: auto; /* Scroll if content is too long */
+    text-align: left;
+    line-height: 1.8;
+}
+
+.anniversary-note-content {
+    font-family: 'YourCustomFont', 'Caveat', cursive;
+    font-size: 1.4em;
+    color: #5C4033; /* Darker text for readability on light page */
+    white-space: pre-wrap; /* Preserve line breaks from HTML */
+}
+
+.final-music-options {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Utility classes */
+.hidden {
+    display: none !important;
+}
+
+/* Animations for overlays with specific behaviors */
+.sparkle-overlay, .sparkle-overlay-final { animation: fade-in 2s forwards; }
+.floating-hearts, .heart-rain-slow, .heart-rain { animation: float-up 10s infinite linear; }
+.tear-drop { animation: fall 3s infinite linear; }
+.soft-glow, .romantic-glow { animation: pulsate-glow 4s infinite alternate; }
+.rain-overlay { animation: rain 2s infinite linear; }
+.tree-bg-move { animation: pan-background 30s infinite linear alternate; } /* Example, adjust speed */
+.ribbon-shine, .sparkle-explosion { animation: sparkle-flash 1s infinite alternate; }
+.border-glow { animation: border-pulse 2s infinite alternate; }
+.floating-heart-small { animation: float-small 7s infinite linear; }
+.sakura-fall { animation: sakura 15s infinite linear; }
+.dreamy-light { animation: fade-and-move 8s infinite alternate; }
+.typing-cursor { animation: blink 1s infinite steps(1); }
+.text-sparkle { animation: sparkle-text 1.5s infinite alternate; }
+.floating-music { animation: float-music 6s infinite linear; }
+.heart-pulse-big { animation: pulse 1.5s infinite alternate; }
+.confetti { animation: confetti-fall 10s infinite linear; }
+
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 0.8; }
+}
+
+@keyframes float-up {
+    from { transform: translateY(100vh); opacity: 0; }
+    to { transform: translateY(-100vh); opacity: 1; }
+}
+
+@keyframes fall {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(100vh); opacity: 1; }
+}
+
+@keyframes pulsate-glow {
+    from { box-shadow: 0 0 10px rgba(255, 182, 193, 0.7); }
+    to { box-shadow: 0 0 30px rgba(255, 182, 193, 1); }
+}
+
+@keyframes rain {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 20% 100%; } /* Adjust for rain effect */
+}
+
+@keyframes pan-background {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 0%; }
+}
+
+@keyframes sparkle-flash {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes border-pulse {
+    0% { border-color: var(--light-pink); }
+    100% { border-color: var(--dark-pink); }
+}
+
+@keyframes float-small {
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+    25% { transform: translateY(-15px) translateX(10px) scale(1.05); }
+    50% { transform: translateY(-30px) translateX(-10px) scale(1); }
+    75% { transform: translateY(-15px) translateX(10px) scale(0.95); }
+}
+
+@keyframes sakura {
+    0% { transform: translateY(-10%) translateX(0); opacity: 0.8; }
+    100% { transform: translateY(100%) translateX(20px); opacity: 0; }
+}
+
+@keyframes fade-and-move {
+    0% { opacity: 0.7; transform: scale(1) translateX(0); }
+    50% { opacity: 1; transform: scale(1.1) translateX(10px); }
+    100% { opacity: 0.7; transform: scale(1) translateX(0); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes sparkle-text {
     0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.2); }
+    50% { filter: brightness(1.5) drop-shadow(0 0 5px var(--baby-pink)); }
+}
+
+@keyframes float-music {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(-5deg); }
+    75% { transform: translateY(10px) rotate(5deg); }
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100%); opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
 }
 
 
-/* --- Responsive Adjustments (Basic) --- */
-@media (max-width: 768px) {
-    #app-container {
-        border-radius: 0; /* No rounded corners on small screens */
+/* Media Queries for Responsiveness - Landscape Prioritization */
+@media (orientation: landscape) {
+    body {
+        flex-direction: row; /* Keep content centered horizontally */
     }
+
+    .page {
+        padding: 10px; /* Less padding in landscape to maximize content area */
+    }
+
+    .content-wrapper {
+        padding: 20px 30px;
+        max-width: 90%;
+        max-height: 95%; /* Use more height in landscape */
+    }
+
+    h1 { font-size: 3em; }
+    h2 { font-size: 2.2em; }
+    h3 { font-size: 1.8em; }
+    p { font-size: 1.1em; }
+
+    .character-bunny {
+        width: 120px;
+    }
+
+    .buttons-container .action-button img {
+        width: 90px;
+    }
+
+    .cry-bunny {
+        width: 180px;
+    }
+
+    .game-area {
+        width: 85%; /* Adjust for better landscape fit */
+        height: 65%; /* Adjust for better landscape fit */
+    }
+    .hidden-item {
+        width: 80px; /* Maintain larger size */
+    }
+
+    .gift-item, .coupon-item {
+        width: 130px;
+        height: 130px;
+    }
+
+    .memory-item img {
+        height: 180px;
+    }
+
+    .wishes-box {
+        padding: 30px;
+        max-width: 600px;
+    }
+    .wishes-box p {
+        font-size: 1.3em;
+    }
+
+    .qr-frame {
+        width: 180px;
+    }
+
+    .anniversary-note-book {
+        width: 550px;
+        height: 380px;
+        padding: 15px;
+    }
+    .book-page {
+        padding: 25px;
+    }
+    .anniversary-note-content {
+        font-size: 1.2em;
+    }
+
+    .music-toggle-button {
+        width: 55px;
+        height: 55px;
+    }
+    .music-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Portrait orientation for smaller screens (phones) - fallback */
+@media (orientation: portrait) and (max-width: 768px) {
     h1 { font-size: 2.5em; }
-    h2 { font-size: 1.8em; }
+    h2 { font-size: 2em; }
+    h3 { font-size: 1.7em; }
     p { font-size: 1em; }
 
-    .music-toggle-btn {
+    .content-wrapper {
+        padding: 20px;
+        max-width: 95%;
+    }
+
+    .character-bunny {
+        width: 100px;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .buttons-container .action-button img {
+        width: 80px;
+    }
+
+    .cry-bunny {
+        width: 150px;
+    }
+
+    .game-area {
+        width: 95%;
+        height: 50%; /* Taller in portrait */
+    }
+    .hidden-item {
+        width: 60px; /* Adjusted for portrait small screens */
+    }
+
+    .gift-item, .coupon-item {
+        width: 100px;
+        height: 100px;
+    }
+
+    .memory-item img {
+        height: 150px;
+    }
+
+    .wishes-box {
+        padding: 25px;
+    }
+    .wishes-box p {
+        font-size: 1.2em;
+    }
+
+    .qr-frame {
+        width: 150px;
+    }
+
+    .anniversary-note-book {
+        width: 95%;
+        height: 350px;
+        padding: 15px;
+    }
+
+    .book-page {
+        padding: 20px;
+    }
+
+    .anniversary-note-content {
+        font-size: 1.1em;
+    }
+
+    .music-toggle-button {
+        width: 50px;
+        height: 50px;
         top: 10px;
         right: 10px;
-        padding: 8px;
     }
-    .music-toggle-btn .music-icon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .main-character { width: 150px; }
-    .question-text { font-size: 2.8em; }
-
-    .gift-selection-grid, .coupon-grid, .memory-grid {
-        grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
-        gap: 15px;
-    }
-    .gift-image { width: 100px; }
-    .coupon-image { width: 80px; }
-    .memory-photo { height: 120px; }
-    .coupon-popup p { font-size: 0.8em; }
-
-    .book-page-container { padding: 25px; }
-    .anniversary-heading { font-size: 2.2em; }
-    .anniversary-message { font-size: 1.1em; }
-    .music-options { flex-direction: column; gap: 10px; }
-}
-
-@media (max-width: 480px) {
-    h1 { font-size: 2em; }
-    h2 { font-size: 1.6em; }
-    .question-text { font-size: 2.2em; }
-    .action-button { padding: 10px 20px; font-size: 1em; }
-    .button-icon { width: 60px; }
-
-    .gift-selection-grid, .coupon-grid, .memory-grid {
-        grid-template-columns: 1fr; /* Single column on very small screens */
-        max-width: 95%;
+    .music-icon {
+        width: 25px;
+        height: 25px;
     }
 }
