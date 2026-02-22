@@ -2,278 +2,404 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 1 Year Anniversary, Jaan! 💗</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Custom Font (if you have 'yourfont.ttf' in assets/fonts/) -->
-    <style>
-        @font-face {
-            font-family: 'YourCustomFont'; /* Replace with your actual font name */
-            src: url('assets/fonts/yourfont.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        body {
-            font-family: 'YourCustomFont', 'Pacifico', cursive; /* Use your custom font first, then fallbacks */
-        }
-        h1, h2, h3, h4 {
-            font-family: 'YourCustomFont', 'Pacifico', cursive;
-        }
-        p, button, .gift-message, .coupon-text, .photo-quote, .anniversary-note-content {
-            font-family: 'YourCustomFont', 'Caveat', cursive;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Our Dreamy Anniversary 💖</title>
+    <link rel="icon" href="assets/decorations/heart_decor.png" type="image/png">
+
+    <!-- Google Fonts: Baloo 2 and Pacifico -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Custom Global Styles (includes Tailwind compiled output) -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
-<body>
-    <!-- Global Audio Elements -->
-    <audio id="backgroundMusic" loop>
-        <source src="assets/music/song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <audio id="softPianoMusic" loop>
-        <source src="assets/music/soft_piano.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <audio id="clickSound">
-        <source src="assets/music/click.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="heartSound">
-        <source src="assets/music/heart.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="popSound">
-        <source src="assets/music/pop.mp3" type="audio/mpeg">
-    </audio>
+<body class="overflow-hidden bg-gradient-to-br from-pastel-pink to-soft-purple antialiased no-scrollbar" style="overscroll-behavior: none;">
+    <div id="app-container" class="relative w-screen h-screen flex justify-center items-center overflow-hidden">
 
-    <!-- Music Play/Pause Button -->
-    <button id="musicToggle" class="music-toggle-button">
-        <img src="assets/buttons/music_play.png" alt="Play Music" id="musicIcon" class="music-icon">
-    </button>
+        <!-- Global Overlays (always visible) -->
+        <div id="global-sparkles" class="absolute inset-0 z-[50] pointer-events-none opacity-70">
+            <img src="assets/overlays/sparkle_overlay.gif" alt="Sparkle Overlay" class="w-full h-full object-cover">
+        </div>
+        <div id="global-hearts" class="absolute inset-0 z-[40] pointer-events-none opacity-60">
+            <img src="assets/overlays/floating_hearts.gif" alt="Floating Hearts" class="w-full h-full object-cover">
+        </div>
 
-    <!-- Page 1: Love Question -->
-    <div id="page1" class="page active" style="background-image: url('assets/backgrounds/bg1.jpg');">
-        <img src="assets/overlays/sparkle_overlay.gif" alt="Sparkle" class="overlay sparkle-overlay">
-        <img src="assets/overlays/floating_hearts.gif" alt="Hearts" class="overlay hearts-overlay">
-        <div class="content-wrapper">
-            <img src="assets/characters/bunny_idle.gif" alt="Character" class="character-bunny">
-            <h1>Do you love me?</h1>
-            <div class="buttons-container">
-                <button id="yesButton" class="action-button">
-                    <img src="assets/buttons/btn_yes.png" alt="Yes">
+        <!-- Music Toggle Button (Global, always on top) -->
+        <button id="music-toggle" class="absolute top-4 right-4 z-[1000] p-3 rounded-full cute-button-small">
+            <i class="fas fa-volume-up text-pastel-pink text-2xl" id="music-icon"></i>
+        </button>
+
+        <!-- Global Audio Elements -->
+        <audio id="background-music" loop preload="auto" src="assets/music/song.mp3"></audio>
+        <audio id="button-click-sound" preload="auto" src="assets/music/button_click.mp3"></audio>
+        <audio id="heart-popup-sound" preload="auto" src="assets/music/heart.mp3"></audio>
+        <audio id="gift-popup-sound" preload="auto" src="assets/music/pop.mp3"></audio>
+        <audio id="soft-piano-music" preload="auto" src="assets/music/soft_piano.mp3"></audio>
+
+        <!-- Page 1: LOVE QUESTION -->
+        <div id="page-1" class="page relative active">
+            <img src="assets/backgrounds/bg1.jpg" alt="Dreamy Background 1" class="page-background">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <img src="assets/characters/bunny_idle.gif" alt="Cute Bunny" class="page-character w-[200px] h-[200px] absolute bottom-10 left-10 lg:w-[250px] lg:h-[250px] animate-float">
+                <h1 class="text-cream-light font-pacifico text-7xl lg:text-9xl text-glow mb-12 text-center" data-aos="zoom-in" data-aos-delay="200">
+                    Do You Love Me? <i class="fas fa-heart text-pastel-pink heart-pulse-light"></i>
+                </h1>
+                <div class="flex space-x-8">
+                    <button id="btn-yes" class="cute-button w-[180px] h-[70px] flex items-center justify-center text-3xl" data-aos="fade-up" data-aos-delay="400">
+                        <img src="assets/buttons/btn_yes.png" alt="Yes" class="h-full object-contain">
+                    </button>
+                    <button id="btn-no" class="cute-button w-[180px] h-[70px] flex items-center justify-center text-3xl" data-aos="fade-up" data-aos-delay="600">
+                        <img src="assets/buttons/btn_no.png" alt="No" class="h-full object-contain">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: CRY PAGE -->
+        <div id="page-2" class="page relative">
+            <img src="assets/backgrounds/bg2.jpg" alt="Sad Background" class="page-background">
+            <img src="assets/overlays/rain_overlay.gif" alt="Rain Overlay" class="page-overlay opacity-50 z-20">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <img src="assets/characters/cry_bunny.gif" alt="Crying Bunny" class="page-character w-[250px] h-[250px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-float">
+                <img src="assets/overlays/tear_drop.gif" alt="Tear Drop" class="absolute w-[80px] h-[80px] z-40 animate-tear-fall opacity-0">
+                <img src="assets/gifs/soft_glow.gif" alt="Soft Glow" class="absolute inset-0 w-full h-full object-cover z-20 opacity-40 animate-pulse-light">
+
+                <h1 class="text-cream-light font-baloo text-6xl lg:text-8xl text-glow-purple mb-12 text-center" data-aos="zoom-in" data-aos-delay="200">
+                    Why did you say no? 😭
+                </h1>
+                <button id="btn-try-again" class="cute-button text-3xl bg-baby-pink border-glow-pink animate-bounce-subtle" data-aos="fade-up" data-aos-delay="400">
+                    Try Again <i class="fas fa-redo-alt ml-2"></i>
                 </button>
-                <button id="noButton" class="action-button">
-                    <img src="assets/buttons/btn_no.png" alt="No">
+            </div>
+        </div>
+
+        <!-- Page 3: FIND HIDDEN ITEM GAME -->
+        <div id="page-3" class="page relative">
+            <img src="assets/backgrounds/tree.png" alt="Forest Tree" class="page-background z-10">
+            <img src="assets/gifs/tree_bg_move.gif" alt="Moving Forest Background" class="absolute inset-0 w-full h-full object-cover z-0 animate-pan-left-right opacity-80">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-pink mb-8 text-center" data-aos="zoom-in">
+                    Find the Hidden Heart! <i class="fas fa-sparkles text-yellow-300"></i>
+                </h1>
+                <p class="text-cream-light font-baloo text-2xl mb-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                    It's shyly hiding among the flowers...
+                </p>
+
+                <div id="game-area" class="relative w-[80%] h-[70%] lg:w-[60%] lg:h-[80%] bg-transparent border-4 border-white/50 rounded-3xl overflow-hidden shadow-glass-effect p-4">
+                    <!-- Decorations -->
+                    <img src="assets/decorations/flower1.png" class="absolute w-24 h-24 object-contain animate-float" style="top: 10%; left: 15%;" alt="Flower">
+                    <img src="assets/decorations/bush.png" class="absolute w-36 h-36 object-contain animate-float delay-100" style="bottom: 5%; right: 10%;" alt="Bush">
+                    <img src="assets/decorations/flower1.png" class="absolute w-20 h-20 object-contain animate-float delay-200" style="top: 25%; right: 25%;" alt="Flower">
+                    <img src="assets/decorations/bush.png" class="absolute w-32 h-32 object-contain animate-float delay-300" style="bottom: 15%; left: 20%;" alt="Bush">
+
+                    <!-- Hidden Item -->
+                    <div id="hidden-item-container" class="absolute w-[70px] h-[70px] cursor-pointer opacity-0 transition-opacity duration-500 hidden-item" style="left: calc(var(--x-pos) * 1%); top: calc(var(--y-pos) * 1%);" data-aos="zoom-in" data-aos-delay="800">
+                        <img src="assets/decorations/hidden_item.gif" alt="Hidden Item" class="w-full h-full object-contain">
+                        <img src="assets/gifs/sparkle_small.gif" alt="Small Sparkle" class="absolute inset-0 w-full h-full object-cover animate-pulse-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: CHOOSE YOUR GIFT -->
+        <div id="page-4" class="page relative">
+            <img src="assets/backgrounds/bg3.jpg" alt="Gift Background" class="page-background">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-pink mb-10 text-center" data-aos="zoom-in">
+                    Congratulations! <i class="fas fa-gift text-yellow-300"></i>
+                </h1>
+                <p class="text-cream-light font-baloo text-3xl mb-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                    You can take this special gift!
+                </p>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="gift-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300" data-gift-id="1" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="assets/decorations/gift1.png" alt="Gift 1" class="w-32 h-32 object-contain mx-auto">
+                        <p class="text-center text-cream-light font-baloo text-xl mt-4">Dreamy Box</p>
+                    </div>
+                    <div class="gift-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300" data-gift-id="2" data-aos="zoom-in" data-aos-delay="500">
+                        <img src="assets/decorations/gift2.png" alt="Gift 2" class="w-32 h-32 object-contain mx-auto">
+                        <p class="text-center text-cream-light font-baloo text-xl mt-4">Love Potion</p>
+                    </div>
+                    <div class="gift-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300" data-gift-id="3" data-aos="zoom-in" data-aos-delay="600">
+                        <img src="assets/decorations/gift3.png" alt="Gift 3" class="w-32 h-32 object-contain mx-auto">
+                        <p class="text-center text-cream-light font-baloo text-xl mt-4">Star Jar</p>
+                    </div>
+                    <div class="gift-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300" data-gift-id="4" data-aos="zoom-in" data-aos-delay="700">
+                        <img src="assets/decorations/gift4.png" alt="Gift 4" class="w-32 h-32 object-contain mx-auto">
+                        <p class="text-center text-cream-light font-baloo text-xl mt-4">Sweet Treat</p>
+                    </div>
+                </div>
+                <button id="btn-page4-next" class="cute-button text-3xl mt-16 opacity-0 pointer-events-none" data-aos="fade-up" data-aos-delay="800">
+                    Next Page <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+             <!-- Gift popup modal -->
+             <div id="gift-popup-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1001] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+                <div class="glass-card p-10 max-w-lg text-center relative zoom-in-out">
+                    <img src="assets/gifs/sparkle_explosion.gif" alt="Sparkle Explosion" class="absolute inset-0 w-full h-full object-cover opacity-80 z-0 rounded-3xl">
+                    <h2 class="text-cream-light font-pacifico text-5xl mb-4 text-glow relative z-10">Your Chosen Gift!</h2>
+                    <img id="modal-gift-image" src="" alt="Chosen Gift" class="w-48 h-48 object-contain mx-auto my-6 relative z-10 animate-pulse-light">
+                    <p class="text-cream-light font-baloo text-2xl relative z-10">"A token of my endless love for you, sweetie!"</p>
+                    <button id="btn-modal-close" class="cute-button mt-8 text-xl relative z-10">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: COUPONS -->
+        <div id="page-5" class="page relative">
+            <img src="assets/backgrounds/bg4.jpg" alt="Coupon Background" class="page-background">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-purple mb-10 text-center" data-aos="zoom-in">
+                    Your Special Coupons! <i class="fas fa-ticket-alt text-yellow-300"></i>
+                </h1>
+                <p class="text-cream-light font-baloo text-2xl mb-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                    Click to reveal a sweet surprise!
+                </p>
+                <div class="grid grid-cols-3 lg:grid-cols-4 gap-6 max-h-[calc(100vh-250px)] overflow-y-auto no-scrollbar p-4 rounded-3xl glass-card" data-aos="zoom-in" data-aos-delay="400">
+                    <!-- Coupons, will be dynamically loaded or repeated -->
+                    <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon1.png" alt="Coupon 1" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon2.png" alt="Coupon 2" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon3.png" alt="Coupon 3" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon4.png" alt="Coupon 4" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon5.png" alt="Coupon 5" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon6.png" alt="Coupon 6" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon7.png" alt="Coupon 7" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon8.png" alt="Coupon 8" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon9.png" alt="Coupon 9" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon10.png" alt="Coupon 10" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon11.png" alt="Coupon 11" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                     <div class="coupon-card glass-card cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group">
+                        <img src="assets/decorations/coupon12.png" alt="Coupon 12" class="w-32 h-32 object-contain mx-auto">
+                        <div class="coupon-glow-border absolute inset-0 rounded-3xl border-4 border-transparent group-hover:border-glow-pink transition-all duration-500"></div>
+                    </div>
+                </div>
+                <button id="btn-page5-next" class="cute-button text-3xl mt-12" data-aos="fade-up" data-aos-delay="800">
+                    Next Page <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+            <!-- Coupon modal -->
+            <div id="coupon-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1001] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+                <div class="glass-card p-10 max-w-xl text-center relative zoom-in-out coupon-modal-content">
+                    <img src="assets/gifs/sparkle_explosion.gif" alt="Sparkle Explosion" class="absolute inset-0 w-full h-full object-cover opacity-60 z-0 rounded-3xl">
+                    <h2 class="text-cream-light font-pacifico text-5xl mb-4 text-glow relative z-10">Sweet Surprise!</h2>
+                    <img id="modal-coupon-image" src="" alt="Revealed Coupon" class="w-56 h-56 object-contain mx-auto my-6 relative z-10 animate-pulse-light border-4 border-glow-pink rounded-2xl p-2">
+                    <p class="text-cream-light font-baloo text-3xl relative z-10">"You can use this coupon anytime. Limitless sweetie."</p>
+                    <button id="btn-coupon-modal-close" class="cute-button mt-8 text-xl relative z-10">Got it!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: MEMORY LANE -->
+        <div id="page-6" class="page relative">
+            <img src="assets/backgrounds/bg5.jpg" alt="Memory Lane Background" class="page-background">
+            <img src="assets/overlays/sakura_fall.gif" alt="Sakura Fall" class="page-overlay opacity-60 z-20">
+            <img src="assets/overlays/heart_rain_slow.gif" alt="Slow Heart Rain" class="page-overlay opacity-50 z-21">
+            <img src="assets/overlays/dreamy_light.gif" alt="Dreamy Light" class="page-overlay opacity-40 z-22 animate-pulse-light">
+
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8 w-full h-full">
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-pink mb-10 text-center" data-aos="zoom-in">
+                    Our Beautiful Memories <i class="fas fa-camera-retro text-yellow-300"></i>
+                </h1>
+                <p class="text-cream-light font-baloo text-2xl mb-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                    A journey captured in moments... Scroll to see!
+                </p>
+
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 max-h-[calc(100vh-250px)] overflow-y-auto no-scrollbar p-4 rounded-3xl glass-card w-[90%] lg:w-[70%]" id="memory-gallery">
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                        <img src="assets/photos/pic1.jpg" alt="Memory 1" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Our first date, full of giggles."</p>
+                        </div>
+                    </div>
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="400">
+                        <img src="assets/photos/pic2.jpg" alt="Memory 2" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Adventure with you, my favorite!"</p>
+                        </div>
+                    </div>
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="500">
+                        <img src="assets/photos/pic3.jpg" alt="Memory 3" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Just us, under the stars."</p>
+                        </div>
+                    </div>
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="600">
+                        <img src="assets/photos/pic4.jpg" alt="Memory 4" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Every moment with you is precious."</p>
+                        </div>
+                    </div>
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="700">
+                        <img src="assets/photos/pic5.jpg" alt="Memory 5" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Your smile, my favorite view."</p>
+                        </div>
+                    </div>
+                    <div class="memory-card glass-card p-4 cursor-pointer hover:scale-105 transition-transform duration-300 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="800">
+                        <img src="assets/photos/pic6.jpg" alt="Memory 6" class="w-full h-auto rounded-xl shadow-lg">
+                        <div class="memory-quote-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                            <p class="text-cream-light font-baloo text-xl px-4 text-center">"Forever and always, my love."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-page6-next" class="cute-button text-3xl mt-12" data-aos="fade-up" data-aos-delay="900">
+                    Next Page <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
-    </div>
 
-    <!-- Page 2: Crying Page -->
-    <div id="page2" class="page" style="background-image: url('assets/backgrounds/bg2.jpg');">
-        <img src="assets/gifs/tear_drop.gif" alt="Tear Drop" class="overlay tear-drop">
-        <img src="assets/gifs/soft_glow.gif" alt="Soft Glow" class="overlay soft-glow">
-        <img src="assets/gifs/rain_overlay.gif" alt="Rain" class="overlay rain-overlay">
-        <div class="content-wrapper">
-            <img src="assets/gifs/cry_bunny.gif" alt="Crying Bunny" class="cry-bunny">
-            <h2>Why did you say no? 😢</h2>
-            <button id="tryAgainButton" class="action-button baby-pink-button">Try Again</button>
-        </div>
-    </div>
+        <!-- Page 7: WORDS FROM MY HEART -->
+        <div id="page-7" class="page relative">
+            <img src="assets/backgrounds/bg6.jpg" alt="Words Background" class="page-background">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <img src="assets/decorations/heart1.png" class="absolute w-24 h-24 object-contain animate-float" style="top: 10%; left: 10%;" alt="Heart 1">
+                <img src="assets/decorations/heart2.png" class="absolute w-20 h-20 object-contain animate-float delay-100" style="bottom: 15%; right: 15%;" alt="Heart 2">
+                <img src="assets/decorations/heart3.png" class="absolute w-28 h-28 object-contain animate-float delay-200" style="top: 20%; right: 5%;" alt="Heart 3">
+                <img src="assets/decorations/heart4.png" class="absolute w-16 h-16 object-contain animate-float delay-300" style="bottom: 5%; left: 20%;" alt="Heart 4">
 
-    <!-- Page 3: Find Hidden Item Game -->
-    <div id="page3" class="page game-page" style="background-image: url('assets/backgrounds/tree.png');">
-        <img src="assets/gifs/tree_bg_move.gif" alt="Moving Tree Background" class="overlay tree-bg-move">
-        <img src="assets/gifs/sparkle_small.gif" alt="Small Sparkle" class="overlay sparkle-small-game">
-        <img src="assets/gifs/flower_sway1.gif" alt="Flower Sway" class="overlay flower-sway-1">
-        <img src="assets/gifs/flower_sway2.gif" alt="Flower Sway" class="overlay flower-sway-2">
-        <img src="assets/gifs/butterfly_fly1.gif" alt="Butterfly Fly" class="overlay butterfly-fly-1">
-        <img src="assets/gifs/butterfly_fly2.gif" alt="Butterfly Fly" class="overlay butterfly-fly-2">
-
-        <div class="game-area">
-            <!-- Non-clickable decorations -->
-            <img src="assets/decorations/flower1.png" alt="Flower" class="game-decoration flower1">
-            <img src="assets/decorations/flower2.png" alt="Flower" class="game-decoration flower2">
-            <img src="assets/decorations/butterfly1.png" alt="Butterfly" class="game-decoration butterfly1">
-            <img src="assets/decorations/butterfly2.png" alt="Butterfly" class="game-decoration butterfly2">
-            <img src="assets/decorations/grass.png" alt="Grass" class="game-decoration grass">
-            <img src="assets/decorations/bush.png" alt="Bush" class="game-decoration bush">
-            <!-- Hidden Item - now larger and initially visible but cleverly placed -->
-            <img src="assets/gifs/hidden_item.gif" alt="Hidden Item" class="hidden-item" id="hiddenItem">
-        </div>
-        <h3 id="gameMessage">Find the hidden item! It's hiding!</h3>
-        <button id="nextPageGame" class="action-button baby-pink-button next-page-button hidden">Next Page</button>
-    </div>
-
-    <!-- Page 4: Choose Your Gift -->
-    <div id="page4" class="page" style="background-image: url('assets/backgrounds/bg3.jpg');">
-        <img src="assets/gifs/ribbon_shine.gif" alt="Ribbon Shine" class="overlay ribbon-shine">
-        <img src="assets/gifs/sparkle_explosion.gif" alt="Sparkle Explosion" class="overlay sparkle-explosion">
-        <h2>Choose Your Gift!</h2>
-        <div class="gifts-container">
-            <div class="gift-item" data-gift-message="Congratulations! You can take this one!">
-                <img src="assets/decorations/gift1.png" alt="Gift 1">
-            </div>
-            <div class="gift-item" data-gift-message="A wonderful choice! This is all yours.">
-                <img src="assets/decorations/gift2.png" alt="Gift 2">
-            </div>
-            <div class="gift-item" data-gift-message="Perfect pick! Enjoy your gift!">
-                <img src="assets/decorations/gift3.png" alt="Gift 3">
-            </div>
-            <div class="gift-item" data-gift-message="You found it! This gift is for you.">
-                <img src="assets/decorations/gift4.png" alt="Gift 4">
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-purple mb-10 text-center" data-aos="zoom-in">
+                    Words From My Heart <i class="fas fa-pen-fancy text-yellow-300"></i>
+                </h1>
+                <div class="glass-card p-8 max-w-2xl w-[90%] relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div id="typing-text-container" class="min-h-[150px] lg:min-h-[200px]">
+                        <p id="typed-text" class="text-cream-light font-baloo text-3xl lg:text-4xl leading-relaxed text-glow-pink typing-effect"></p>
+                        <img id="typing-cursor" src="assets/gifs/typing_cursor.gif" class="inline-block w-8 h-8 lg:w-10 lg:h-10 ml-2 relative top-1" alt="Typing Cursor">
+                        <img id="text-sparkle" src="assets/gifs/text_sparkle.gif" class="absolute w-12 h-12 opacity-0" alt="Text Sparkle">
+                    </div>
+                </div>
+                <button id="btn-page7-next" class="cute-button text-3xl mt-12" data-aos="fade-up" data-aos-delay="1000">
+                    Next Page <i class="fas fa-arrow-right ml-2"></i>
+                </button>
             </div>
         </div>
-        <p id="giftMessage" class="gift-message"></p>
-        <button id="nextPageGift" class="action-button baby-pink-button next-page-button hidden">Next Page</button>
-    </div>
 
-    <!-- Page 5: Special Coupons -->
-    <div id="page5" class="page" style="background-image: url('assets/backgrounds/bg4.jpg');">
-        <img src="assets/gifs/border_glow.gif" alt="Border Glow" class="overlay border-glow">
-        <img src="assets/gifs/floating_heart_small.gif" alt="Floating Hearts" class="overlay floating-heart-small">
-        <h2>Special Coupons For You!</h2>
-        <div class="coupons-container">
-            <!-- Add 12 coupon images here -->
-            <div class="coupon-item" data-coupon-message="You can use this coupon anytime, limitless sweetie!">
-                <img src="assets/decorations/coupon1.png" alt="Coupon 1">
-            </div>
-            <div class="coupon-item" data-coupon-message="Enjoy this special treat, my love!">
-                <img src="assets/decorations/coupon2.png" alt="Coupon 2">
-            </div>
-            <div class="coupon-item" data-coupon-message="A little something just for you!">
-                <img src="assets/decorations/coupon3.png" alt="Coupon 3">
-            </div>
-            <div class="coupon-item" data-coupon-message="Your wish is my command with this coupon!">
-                <img src="assets/decorations/coupon4.png" alt="Coupon 4">
-            </div>
-            <div class="coupon-item" data-coupon-message="More sweet moments await!">
-                <img src="assets/decorations/coupon5.png" alt="Coupon 5">
-            </div>
-            <div class="coupon-item" data-coupon-message="Consider this a special favour!">
-                <img src="assets/decorations/coupon6.png" alt="Coupon 6">
-            </div>
-            <div class="coupon-item" data-coupon-message="Limitless cuddles coming your way!">
-                <img src="assets/decorations/coupon7.png" alt="Coupon 7">
-            </div>
-            <div class="coupon-item" data-coupon-message="Your happiness, my priority!">
-                <img src="assets/decorations/coupon8.png" alt="Coupon 8">
-            </div>
-            <div class="coupon-item" data-coupon-message="Anything you desire!">
-                <img src="assets/decorations/coupon9.png" alt="Coupon 9">
-            </div>
-            <div class="coupon-item" data-coupon-message="For my sweetest love!">
-                <img src="assets/decorations/coupon10.png" alt="Coupon 10">
-            </div>
-            <div class="coupon-item" data-coupon-message="Cherish this moment and this coupon!">
-                <img src="assets/decorations/coupon11.png" alt="Coupon 11">
-            </div>
-            <div class="coupon-item" data-coupon-message="A never-ending supply of joy!">
-                <img src="assets/decorations/coupon12.png" alt="Coupon 12">
+        <!-- Page 8: GUESS OUR SONG -->
+        <div id="page-8" class="page relative">
+            <img src="assets/backgrounds/bg5.jpg" alt="Music Background" class="page-background">
+            <img src="assets/gifs/romantic_glow.gif" alt="Romantic Glow" class="page-overlay opacity-50 z-20 animate-pulse-light">
+            <img src="assets/gifs/floating_music.gif" alt="Floating Music Notes" class="absolute inset-0 w-full h-full object-cover z-25 opacity-70">
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <img src="assets/gifs/heart_pulse_big.gif" alt="Pulsing Heart" class="absolute w-[200px] h-[200px] lg:w-[300px] lg:h-[300px] z-28 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+
+                <h1 class="text-cream-light font-pacifico text-6xl lg:text-7xl text-glow-pink mb-10 text-center" data-aos="zoom-in">
+                    Guess Our Song! <i class="fas fa-music text-yellow-300"></i>
+                </h1>
+                <p class="text-cream-light font-baloo text-2xl mb-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                    Which song makes our hearts beat together?
+                </p>
+
+                <div class="glass-card p-8 max-w-md w-[90%] flex flex-col items-center" data-aos="fade-up" data-aos-delay="400">
+                    <img src="assets/decorations/music_note.png" alt="Music Note" class="w-24 h-24 object-contain mb-4 animate-float">
+                    <p class="text-cream-light font-baloo text-xl mb-6 text-center">Scan the QR code to reveal!</p>
+                    <div class="relative w-40 h-40 border-4 border-glow-pink rounded-xl p-2 bg-cream-light shadow-lg">
+                        <img src="assets/decorations/qr_frame.png" alt="QR Frame" class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none">
+                        <!-- Replace with your actual QR code image if you have one -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtu.be/dQw4w9WgXcQ?autoplay=1" alt="Our Song QR Code" class="w-full h-full object-contain relative z-0">
+                    </div>
+                </div>
+
+                <button id="btn-page8-next" class="cute-button text-3xl mt-12" data-aos="fade-up" data-aos-delay="800">
+                    Next Page <i class="fas fa-arrow-right ml-2"></i>
+                </button>
             </div>
         </div>
-        <p id="couponMessage" class="coupon-text"></p>
-        <button id="nextPageCoupon" class="action-button baby-pink-button next-page-button">Next Page</button>
-    </div>
 
-    <!-- Page 6: Memory Lane -->
-    <div id="page6" class="page" style="background-image: url('assets/backgrounds/bg5.jpg');">
-        <img src="assets/gifs/sakura_fall.gif" alt="Sakura Fall" class="overlay sakura-fall">
-        <img src="assets/gifs/heart_rain_slow.gif" alt="Heart Rain Slow" class="overlay heart-rain-slow">
-        <img src="assets/gifs/dreamy_light.gif" alt="Dreamy Light" class="overlay dreamy-light">
-        <h2>Our Memory Lane 💖</h2>
-        <div class="memory-photos-container">
-            <div class="memory-item" data-quote="Every moment with you is a cherished memory.">
-                <img src="assets/decorations/pic1.jpg" alt="Memory Photo 1">
-                <p class="photo-quote hidden"></p>
-            </div>
-            <div class="memory-item" data-quote="Our laughter echoes through time.">
-                <img src="assets/decorations/pic2.jpg" alt="Memory Photo 2">
-                <p class="photo-quote hidden"></p>
-            </div>
-            <div class="memory-item" data-quote="Adventures are better when shared with you.">
-                <img src="assets/decorations/pic3.jpg" alt="Memory Photo 3">
-                <p class="photo-quote hidden"></p>
-            </div>
-            <div class="memory-item" data-quote="You light up my world.">
-                <img src="assets/decorations/pic4.jpg" alt="Memory Photo 4">
-                <p class="photo-quote hidden"></p>
-            </div>
-            <div class="memory-item" data-quote="Growing together, loving forever.">
-                <img src="assets/decorations/pic5.jpg" alt="Memory Photo 5">
-                <p class="photo-quote hidden"></p>
-            </div>
-            <div class="memory-item" data-quote="My favorite view is always with you.">
-                <img src="assets/decorations/pic6.jpg" alt="Memory Photo 6">
-                <p class="photo-quote hidden"></p>
-            </div>
-        </div>
-        <button id="nextPageMemory" class="action-button baby-pink-button next-page-button">Next Page</button>
-    </div>
+        <!-- Page 9: ANNIVERSARY BOOK PAGE -->
+        <div id="page-9" class="page relative">
+            <img src="assets/backgrounds/bg9_note.jpg" alt="Notebook Background" class="page-background">
+            <img src="assets/overlays/heart_rain.gif" alt="Heart Rain" class="page-overlay opacity-60 z-20">
+            <img src="assets/overlays/sparkle_overlay.gif" alt="Sparkle Overlay" class="page-overlay opacity-50 z-21">
+            <img src="assets/overlays/confetti.gif" alt="Confetti" class="page-overlay opacity-70 z-22">
 
-    <!-- Page 7: Words From My Heart -->
-    <div id="page7" class="page" style="background-image: url('assets/backgrounds/bg6.jpg');">
-        <img src="assets/gifs/typing_cursor.gif" alt="Typing Cursor" class="overlay typing-cursor">
-        <img src="assets/gifs/text_sparkle.gif" alt="Text Sparkle" class="overlay text-sparkle">
-        <img src="assets/decorations/heart1.png" alt="Heart Decoration" class="overlay floating-heart-decor heart1">
-        <img src="assets/decorations/heart2.png" alt="Heart Decoration" class="overlay floating-heart-decor heart2">
-        <img src="assets/decorations/heart3.png" alt="Heart Decoration" class="overlay floating-heart-decor heart3">
-        <img src="assets/decorations/heart4.png" alt="Heart Decoration" class="overlay floating-heart-decor heart4">
-        <h2>Words From My Heart 💌</h2>
-        <div class="wishes-box">
-            <p>
-                My dearest love, every day with you is a gift. You fill my life with so much joy, warmth, and endless love.
-                Thank you for being you, for your beautiful smile, your kind heart, and for always being by my side.
-                You are my greatest adventure, my sweetest dream, and my most precious treasure.
-                I love you more than words can express. Always and forever yours.
-            </p>
-        </div>
-        <button id="nextPageWishes" class="action-button baby-pink-button next-page-button">Next Page</button>
-    </div>
+            <div class="page-content relative z-30 flex flex-col items-center justify-center p-8">
+                <img src="assets/decorations/heart_decor.png" alt="Heart Decoration" class="absolute w-24 h-24 lg:w-32 lg:h-32 object-contain animate-float z-35" style="top: 15%; right: 10%;">
 
-    <!-- Page 8: Guess Our Song -->
-    <div id="page8" class="page" style="background-image: url('assets/decorations/music_note.png');">
-        <img src="assets/gifs/floating_music.gif" alt="Floating Music Notes" class="overlay floating-music">
-        <img src="assets/gifs/heart_pulse_big.gif" alt="Heart Pulse" class="overlay heart-pulse-big">
-        <img src="assets/gifs/romantic_glow.gif" alt="Romantic Glow" class="overlay romantic-glow">
-        <h2>Guess Our Song! 🎶</h2>
-        <div class="song-game-content">
-            <img src="assets/decorations/qr_frame.png" alt="QR Code Frame" class="qr-frame">
-            <div class="music-hint">
-                <p>Can you guess the special song that defines us?</p>
-                <button id="playHintButton" class="action-button baby-pink-button">Play a Hint</button>
-            </div>
-        </div>
-        <button id="nextPageSong" class="action-button baby-pink-button next-page-button">Next Page</button>
-    </div>
-
-    <!-- Page 9: Anniversary Note -->
-    <div id="page9" class="page" style="background-image: url('assets/backgrounds/bg9_note.jpg');">
-        <img src="assets/gifs/heart_rain.gif" alt="Heart Rain" class="overlay heart-rain">
-        <img src="assets/gifs/sparkle_overlay.gif" alt="Sparkle" class="overlay sparkle-overlay-final">
-        <img src="assets/gifs/confetti.gif" alt="Confetti" class="overlay confetti">
-        <img src="assets/decorations/heart_decor.png" alt="Heart Decoration" class="overlay heart-decor">
-        <div class="content-wrapper final-page-content">
-            <div class="anniversary-note-book">
-                <div class="book-page">
-                    <p class="anniversary-note-content">
+                <div class="glass-card p-8 lg:p-12 max-w-3xl w-[90%] text-center relative overflow-hidden book-page-effect" data-aos="zoom-in" data-aos-delay="200">
+                    <h1 class="text-pastel-pink font-pacifico text-6xl lg:text-7xl text-glow-pink mb-6" data-aos="fade-down" data-aos-delay="400">
+                        Happy Anniversary, My Love!
+                    </h1>
+                    <p class="text-cream-light font-baloo text-3xl lg:text-4xl leading-relaxed text-glow-purple" data-aos="fade-up" data-aos-delay="600">
                         Happy 1 Year Anniversary Jaaan 💗<br>
                         My love, today marks 1 year of our beautiful journey together.<br>
                         Every moment with you has been magical, full of joy, laughter, and endless love.<br>
                         You are my dream, my heart, my everything. 💗💗<br>
                         Here’s to us, our memories, our love, and the countless adventures ahead.<br>
-                        I love you more than words can ever say. 💗
+                        Iloveyoumore than words can ever say. 💗
                     </p>
+                    <div class="absolute inset-0 border-8 border-double border-pastel-pink rounded-3xl animate-border-glow pointer-events-none z-0"></div>
                 </div>
             </div>
-            <div class="final-music-options">
-                <button id="playSoftPianoButton" class="action-button baby-pink-button">Play Soft Piano</button>
-                <button id="stopBackgroundMusic" class="action-button baby-pink-button">Stop Main Music</button>
-            </div>
         </div>
+
     </div>
 
-    <script src="script.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- All Custom JavaScript -->
+    <script src="./script.js"></script>
+
+    <script>
+        // AOS Initialization
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            disable: function() {
+                var maxWidth = 1024; // Designed for landscape, might need to adjust for very small landscape
+                return window.innerWidth < maxWidth;
+            }
+        });
+
+        // Trigger AOS refresh when content is dynamically loaded or changes visibility
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.refreshHard();
+        });
+    </script>
 </body>
 </html>
