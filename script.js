@@ -1,314 +1,542 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const pages = document.querySelectorAll('.page');
-    let currentPageIndex = 0;
+// script.js - All consolidated JavaScript for the 9-page SPA
 
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const softPianoMusic = document.getElementById('softPianoMusic');
-    const clickSound = document.getElementById('clickSound');
-    const heartSound = document.getElementById('heartSound');
-    const popSound = document.getElementById('popSound');
+// --- Global Variables and Audio Setup ---
+const pages = document.querySelectorAll('.page');
+let currentPage = 1; // Start on Page 1
+let isMusicPlaying = false;
 
-    const musicToggleButton = document.getElementById('musicToggle');
-    const musicIcon = document.getElementById('musicIcon');
-    let isPlaying = false; // To track main background music state
-    let softPianoPlaying = false; // To track soft piano music state
+const backgroundMusic = document.getElementById('background-music');
+const buttonClickSound = document.getElementById('button-click-sound');
+const heartPopupSound = document.getElementById('heart-popup-sound');
+const giftPopupSound = document.getElementById('gift-popup-sound');
+const softPianoMusic = document.getElementById('soft-piano-music');
+const musicToggleBtn = document.getElementById('music-toggle');
+const musicIcon = document.getElementById('music-icon');
 
-    // --- Utility Functions ---
-    function playSound(audioElement) {
-        if (audioElement) {
-            audioElement.currentTime = 0; // Rewind to start
-            audioElement.play().catch(e => console.log("Audio play prevented:", e));
-        }
+const pageContentMap = {
+    1: document.querySelector('#page-1 .page-content'),
+    2: document.querySelector('#page-2 .page-content'),
+    3: document.querySelector('#page-3 .page-content'),
+    4: document.querySelector('#page-4 .page-content'),
+    5: document.querySelector('#page-5 .page-content'),
+    6: document.querySelector('#page-6 .page-content'),
+    7: document.querySelector('#page-7 .page-content'),
+    8: document.querySelector('#page-8 .page-content'),
+    9: document.querySelector('#page-9 .page-content'),
+};
+
+// --- Utility Functions ---
+function playSound(audioElement) {
+    if (audioElement && !audioElement.paused) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+    }
+    if (audioElement) {
+        audioElement.play().catch(e => console.error("Audio play failed:", e));
+    }
+}
+
+function stopSound(audioElement) {
+    if (audioElement) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+    }
+}
+
+function showPage(pageNumber, transitionType = 'fade') {
+    if (pageNumber < 1 || pageNumber > pages.length) {
+        console.error("Invalid page number:", pageNumber);
+        return;
     }
 
-    function showPage(index) {
-        if (index < 0 || index >= pages.length) return;
+    const currentPageElement = document.getElementById(`page-${currentPage}`);
+    const nextPageElement = document.getElementById(`page-${pageNumber}`);
+    const currentContent = pageContentMap[currentPage];
+    const nextContent = pageContentMap[pageNumber];
 
-        // Hide all pages
-        pages.forEach(page => {
-            page.classList.remove('active');
-            // Reset specific page states when hidden
-            if (page.id === 'page3') {
-                const hiddenItem = document.getElementById('hiddenItem');
-                hiddenItem.classList.remove('found');
-                document.getElementById('gameMessage').textContent = 'Find the hidden item! It\'s hiding!'; // Reset game message
-                document.getElementById('nextPageGame').classList.add('hidden');
-                itemFound = false; // Reset game state
-            }
-            if (page.id === 'page4') {
-                document.querySelectorAll('.gift-item').forEach(item => item.classList.remove('zoomed'));
-                document.getElementById('giftMessage').textContent = '';
-                document.getElementById('giftMessage').classList.remove('show');
-                document.getElementById('nextPageGift').classList.add('hidden');
-                giftSelected = false;
-            }
-            if (page.id === 'page5') {
-                document.querySelectorAll('.coupon-item').forEach(item => item.classList.remove('zoomed'));
-                document.getElementById('couponMessage').textContent = '';
-                currentZoomedCoupon = null;
-            }
-            if (page.id === 'page6') {
-                document.querySelectorAll('.memory-item').forEach(item => {
-                    item.classList.remove('zoomed');
-                    item.querySelector('.photo-quote').classList.add('hidden');
-                });
-                currentZoomedMemory = null;
-            }
-        });
-
-        // Show the target page
-        pages[index].classList.add('active');
-        currentPageIndex = index;
-
-        // Special handling for Page 9 music
-        if (pages[index].id === 'page9') {
-            if (isPlaying) {
-                backgroundMusic.pause();
-                backgroundMusic.currentTime = 0;
-                isPlaying = false;
-                musicIcon.src = 'assets/buttons/music_play.png'; // Update global music icon
-            }
-            // Ensure soft piano isn't playing by default, unless user clicks
-            if (softPianoPlaying) {
-                softPianoMusic.pause();
-                softPianoMusic.currentTime = 0;
-                softPianoPlaying = false;
-            }
-        } else {
-            // If not on page 9, stop soft piano if playing
-            if (softPianoPlaying) {
-                softPianoMusic.pause();
-                softPianoMusic.currentTime = 0;
-                softPianoPlaying = false;
-            }
-            // Resume main music if it was playing and not on page 9
-            if (isPlaying && backgroundMusic.paused) {
-                backgroundMusic.play().catch(e => console.log("Background music play prevented:", e));
-            }
-        }
-        
-        // Special logic for Page 3 on activation
-        if (pages[index].id === 'page3' && pages[index].classList.contains('active')) {
-            randomizeHiddenItemPosition();
-        }
+    if (!nextPageElement) {
+        console.error(`Page ${pageNumber} element not found.`);
+        return;
     }
 
-    function goToNextPage() {
-        playSound(clickSound);
-        showPage(currentPageIndex + 1);
-    }
-
-    // --- Global Music Control ---
-    musicToggleButton.addEventListener('click', () => {
-        if (isPlaying) {
-            backgroundMusic.pause();
-            musicIcon.src = 'assets/buttons/music_play.png';
-            isPlaying = false;
-        } else {
-            backgroundMusic.play().catch(e => console.log("Background music play prevented:", e));
-            musicIcon.src = 'assets/buttons/music_pause.png';
-            isPlaying = true;
-        }
-    });
-
-    // Automatically play music on user interaction (first click anywhere)
-    // This is a common workaround for browser autoplay policies
-    document.body.addEventListener('click', () => {
-        if (!isPlaying && currentPageIndex === 0) { // Only attempt to play if not playing and on the first page
-            backgroundMusic.play().catch(e => console.log("Autoplay prevented, user interaction required:", e));
-            musicIcon.src = 'assets/buttons/music_pause.png';
-            isPlaying = true;
-        }
-    }, { once: true }); // Ensure this event listener runs only once
-
-    // --- Page 1: Love Question ---
-    document.getElementById('yesButton').addEventListener('click', () => {
-        playSound(heartSound);
-        // "Yes" now leads to Page 3 (Find Hidden Item), as per the previous correction
-        showPage(2);
-    });
-
-    document.getElementById('noButton').addEventListener('click', () => {
-        playSound(clickSound);
-        showPage(1); // "No" leads to Page 2 (Crying Page)
-    });
-
-    // --- Page 2: Crying Page ---
-    document.getElementById('tryAgainButton').addEventListener('click', () => {
-        playSound(clickSound);
-        showPage(0); // Go back to Page 1
-    });
-
-    // --- Page 3: Find Hidden Item Game ---
-    const hiddenItem = document.getElementById('hiddenItem');
-    const gameMessage = document.getElementById('gameMessage');
-    const nextPageGameButton = document.getElementById('nextPageGame');
-    let itemFound = false;
-
-    // Randomize hidden item position (within game-area)
-    function randomizeHiddenItemPosition() {
-        const gameArea = document.querySelector('.game-area');
-        if (!gameArea) return;
-
-        // Ensure images are loaded before calculating dimensions
-        const imagesLoaded = Array.from(gameArea.querySelectorAll('img')).map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise(resolve => { img.onload = resolve; });
-        });
-
-        Promise.all(imagesLoaded).then(() => {
-            const gameAreaRect = gameArea.getBoundingClientRect();
-            const itemRect = hiddenItem.getBoundingClientRect();
-
-            // Calculate max X and Y coordinates within the game area
-            // Account for item's own dimensions
-            const maxX = gameAreaRect.width - itemRect.width;
-            const maxY = gameAreaRect.height - itemRect.height;
-
-            // Generate random positions
-            // Ensure item is not placed completely off-screen or too close to edges
-            const randomX = Math.random() * (maxX - 20) + 10; // 10px padding from edges
-            const randomY = Math.random() * (maxY - 20) + 10;
-
-            hiddenItem.style.left = `${randomX}px`;
-            hiddenItem.style.top = `${randomY}px`;
-            console.log(`Hidden item placed at: top ${randomY}px, left ${randomX}px`);
-
-            // Optional: You can make the item blink or briefly show its location when the page loads for a very short hint
-            // hiddenItem.style.opacity = '0.5';
-            // setTimeout(() => { hiddenItem.style.opacity = '1'; }, 500);
+    // Deactivate current page
+    if (currentPageElement && currentPageElement.classList.contains('active')) {
+        gsap.to(currentContent, {
+            opacity: 0,
+            scale: 0.9,
+            duration: 0.5,
+            ease: "power2.in",
+            onComplete: () => {
+                currentPageElement.classList.remove('active');
+                currentPageElement.classList.add('hidden'); // Hide completely
+                currentContent.style.opacity = ''; // Reset for next activation
+                currentContent.style.transform = ''; // Reset for next activation
+                // Specific cleanup for pages that need it
+                if (currentPage === 3) stopHiddenItemAnimation();
+                if (currentPage === 7) stopTypingAnimation();
+            }
         });
     }
 
-    hiddenItem.addEventListener('click', () => {
-        if (!itemFound) {
-            playSound(popSound); // Use a pop sound for finding
-            hiddenItem.classList.add('found');
-            gameMessage.textContent = 'You found it! Great job! 🎉';
-            nextPageGameButton.classList.remove('hidden');
-            itemFound = true;
-        }
-    });
+    // Activate next page
+    nextPageElement.classList.remove('hidden');
+    gsap.fromTo(nextContent,
+        { opacity: 0, scale: 0.9 }, // Start slightly scaled down and invisible
+        {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8, // Slightly longer for the entrance
+            ease: "power2.out",
+            delay: 0.2, // Small delay for content to appear after old page fades
+            onStart: () => {
+                nextPageElement.classList.add('active');
+                currentPage = pageNumber;
+                AOS.refreshHard(); // Re-initialize AOS for new page elements
 
-    nextPageGameButton.addEventListener('click', goToNextPage);
-
-    // --- Page 4: Choose Your Gift ---
-    const giftItems = document.querySelectorAll('.gift-item');
-    const giftMessageDisplay = document.getElementById('giftMessage');
-    const nextPageGiftButton = document.getElementById('nextPageGift');
-    let giftSelected = false;
-
-    giftItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (!giftSelected) {
-                playSound(popSound); // Pop sound for gift selection
-                giftItems.forEach(g => g.classList.remove('zoomed')); // Deselect any previous
-                item.classList.add('zoomed');
-                giftMessageDisplay.textContent = item.dataset.giftMessage;
-                giftMessageDisplay.classList.add('show');
-                nextPageGiftButton.classList.remove('hidden');
-                giftSelected = true;
-            }
-        });
-    });
-    nextPageGiftButton.addEventListener('click', () => {
-        giftSelected = false; // Reset for next time
-        goToNextPage();
-    });
-
-    // --- Page 5: Special Coupons ---
-    const couponItems = document.querySelectorAll('.coupon-item');
-    const couponMessageDisplay = document.getElementById('couponMessage');
-    let currentZoomedCoupon = null;
-
-    couponItems.forEach(item => {
-        item.addEventListener('click', () => {
-            playSound(heartSound); // Heart sound for coupon selection
-            if (currentZoomedCoupon) {
-                currentZoomedCoupon.classList.remove('zoomed');
-            }
-            item.classList.add('zoomed');
-            couponMessageDisplay.textContent = item.dataset.couponMessage;
-            currentZoomedCoupon = item;
-        });
-    });
-    document.getElementById('nextPageCoupon').addEventListener('click', goToNextPage);
-
-    // --- Page 6: Memory Lane ---
-    const memoryItems = document.querySelectorAll('.memory-item');
-    let currentZoomedMemory = null;
-
-    memoryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            playSound(clickSound); // Click sound for photo
-            const quoteElement = item.querySelector('.photo-quote');
-
-            if (currentZoomedMemory === item) {
-                // If clicking the same item, unzoom and hide quote
-                item.classList.remove('zoomed');
-                quoteElement.classList.add('hidden');
-                currentZoomedMemory = null;
-            } else {
-                // Unzoom previous if any
-                if (currentZoomedMemory) {
-                    currentZoomedMemory.classList.remove('zoomed');
-                    currentZoomedMemory.querySelector('.photo-quote').classList.add('hidden');
+                // Specific setup for pages that need it
+                if (currentPage === 3) setupHiddenItemGame();
+                if (currentPage === 7) setupTypingAnimation();
+                if (currentPage === 9) {
+                    stopSound(backgroundMusic);
+                    if (isMusicPlaying) playSound(softPianoMusic);
+                } else if (currentPage !== 9 && backgroundMusic.paused && isMusicPlaying) {
+                    stopSound(softPianoMusic);
+                    playSound(backgroundMusic);
                 }
-                // Zoom new item and show quote
-                item.classList.add('zoomed');
-                quoteElement.textContent = item.dataset.quote;
-                quoteElement.classList.remove('hidden');
-                currentZoomedMemory = item;
+            }
+        }
+    );
+}
+
+
+// --- Global Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial music state (autoplay handled by browser, then controlled by user)
+    backgroundMusic.volume = 0.6;
+    buttonClickSound.volume = 0.8;
+    heartPopupSound.volume = 0.8;
+    giftPopupSound.volume = 0.8;
+    softPianoMusic.volume = 0.6;
+
+    // Try to autoplay, but be ready for user interaction
+    const playAttempt = backgroundMusic.play();
+    if (playAttempt !== undefined) {
+        playAttempt.then(() => {
+            isMusicPlaying = true;
+            musicIcon.classList.remove('fa-volume-mute');
+            musicIcon.classList.add('fa-volume-up');
+        }).catch(() => {
+            // Autoplay failed, likely due to browser policy
+            isMusicPlaying = false;
+            musicIcon.classList.remove('fa-volume-up');
+            musicIcon.classList.add('fa-volume-mute');
+            console.log("Autoplay prevented. User interaction needed to play music.");
+        });
+    }
+
+    musicToggleBtn.addEventListener('click', () => {
+        playSound(buttonClickSound);
+        if (isMusicPlaying) {
+            backgroundMusic.pause();
+            softPianoMusic.pause();
+            musicIcon.classList.remove('fa-volume-up');
+            musicIcon.classList.add('fa-volume-mute');
+            isMusicPlaying = false;
+        } else {
+            if (currentPage === 9) {
+                softPianoMusic.play();
+            } else {
+                backgroundMusic.play();
+            }
+            musicIcon.classList.remove('fa-volume-mute');
+            musicIcon.classList.add('fa-volume-up');
+            isMusicPlaying = true;
+        }
+    });
+
+    // Ensure initial page is set up
+    showPage(1);
+});
+
+// --- Page 1: LOVE QUESTION ---
+document.addEventListener('DOMContentLoaded', () => {
+    const btnYes = document.getElementById('btn-yes');
+    const btnNo = document.getElementById('btn-no');
+
+    if (btnYes) {
+        btnYes.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            gsap.to(btnYes, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1, onComplete: () => {
+                showPage(3); // Navigate to Page 3 (Hidden Item Game)
+            }});
+        });
+    }
+
+    if (btnNo) {
+        btnNo.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            gsap.to(btnNo, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1, onComplete: () => {
+                showPage(2); // Navigate to Page 2 (Cry Page)
+            }});
+        });
+    }
+});
+
+// --- Page 2: CRY PAGE ---
+document.addEventListener('DOMContentLoaded', () => {
+    const btnTryAgain = document.getElementById('btn-try-again');
+    const tearDrop = document.querySelector('#page-2 .animate-tear-fall');
+
+    // Only animate tear drop when page 2 is active
+    const page2Observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class' && mutation.target.id === 'page-2') {
+                if (mutation.target.classList.contains('active')) {
+                    if (tearDrop) {
+                        gsap.to(tearDrop, { opacity: 1, repeat: -1, duration: 3, ease: "none" });
+                    }
+                } else {
+                    if (tearDrop) {
+                        gsap.killTweensOf(tearDrop);
+                        gsap.set(tearDrop, { opacity: 0 }); // Hide when inactive
+                    }
+                }
             }
         });
     });
-    document.getElementById('nextPageMemory').addEventListener('click', goToNextPage);
+    page2Observer.observe(document.getElementById('page-2'), { attributes: true });
 
-    // --- Page 7: Words From My Heart ---
-    document.getElementById('nextPageWishes').addEventListener('click', goToNextPage);
 
-    // --- Page 8: Guess Our Song ---
-    document.getElementById('playHintButton').addEventListener('click', () => {
-        playSound(clickSound);
-        alert("Imagine a snippet of our special song playing now! 😊");
-    });
-    document.getElementById('nextPageSong').addEventListener('click', goToNextPage);
+    if (btnTryAgain) {
+        btnTryAgain.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            gsap.to(btnTryAgain, {
+                y: -10,
+                repeat: 1,
+                yoyo: true,
+                duration: 0.3,
+                ease: "power1.inOut",
+                onComplete: () => showPage(1) // Go back to Page 1
+            });
+        });
+    }
+});
 
-    // --- Page 9: Anniversary Note ---
-    document.getElementById('playSoftPianoButton').addEventListener('click', () => {
-        playSound(clickSound);
-        if (isPlaying) {
-            backgroundMusic.pause();
-            backgroundMusic.currentTime = 0;
-            isPlaying = false;
-            musicIcon.src = 'assets/buttons/music_play.png'; // Update global music icon
+
+// --- Page 3: FIND HIDDEN ITEM GAME ---
+let hiddenItemTween;
+let sparkleTween;
+
+function setupHiddenItemGame() {
+    const hiddenItemContainer = document.getElementById('hidden-item-container');
+    const gameArea = document.getElementById('game-area');
+
+    if (!hiddenItemContainer || !gameArea) return;
+
+    // Reset visibility and position
+    gsap.set(hiddenItemContainer, { opacity: 0, scale: 0.5, pointerEvents: 'none' });
+
+    // Function to set random position
+    function setRandomPosition() {
+        const gameAreaRect = gameArea.getBoundingClientRect();
+        const itemRect = hiddenItemContainer.getBoundingClientRect();
+
+        // Calculate maximum top and left to keep item fully within game area
+        const maxTop = (gameAreaRect.height - itemRect.height) / gameAreaRect.height * 100;
+        const maxLeft = (gameAreaRect.width - itemRect.width) / gameAreaRect.width * 100;
+
+        const randomX = gsap.utils.random(5, Math.max(5, maxLeft - 5)); // Keep some margin
+        const randomY = gsap.utils.random(5, Math.max(5, maxTop - 5));
+
+        hiddenItemContainer.style.setProperty('--x-pos', randomX);
+        hiddenItemContainer.style.setProperty('--y-pos', randomY);
+    }
+
+    // Initial random position
+    setRandomPosition();
+
+    // Show the item with a slight delay and animation
+    gsap.to(hiddenItemContainer, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "back.out(1.7)",
+        delay: 1, // Appear after page transition
+        onComplete: () => {
+            hiddenItemContainer.style.pointerEvents = 'auto'; // Make clickable
+            // Start subtle floating animation
+            hiddenItemTween = gsap.to(hiddenItemContainer, {
+                y: "+=10",
+                x: "+=5",
+                rotation: 1,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut",
+                duration: 2
+            });
+            sparkleTween = gsap.to("#hidden-item-container img[src*='sparkle_small']", {
+                opacity: 0.8,
+                scale: 1.2,
+                repeat: -1,
+                yoyo: true,
+                duration: 1.5,
+                ease: "power1.inOut"
+            });
         }
+    });
 
-        if (softPianoPlaying) {
-            softPianoMusic.pause();
-            softPianoMusic.currentTime = 0;
-            softPianoPlaying = false;
+    // Handle click on hidden item
+    hiddenItemContainer.onclick = () => {
+        playSound(heartPopupSound);
+        gsap.killTweensOf(hiddenItemContainer);
+        gsap.killTweensOf("#hidden-item-container img[src*='sparkle_small']");
+        
+        gsap.to(hiddenItemContainer, {
+            scale: 1.5,
+            opacity: 0,
+            duration: 0.7,
+            ease: "back.in(2)",
+            onComplete: () => {
+                hiddenItemContainer.style.pointerEvents = 'none';
+                showPage(4); // Navigate to Page 4
+            }
+        });
+    };
+}
+
+function stopHiddenItemAnimation() {
+    if (hiddenItemTween) hiddenItemTween.kill();
+    if (sparkleTween) sparkleTween.kill();
+    const hiddenItemContainer = document.getElementById('hidden-item-container');
+    if (hiddenItemContainer) {
+        hiddenItemContainer.style.opacity = 0;
+        hiddenItemContainer.style.pointerEvents = 'none';
+    }
+}
+
+
+// --- Page 4: CHOOSE YOUR GIFT ---
+document.addEventListener('DOMContentLoaded', () => {
+    const giftCards = document.querySelectorAll('.gift-card');
+    const btnPage4Next = document.getElementById('btn-page4-next');
+    const giftPopupModal = document.getElementById('gift-popup-modal');
+    const modalGiftImage = document.getElementById('modal-gift-image');
+    const btnModalClose = document.getElementById('btn-modal-close');
+
+    if (giftCards.length > 0) {
+        giftCards.forEach(card => {
+            card.addEventListener('click', () => {
+                playSound(giftPopupSound);
+                const giftId = card.dataset.giftId;
+                const giftImageSrc = `assets/decorations/gift${giftId}.png`;
+
+                modalGiftImage.src = giftImageSrc;
+                giftPopupModal.classList.add('modal-active'); // For custom modal animation
+                giftPopupModal.style.pointerEvents = 'auto'; // Make modal interactive
+
+                // Animate gift card click
+                gsap.to(card, {
+                    scale: 1.1,
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.inOut"
+                });
+
+                // Show next button after gift selection
+                gsap.to(btnPage4Next, { opacity: 1, pointerEvents: 'auto', duration: 0.5 });
+            });
+        });
+    }
+
+    if (btnModalClose) {
+        btnModalClose.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            giftPopupModal.classList.remove('modal-active');
+            giftPopupModal.style.pointerEvents = 'none';
+        });
+    }
+
+    if (btnPage4Next) {
+        btnPage4Next.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            showPage(5); // Navigate to Page 5
+        });
+    }
+});
+
+
+// --- Page 5: COUPONS ---
+document.addEventListener('DOMContentLoaded', () => {
+    const couponCards = document.querySelectorAll('.coupon-card');
+    const btnPage5Next = document.getElementById('btn-page5-next');
+    const couponModal = document.getElementById('coupon-modal');
+    const modalCouponImage = document.getElementById('modal-coupon-image');
+    const btnCouponModalClose = document.getElementById('btn-coupon-modal-close');
+
+    if (couponCards.length > 0) {
+        couponCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                playSound(giftPopupSound); // Using gift popup sound for coupons too
+                const couponImageSrc = `assets/decorations/coupon${index + 1}.png`;
+
+                modalCouponImage.src = couponImageSrc;
+                couponModal.classList.add('modal-active');
+                couponModal.style.pointerEvents = 'auto';
+
+                gsap.to(card, {
+                    scale: 1.1,
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.inOut"
+                });
+            });
+        });
+    }
+
+    if (btnCouponModalClose) {
+        btnCouponModalClose.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            couponModal.classList.remove('modal-active');
+            couponModal.style.pointerEvents = 'none';
+        });
+    }
+
+    if (btnPage5Next) {
+        btnPage5Next.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            showPage(6); // Navigate to Page 6
+        });
+    }
+});
+
+
+// --- Page 6: MEMORY LANE ---
+document.addEventListener('DOMContentLoaded', () => {
+    const memoryCards = document.querySelectorAll('.memory-card');
+    const btnPage6Next = document.getElementById('btn-page6-next');
+
+    if (memoryCards.length > 0) {
+        memoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                playSound(buttonClickSound); // Soft click for memory cards
+                gsap.to(card, {
+                    scale: 1.05,
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.inOut"
+                });
+                // The quote is shown/hidden via CSS hover, no extra JS needed here
+            });
+        });
+    }
+
+    if (btnPage6Next) {
+        btnPage6Next.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            showPage(7); // Navigate to Page 7
+        });
+    }
+});
+
+
+// --- Page 7: WORDS FROM MY HEART ---
+const textToType = "My dearest,\nEvery day with you is a gift.\nYour smile lights up my world.\nThank you for this incredible year.\nYou are my everything, my sweet love. 💖";
+let typingIndex = 0;
+let typingInterval;
+let sparkleTweenPage7;
+
+function setupTypingAnimation() {
+    const typedTextElement = document.getElementById('typed-text');
+    const typingCursor = document.getElementById('typing-cursor');
+    const textSparkle = document.getElementById('text-sparkle');
+
+    if (!typedTextElement || !typingCursor || !textSparkle) return;
+
+    typedTextElement.textContent = ''; // Clear previous text
+    typingIndex = 0;
+    gsap.set(typingCursor, { opacity: 1, display: 'inline-block' });
+    gsap.set(textSparkle, { opacity: 0 });
+
+    typingInterval = setInterval(() => {
+        if (typingIndex < textToType.length) {
+            typedTextElement.textContent += textToType.charAt(typingIndex);
+            typingIndex++;
+
+            // Position sparkle effect at the end of the current text
+            if (typingIndex % 5 === 0) { // Sparkle every few characters
+                const lastCharRect = typedTextElement.getBoundingClientRect();
+                if (lastCharRect.width > 0 && lastCharRect.height > 0) {
+                    const parentRect = typedTextElement.parentElement.getBoundingClientRect();
+                    gsap.set(textSparkle, {
+                        x: lastCharRect.right - parentRect.left - 20, // Adjust sparkle position
+                        y: lastCharRect.bottom - parentRect.top - 20,
+                        opacity: 1,
+                        scale: 0.8
+                    });
+                    gsap.to(textSparkle, {
+                        opacity: 0,
+                        scale: 1.2,
+                        duration: 0.5,
+                        ease: "power1.out"
+                    });
+                }
+            }
         } else {
-            softPianoMusic.play().catch(e => console.log("Soft piano music play prevented:", e));
-            softPianoPlaying = true;
+            clearInterval(typingInterval);
+            gsap.to(typingCursor, { opacity: 0, duration: 0.5, ease: "power1.out" }); // Hide cursor
         }
-    });
+    }, 80); // Typing speed
+}
 
-    document.getElementById('stopBackgroundMusic').addEventListener('click', () => {
-        playSound(clickSound);
-        if (isPlaying) {
-            backgroundMusic.pause();
-            backgroundMusic.currentTime = 0;
-            isPlaying = false;
-            musicIcon.src = 'assets/buttons/music_play.png'; // Update global music icon
-        }
-        if (softPianoPlaying) {
-            softPianoMusic.pause();
-            softPianoMusic.currentTime = 0;
-            softPianoPlaying = false;
-        }
-    });
+function stopTypingAnimation() {
+    clearInterval(typingInterval);
+    gsap.killTweensOf(document.getElementById('typing-cursor'));
+    gsap.killTweensOf(document.getElementById('text-sparkle'));
+    gsap.set(document.getElementById('typing-cursor'), { opacity: 0, display: 'none' });
+    gsap.set(document.getElementById('text-sparkle'), { opacity: 0 });
+}
 
-    // Initial page load
-    showPage(0);
+document.addEventListener('DOMContentLoaded', () => {
+    const btnPage7Next = document.getElementById('btn-page7-next');
+    if (btnPage7Next) {
+        btnPage7Next.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            showPage(8); // Navigate to Page 8
+        });
+    }
+});
+
+
+// --- Page 8: GUESS OUR SONG ---
+document.addEventListener('DOMContentLoaded', () => {
+    const btnPage8Next = document.getElementById('btn-page8-next');
+
+    if (btnPage8Next) {
+        btnPage8Next.addEventListener('click', () => {
+            playSound(buttonClickSound);
+            showPage(9); // Navigate to Page 9
+        });
+    }
+});
+
+
+// --- Page 9: ANNIVERSARY BOOK PAGE ---
+// No specific interactive JS for this page, it's mostly visual and text.
+// Music handling is done in showPage function.
+document.addEventListener('DOMContentLoaded', () => {
+    // Optional: Add any final page specific GSAP animations for aesthetic if needed
+    // For example, a subtle pulse for the main text block
+    const bookPageContent = document.querySelector('#page-9 .book-page-effect');
+    if (bookPageContent) {
+        gsap.to(bookPageContent, {
+            y: -5,
+            repeat: -1,
+            yoyo: true,
+            duration: 3,
+            ease: "sine.inOut"
+        });
+    }
 });
