@@ -3,112 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our Kawaii Anniversary 💖</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Happy Anniversary! 💖</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts - Replace with your chosen cute fonts for production -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Handlee&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Custom TTF fonts will be loaded via CSS @font-face -->
+    <!-- Google Fonts for Kawaii Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&family=Pacifico&display=swap" rel="stylesheet">
 </head>
-<body class="overflow-hidden">
-    <!-- Music Toggle Button (Global) -->
-    <button id="musicToggleButton" class="music-toggle-btn position-fixed top-4 right-4 z-[100] p-3 rounded-full shadow-lg cute-btn">
-        <i class="fas fa-music text-xl"></i>
-    </button>
-    <audio id="backgroundMusic" loop autoplay></audio>
+<body>
 
-    <div id="app" class="relative w-screen h-screen flex justify-center items-center overflow-hidden">
-        <!-- Page 1: Love Question -->
-        <div id="page1" class="app-page active absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center transition-opacity duration-1000 ease-in-out" style="background-image: url('assets/backgrounds/bg1.jpg');">
-            <div class="overlay sparkle-overlay pointer-events-none"></div>
-            <div class="overlay hearts-overlay pointer-events-none"></div>
-
-            <div class="text-center space-y-8 z-10 relative">
-                <img src="assets/characters/bunny_idle.gif" alt="Cute Bunny" class="mx-auto w-32 md:w-48 floating-element mb-8">
-                <h1 class="text-5xl md:text-7xl kawaii-text soft-glow font-cute text-pink-700">Do You Love Me?</h1>
-                <div class="flex space-x-8 mt-10">
-                    <button class="kawaii-btn btn-yes px-8 py-4 rounded-full shadow-lg relative overflow-hidden" data-target-page="page3">
-                        <img src="assets/buttons/btn_yes.png" alt="Yes" class="w-24 md:w-32">
-                    </button>
-                    <button class="kawaii-btn btn-no px-8 py-4 rounded-full shadow-lg relative overflow-hidden" data-target-page="page2">
-                        <img src="assets/buttons/btn_no.png" alt="No" class="w-24 md:w-32">
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 2: Crying Page -->
-        <div id="page2" class="app-page absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center transition-opacity duration-1000 ease-in-out" style="background-image: url('assets/backgrounds/bg2.jpg');">
-            <div class="overlay rain-overlay pointer-events-none"></div>
-            <div class="overlay tear-overlay pointer-events-none"></div>
-
-            <div class="text-center space-y-8 z-10 relative">
-                <img src="assets/characters/cry_bunny.gif" alt="Crying Bunny" class="mx-auto w-40 md:w-64 mb-8 bounce-animation">
-                <h2 class="text-4xl md:text-6xl kawaii-text baby-pink-glow font-cute text-pink-600">Why did you say no? 🥺</h2>
-                <button class="kawaii-btn try-again-btn px-10 py-5 rounded-full shadow-lg relative overflow-hidden" data-target-page="page1">
-                    Try Again
-                    <img src="assets/gifs/sparkle_small.gif" alt="sparkle" class="button-sparkle">
-                </button>
-            </div>
-        </div>
-
-        <!-- Page 3: Find Hidden Item (Placeholder) -->
-        <div id="page3" class="app-page absolute inset-0 flex flex-col justify-center items-center p-4 bg-cover bg-center transition-opacity duration-1000 ease-in-out" style="background-image: url('assets/backgrounds/tree.png');">
-             <div class="overlay sparkle-overlay pointer-events-none"></div>
-             <div class="overlay butterflies-overlay pointer-events-none"></div>
-             <div class="overlay flower-sway-overlay pointer-events-none"></div>
-
-            <h2 class="text-5xl kawaii-text soft-glow font-cute text-purple-600 mb-8">Find the Hidden Item!</h2>
-            <img id="hiddenItem" src="assets/gifs/hidden_item.gif" alt="Hidden Item" class="w-24 h-24 absolute cursor-pointer hidden-item floating-element">
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page4">Next Page (Dev Only)</button>
-        </div>
-
-        <!-- Page 4-9: Placeholders for other pages -->
-        <div id="page4" class="app-page absolute inset-0 flex justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg3.jpg');">
-            <h2 class="text-6xl kawaii-text soft-glow font-cute text-blue-400">Choose Your Gift!</h2>
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page5">Next Page (Dev Only)</button>
-        </div>
-        <div id="page5" class="app-page absolute inset-0 flex justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg4.jpg');">
-            <h2 class="text-6xl kawaii-text soft-glow font-cute text-green-400">Special Coupons!</h2>
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page6">Next Page (Dev Only)</button>
-        </div>
-        <div id="page6" class="app-page absolute inset-0 flex justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg5.jpg');">
-            <h2 class="text-6xl kawaii-text soft-glow font-cute text-yellow-400">Memory Lane!</h2>
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page7">Next Page (Dev Only)</button>
-        </div>
-        <div id="page7" class="app-page absolute inset-0 flex justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg6.jpg');">
-            <h2 class="text-6xl kawaii-text soft-glow font-cute text-orange-400">Words From Heart!</h2>
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page8">Next Page (Dev Only)</button>
-        </div>
-        <div id="page8" class="app-page absolute inset-0 flex justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg7.jpg');">
-            <h2 class="text-6xl kawaii-text soft-glow font-cute text-red-400">Guess Our Song!</h2>
-            <button class="kawaii-btn next-page-btn mt-8" data-target-page="page9">Next Page (Dev Only)</button>
-        </div>
-        <div id="page9" class="app-page absolute inset-0 flex flex-col justify-center items-center bg-cover bg-center" style="background-image: url('assets/backgrounds/bg9_note.jpg');">
-            <div class="overlay heart-rain-overlay pointer-events-none"></div>
-            <div class="overlay confetti-overlay pointer-events-none"></div>
-
-            <div class="note-book-style p-8 md:p-12 bg-white bg-opacity-80 rounded-[30px] shadow-2xl max-w-4xl w-full mx-auto text-center">
-                <h2 class="text-5xl kawaii-text soft-glow font-cute text-pink-700 mb-6">Happy 1 Year Anniversary Jaaan 💗</h2>
-                <p class="text-xl md:text-2xl font-handwritten text-gray-800 leading-relaxed soft-glow-white">
-                    My love, today marks 1 year of our beautiful journey together. Every moment with you has been magical, full of joy, laughter, and endless love. You are my dream, my heart, my everything. 💗💗 Here’s to us, our memories, our love, and the countless adventures ahead. Iloveyoumore than words can ever say. 💗
-                </p>
-                <button id="playPianoButton" class="kawaii-btn baby-pink-glow mt-8 px-8 py-4 rounded-full shadow-lg relative overflow-hidden">
-                    Play Piano 🎹
-                    <img src="assets/gifs/sparkle_small.gif" alt="sparkle" class="button-sparkle">
-                </button>
-                 <audio id="pianoMusic" src="assets/music/soft_piano.mp3" loop></audio>
-            </div>
+    <!-- 🌸 LANDSCAPE WARNING (Android Friendly) -->
+    <div id="orientation-lock">
+        <div class="lock-content">
+            <img src="assets/characters/bunny_idle.gif" class="bounce">
+            <h2>Please Rotate Your Phone! ↻</h2>
+            <p>This surprise looks best in Landscape Mode 💖</p>
         </div>
     </div>
 
-    <!-- GSAP, AOS, Bootstrap, Tailwind JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script> <!-- For AOS-like effects with GSAP -->
+    <!-- 🌸 START SCREEN (To Allow Audio) -->
+    <div id="start-screen" onclick="startJourney()">
+        <div class="pulsing-heart">💖</div>
+        <p>Tap anywhere to begin our story...</p>
+    </div>
+
+    <!-- 🌸 AUDIO SYSTEM -->
+    <audio id="bg-music" loop><source src="assets/music/song.mp3"></audio>
+    <audio id="piano-music" loop><source src="assets/music/soft_piano.mp3"></audio>
+    <audio id="sfx-click"><source src="assets/music/click.mp3"></audio>
+    <audio id="sfx-success"><source src="assets/music/success.mp3"></audio>
+
+    <!-- 🌸 MODAL (POPUP) -->
+    <div id="modal" class="modal hidden" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">✖</span>
+            <img id="modal-img" src="" alt="">
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
+    <!-- ✨ BACKGROUND PARTICLES (Always Floating) -->
+    <div class="particles"></div>
+
+    <!-- === PAGE 1: THE QUESTION === -->
+    <section id="page1" class="page active" style="background-image: url('assets/backgrounds/bg1.jpg');">
+        <div class="music-toggle" onclick="toggleMusic()">🎵</div>
+        <div class="content-center">
+            <img src="assets/characters/bunny_idle.gif" class="char-main bounce-slow">
+            <h1 class="title">Do You Love Me?</h1>
+            <div class="btn-container">
+                <img src="assets/buttons/btn_yes.png" class="btn hover-pop" onclick="handleNav(3)">
+                <!-- This NO button will run away -->
+                <img src="assets/buttons/btn_no.png" id="no-btn" class="btn hover-pop" onclick="handleNav(2)">
+            </div>
+        </div>
+    </section>
+
+    <!-- === PAGE 2: SAD PAGE === -->
+    <section id="page2" class="page hidden" style="background-image: url('assets/backgrounds/bg2.jpg');">
+        <div class="overlay rain"></div>
+        <div class="content-center">
+            <img src="assets/characters/cry_bunny.gif" class="char-main">
+            <h1 class="sad-text">Why did you say no? 😭</h1>
+            <button class="cute-btn pink" onclick="handleNav(1)">Try Again 🥺</button>
+        </div>
+    </section>
+
+    <!-- === PAGE 3: HIDDEN ITEM GAME === -->
+    <section id="page3" class="page hidden" style="background-image: url('assets/backgrounds/tree.png');">
+        <div class="moving-bg"></div> <!-- For tree_bg_move.gif -->
+        <h2 class="game-instruction">Find the Hidden Heart! 💖</h2>
+        
+        <div class="game-area">
+            <!-- Decorations to distract -->
+            <img src="assets/decorations/flower.png" class="deco d1 sway">
+            <img src="assets/decorations/flower.png" class="deco d2 sway">
+            <img src="assets/decorations/butterfly.png" class="deco d3 fly">
+            <img src="assets/decorations/bush.png" class="deco d4">
+            
+            <!-- Hidden Item -->
+            <img src="assets/decorations/heart.png" id="hidden-item" onclick="foundItem()">
+        </div>
+
+        <button id="p3-next" class="next-arrow hidden" onclick="handleNav(4)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 4: GIFTS === -->
+    <section id="page4" class="page hidden" style="background-image: url('assets/backgrounds/bg3.jpg');">
+        <div class="overlay sparkle"></div>
+        <h1 class="title">Choose Your Gift 🎁</h1>
+        <div class="grid-4">
+            <img src="assets/decorations/gift1.png" onclick="showModal(this.src, 'Yay! A luxury bag for you! 👜')">
+            <img src="assets/decorations/gift2.png" onclick="showModal(this.src, 'A cute dress for my princess! 👗')">
+            <img src="assets/decorations/gift3.png" onclick="showModal(this.src, 'Makeup kit for the prettiest girl! 💄')">
+            <img src="assets/decorations/gift4.png" onclick="showModal(this.src, 'Chocolates strictly for you! 🍫')">
+        </div>
+        <button class="next-arrow" onclick="handleNav(5)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 5: COUPONS === -->
+    <section id="page5" class="page hidden" style="background-image: url('assets/backgrounds/bg4.jpg');">
+        <h1 class="title">Special Coupons 🎟️</h1>
+        <div class="horizontal-scroll">
+            <div class="scroll-track">
+                <!-- Add 12 coupons here -->
+                <img src="assets/buttons/coupon1.png" onclick="showModal(this.src, 'Unlimited Hugs! Valid Forever 🤗')">
+                <img src="assets/buttons/coupon2.png" onclick="showModal(this.src, 'One Date Night Request 🍷')">
+                <img src="assets/buttons/coupon3.png" onclick="showModal(this.src, 'Forgiveness for one mistake 🥺')">
+                <img src="assets/buttons/coupon4.png" onclick="showModal(this.src, 'Master of the Remote Control 📺')">
+            </div>
+        </div>
+        <button class="next-arrow" onclick="handleNav(6)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 6: MEMORY LANE === -->
+    <section id="page6" class="page hidden" style="background-image: url('assets/backgrounds/bg5.jpg');">
+        <div class="overlay sakura"></div>
+        <h1 class="title">Our Memories 📸</h1>
+        <div class="photo-gallery">
+            <div class="photo-frame"><img src="assets/decorations/pic1.jpg" onclick="showModal(this.src, 'The day we met...')"></div>
+            <div class="photo-frame"><img src="assets/decorations/pic2.jpg" onclick="showModal(this.src, 'You looked so cute here!')"></div>
+            <div class="photo-frame"><img src="assets/decorations/pic3.jpg" onclick="showModal(this.src, 'Our first trip together.')"></div>
+            <div class="photo-frame"><img src="assets/decorations/pic4.jpg" onclick="showModal(this.src, 'I love this smile.')"></div>
+        </div>
+        <button class="next-arrow" onclick="handleNav(7)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 7: WORDS FROM HEART === -->
+    <section id="page7" class="page hidden" style="background-image: url('assets/backgrounds/bg6.jpg');">
+        <div class="overlay stars"></div>
+        <div class="floating-wishes">
+            <div class="wish w1">You are my sunshine ☀️</div>
+            <div class="wish w2">My Forever & Always 💖</div>
+            <div class="wish w3">I Love You 3000 🫰</div>
+        </div>
+        <button class="next-arrow" onclick="handleNav(8)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 8: GUESS SONG === -->
+    <section id="page8" class="page hidden" style="background-image: url('assets/backgrounds/bg1.jpg');">
+        <div class="music-player-card">
+            <img src="assets/decorations/music_note.png" class="album-art spin">
+            <div class="song-info">
+                <h3>Our Favorite Song</h3>
+                <div class="progress-bar"><div class="fill"></div></div>
+                <p>Scan to Listen ⤵</p>
+                <img src="assets/decorations/qr_frame.png" class="qr">
+            </div>
+        </div>
+        <button class="next-arrow" onclick="handleNav(9)">Next ➡</button>
+    </section>
+
+    <!-- === PAGE 9: ANNIVERSARY LETTER === -->
+    <section id="page9" class="page hidden" style="background-image: url('assets/backgrounds/bg9_note.jpg');">
+        <div class="overlay confetti"></div>
+        <div class="letter-paper">
+            <h2 class="handwritten">Happy 1 Year Anniversary Jaaan 💗</h2>
+            <div class="letter-body handwritten">
+                <p>My love, today marks 1 year of our beautiful journey together.</p>
+                <p>Every moment with you has been magical, full of joy, laughter, and endless love.</p>
+                <p>You are my dream, my heart, my everything. 💗💗</p>
+                <p>Here’s to us, our memories, our love, and the countless adventures ahead.</p>
+                <p>I love you more than words can ever say. 💗</p>
+            </div>
+        </div>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
