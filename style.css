@@ -1,361 +1,148 @@
-/* Global Reset & Box Sizing */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden; /* Prevent scrolling, SPA handles content */
-    font-family: 'Handlee', cursive; /* Default cute font */
-    background-color: #ffe6f2; /* Soft pastel base */
-    color: #4a4a4a;
-}
-
-/* Custom Font Faces (Update paths to your actual TTF files) */
-@font-face {
-    font-family: 'CuteFont';
-    src: url('assets/fonts/CuteFont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'HandwrittenCute';
-    src: url('assets/fonts/HandwrittenCute.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* Apply custom fonts to specific elements or globally */
-.font-cute {
-    font-family: 'CuteFont', 'Pacifico', cursive;
-}
-.font-handwritten {
-    font-family: 'HandwrittenCute', 'Caveat', cursive;
-}
-
-/* Global Page Styles */
-.app-page {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-    background-size: cover;
-    background-position: center;
-    display: flex; /* Ensure content is centered if not using flex/grid directly */
-    justify-content: center;
-    align-items: center;
-}
-
-.app-page.active {
-    opacity: 1;
-    visibility: visible;
-    z-index: 1; /* Bring active page to front */
-}
-
-/* Kawaii Text Styles */
-.kawaii-text {
-    font-weight: bold;
-    text-shadow: 
-        0 0 8px rgba(255, 204, 229, 0.7), /* Pastel Pink Glow */
-        0 0 15px rgba(255, 182, 219, 0.5),
-        0 0 25px rgba(255, 160, 208, 0.3);
-    color: #ff99cc; /* Default pastel pink */
-}
-
-.soft-glow {
-    text-shadow: 
-        0 0 10px rgba(255, 255, 255, 0.8), /* Soft white glow */
-        0 0 20px rgba(255, 255, 255, 0.6),
-        0 0 30px rgba(255, 255, 255, 0.4);
-}
-
-.baby-pink-glow {
-    text-shadow: 
-        0 0 8px rgba(255, 220, 230, 0.9), /* Baby Pink Glow */
-        0 0 15px rgba(255, 190, 210, 0.7),
-        0 0 25px rgba(255, 160, 190, 0.5);
-    color: #ffb3c1; /* Baby pink */
-}
-
-
-/* Kawaii Buttons */
-.kawaii-btn {
-    background-color: #ffccd5; /* Soft pastel pink */
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 50px; /* Super rounded */
-    color: #fff;
-    font-family: 'CuteFont', cursive;
-    font-size: 1.8rem;
-    cursor: pointer;
-    position: relative;
+/* --- RESET & FONTS --- */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+    font-family: 'Nunito', sans-serif;
     overflow: hidden;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 5px 15px rgba(255, 150, 180, 0.4);
+    background-color: #ffd1dc;
+    color: #ff69b4;
 }
 
-.kawaii-btn:hover {
-    background-color: #ffb3c1; /* Slightly darker pink on hover */
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(255, 150, 180, 0.6);
+/* --- LANDSCAPE LOCK --- */
+#orientation-lock {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #ff9a9e; z-index: 9999; flex-direction: column;
+    align-items: center; justify-content: center; color: white; text-align: center;
+}
+@media screen and (orientation: portrait) { #orientation-lock { display: flex; } }
+
+/* --- START SCREEN --- */
+#start-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, #ffdde1, #ee9ca7);
+    z-index: 5000; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #fff;
+    cursor: pointer; transition: opacity 0.5s;
+}
+.pulsing-heart { font-size: 4rem; animation: pulse 1s infinite; }
+
+/* --- PAGE STYLING --- */
+.page {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-size: cover; background-position: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.8s ease-in-out;
+}
+.page.active { opacity: 1; pointer-events: all; }
+.page.hidden { opacity: 0; pointer-events: none; }
+
+/* --- TYPOGRAPHY --- */
+.title {
+    font-family: 'Fredoka One', cursive; font-size: 3rem; color: #ff007f;
+    text-shadow: 4px 4px 0 #fff; margin-bottom: 20px; z-index: 10;
+}
+.handwritten { font-family: 'Pacifico', cursive; }
+.sad-text { font-family: 'Fredoka One'; font-size: 2.5rem; color: white; text-shadow: 2px 2px 4px #000; }
+
+/* --- BUTTONS --- */
+.cute-btn, .next-arrow {
+    background: #ff69b4; border: 3px solid white; color: white;
+    padding: 10px 30px; font-family: 'Fredoka One'; font-size: 1.2rem;
+    border-radius: 50px; cursor: pointer; box-shadow: 0 5px 0 #d1478c;
+    transition: transform 0.1s, box-shadow 0.1s; z-index: 100;
+}
+.cute-btn:active, .next-arrow:active { transform: translateY(5px); box-shadow: 0 0 0 #d1478c; }
+.next-arrow { position: absolute; bottom: 20px; right: 20px; animation: bounce 2s infinite; }
+.btn-container { display: flex; gap: 50px; z-index: 20; }
+.btn { width: 130px; cursor: pointer; transition: transform 0.2s; }
+.hover-pop:hover { transform: scale(1.1); }
+
+/* --- GAME AREA (Page 3) --- */
+.game-area {
+    position: relative; width: 80vw; height: 60vh;
+    border: 4px dashed rgba(255,255,255,0.7); border-radius: 20px;
+}
+.deco { position: absolute; pointer-events: none; }
+.d1 { top: 10%; left: 10%; width: 60px; }
+.d2 { bottom: 20%; right: 10%; width: 70px; }
+.d3 { top: 20%; right: 20%; width: 50px; }
+.d4 { bottom: 0; left: 30%; width: 120px; }
+#hidden-item {
+    position: absolute; width: 40px; cursor: pointer;
+    top: 60%; left: 80%; z-index: 30; opacity: 0.9;
+    transition: transform 0.3s;
 }
 
-.kawaii-btn:active {
-    transform: translateY(0) scale(0.98);
+/* --- GRIDS & SCROLLS --- */
+.grid-4 {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 85vw; z-index: 10;
+}
+.grid-4 img {
+    width: 100%; height: 160px; object-fit: contain; background: rgba(255,255,255,0.6);
+    border-radius: 15px; padding: 10px; cursor: pointer; transition: 0.3s;
+}
+.grid-4 img:hover { transform: scale(1.1) rotate(3deg); background: rgba(255,255,255,0.9); }
+
+.horizontal-scroll { width: 95vw; overflow-x: auto; padding: 20px 0; z-index: 10; }
+.scroll-track { display: flex; gap: 20px; padding: 0 20px; }
+.scroll-track img { height: 200px; border-radius: 10px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+.photo-gallery { display: flex; gap: 20px; z-index: 10; }
+.photo-frame {
+    background: white; padding: 10px 10px 40px 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transform: rotate(-2deg); transition: 0.3s; cursor: pointer;
+}
+.photo-frame:nth-child(even) { transform: rotate(3deg); }
+.photo-frame:hover { transform: scale(1.1) rotate(0); z-index: 20; }
+.photo-frame img { width: 180px; height: 180px; object-fit: cover; }
+
+/* --- LETTER (Page 9) --- */
+.letter-paper {
+    background: #fff; width: 70vw; padding: 40px; border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10;
+    background-image: linear-gradient(#e1e1e1 1px, transparent 1px); background-size: 100% 2rem;
+    line-height: 2rem; color: #555; transform: rotate(-1deg);
+}
+.letter-paper h2 { color: #d63384; margin-bottom: 20px; }
+
+/* --- MUSIC PLAYER CARD --- */
+.music-player-card {
+    background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px;
+    display: flex; align-items: center; gap: 30px; border: 4px solid #ff69b4;
+}
+.album-art { width: 100px; }
+.progress-bar { width: 200px; height: 10px; background: #ddd; border-radius: 5px; margin: 10px 0; overflow: hidden; }
+.fill { width: 60%; height: 100%; background: #ff69b4; animation: fillBar 10s linear infinite; }
+.qr { width: 80px; }
+
+/* --- MODAL --- */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center;
+}
+.modal-box {
+    background: #fff0f5; padding: 20px; border-radius: 20px; text-align: center;
+    max-width: 60%; border: 5px solid #ff69b4; position: relative; animation: popIn 0.3s;
+}
+.modal-box img { max-height: 60vh; border-radius: 10px; margin-bottom: 10px; }
+.modal-box p { font-family: 'Fredoka One'; color: #ff69b4; font-size: 1.5rem; }
+.close-btn {
+    position: absolute; top: -15px; right: -15px; background: #ff1493; color: white;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem;
+    line-height: 38px; cursor: pointer; border: 2px solid white;
 }
 
-/* Button with image (Page 1 specific) */
-.kawaii-btn img {
-    max-width: 100%;
-    height: auto;
-    pointer-events: none; /* Do not block button click */
-}
+/* --- OVERLAYS & ANIMATIONS --- */
+.overlay { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0.6; }
+.rain { background: url('assets/gifs/rain.gif'); }
+.sparkle { background: url('assets/gifs/sparkle.gif'); }
+.confetti { background: url('assets/gifs/confetti.gif'); }
 
-/* Button Sparkle Effect */
-.button-sparkle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    opacity: 0;
-}
-.kawaii-btn:hover .button-sparkle {
-    animation: sparkle-burst 0.6s forwards;
-}
-@keyframes sparkle-burst {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-}
-
-
-/* Floating Element Animation */
-.floating-element {
-    animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-/* Bounce Animation */
-.bounce-animation {
-    animation: bounce 1s infinite;
-}
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-
-/* Music Toggle Button */
-.music-toggle-btn {
-    background-color: #ffadd2; /* Baby pink */
-    color: white;
-    border: none;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.music-toggle-btn:hover {
-    background-color: #ff99cc;
-    transform: scale(1.1);
-}
-
-/* Overlay Styles */
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Ensures clicks go through to elements beneath */
-    z-index: 5; /* Below main content, above background */
-    background-size: cover; /* Adjust as needed */
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-/* Page 1 Overlays */
-#page1 .sparkle-overlay {
-    background-image: url('assets/overlays/sparkle_overlay.gif');
-    background-size: contain; /* Or 'cover' depending on GIF */
-    animation: subtle-pulse 5s infinite;
-}
-#page1 .hearts-overlay {
-    background-image: url('assets/gifs/floating_hearts.gif');
-    background-size: cover;
-}
-
-/* Page 2 Overlays */
-#page2 .rain-overlay {
-    background-image: url('assets/overlays/rain_overlay.gif');
-    background-size: cover;
-}
-#page2 .tear-overlay {
-    background-image: url('assets/gifs/tear_drop.gif');
-    background-size: 50% auto; /* Example, adjust as needed */
-    background-position: top center;
-    background-repeat: repeat-y;
-    opacity: 0.7;
-}
-
-/* Page 3 Overlays (Example) */
-#page3 .butterflies-overlay {
-    background-image: url('assets/gifs/butterfly_fly1.gif');
-    background-size: contain; /* Or auto, repeat, etc. */
-    background-repeat: repeat;
-    opacity: 0.8;
-}
-#page3 .flower-sway-overlay {
-    background-image: url('assets/gifs/flower_sway1.gif');
-    background-size: 30% auto;
-    background-position: bottom left;
-    background-repeat: no-repeat;
-}
-.hidden-item {
-    animation: float 4s ease-in-out infinite; /* Apply floating to hidden item */
-}
-
-/* Page 9 (Anniversary Note) Specific Styles */
-.note-book-style {
-    background: linear-gradient(135deg, rgba(255, 240, 245, 0.95), rgba(255, 250, 250, 0.9)); /* Soft gradient */
-    border: 5px solid #ffccdd; /* Cute border */
-    box-shadow: 0 10px 30px rgba(255, 100, 150, 0.3); /* Deeper shadow */
-    max-width: 800px;
-    width: 90%;
-    margin: auto;
-    position: relative; /* For overlays inside */
-    padding: 3rem 4rem; /* More padding for book feel */
-}
-.note-book-style::before, .note-book-style::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 15px; /* Spine width */
-    background-color: #ffdce5; /* Lighter spine color */
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-}
-.note-book-style::before {
-    left: -15px;
-    transform: translateX(50%);
-}
-.note-book-style::after {
-    right: -15px;
-    transform: translateX(-50%);
-}
-
-#page9 .heart-rain-overlay {
-    background-image: url('assets/gifs/heart_rain.gif');
-    background-size: cover;
-    opacity: 0.6;
-}
-#page9 .confetti-overlay {
-    background-image: url('assets/gifs/confetti.gif');
-    background-size: cover;
-    opacity: 0.7;
-}
-.soft-glow-white {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 255, 255, 0.6);
-}
-
-/* Animations for overlays */
-@keyframes subtle-pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; }
-    100% { opacity: 0.8; }
-}
-
-/* Responsive adjustments for Android landscape */
-@media (orientation: landscape) {
-    body {
-        /* Ensure no horizontal scroll */
-        min-width: 100vw;
-        max-width: 100vw;
-    }
-    .app-page {
-        /* Ensure pages fill the landscape viewport */
-        width: 100vw;
-        height: 100vh;
-    }
-    /* Adjust font sizes, button sizes for landscape if needed */
-    .kawaii-text {
-        font-size: clamp(2.5rem, 6vw, 5rem); /* Responsive font size */
-    }
-    .kawaii-btn {
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
-        padding: clamp(0.8rem, 2vw, 1.5rem) clamp(1.5rem, 4vw, 3rem);
-    }
-    .music-toggle-btn {
-        width: clamp(50px, 8vw, 70px);
-        height: clamp(50px, 8vw, 70px);
-    }
-    .note-book-style {
-        padding: clamp(1.5rem, 5vw, 3rem) clamp(2rem, 8vw, 4rem);
-    }
-}
-
-/* Tailwind CSS (already included via CDN, these are custom additions) */
-.z-10 { z-index: 10; }
-.z-20 { z-index: 20; }
-.z-\[100\] { z-index: 100; } /* For music button */
-
-.bg-cover { background-size: cover; }
-.bg-center { background-position: center; }
-.flex { display: flex; }
-.justify-center { justify-content: center; }
-.items-center { align-items: center; }
-.text-center { text-align: center; }
-.relative { position: relative; }
-.absolute { position: absolute; }
-.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.w-screen { width: 100vw; }
-.h-screen { height: 100vh; }
-.overflow-hidden { overflow: hidden; }
-.p-4 { padding: 1rem; }
-.space-y-8 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-.space-x-8 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(2rem * var(--tw-space-x-reverse));
-    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.mx-auto { margin-left: auto; margin-right: auto; }
-.w-32 { width: 8rem; } /* 128px */
-.md\:w-48 { width: 12rem; } /* 192px */
-.md\:w-64 { width: 16rem; } /* 256px */
-.text-5xl { font-size: 3rem; line-height: 1; }
-.md\:text-7xl { font-size: 4.5rem; line-height: 1; }
-.text-pink-700 { color: #be185d; }
-.text-pink-600 { color: #db2777; }
-.mt-10 { margin-top: 2.5rem; }
-.px-8 { padding-left: 2rem; padding-right: 2rem; }
-.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-.rounded-full { border-radius: 9999px; }
-.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-.position-fixed { position: fixed; }
-.top-4 { top: 1rem; }
-.right-4 { right: 1rem; }
-.p-3 { padding: 0.75rem; }
-.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-.pointer-events-none { pointer-events: none; }
-.cursor-pointer { cursor: pointer; }
-.hidden { display: none; } /* Use JS to toggle visibility */
-.flex-col { flex-direction: column; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes sway { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(10deg); } }
+@keyframes fly { 0% { transform: translate(0,0); } 50% { transform: translate(30px, -30px); } 100% { transform: translate(0,0); } }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.spin { animation: spin 5s linear infinite; }
+.bounce-slow { animation: bounce 3s infinite; }
